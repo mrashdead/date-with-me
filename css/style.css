@@ -1,0 +1,116 @@
+* { font-family: 'Vazirmatn', sans-serif; }
+
+body {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.page { display: none; animation: fadeIn 0.6s ease; }
+.page.active { display: flex; }
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes float {
+    0%, 100% { transform: translateY(0px) rotate(0deg); }
+    50% { transform: translateY(-20px) rotate(5deg); }
+}
+
+@keyframes heartbeat {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+.float-animation { animation: float 3s ease-in-out infinite; }
+.heartbeat { animation: heartbeat 1.5s ease-in-out infinite; }
+
+.heart-particle {
+    position: fixed;
+    font-size: 1.5rem;
+    animation: rise 4s ease-in infinite;
+    pointer-events: none;
+    z-index: 0;
+}
+
+@keyframes rise {
+    0% { transform: translateY(100vh) scale(0); opacity: 0; }
+    10% { opacity: 1; }
+    90% { opacity: 1; }
+    100% { transform: translateY(-10vh) scale(1.2); opacity: 0; }
+}
+
+.no-btn {
+    transition: none;
+    position: relative;
+}
+
+.card {
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+}
+
+.btn-yes {
+    background: linear-gradient(135deg, #ff6b6b, #ee5a24, #ff6348);
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.4);
+    transition: all 0.3s ease;
+}
+.btn-yes:hover {
+    transform: scale(1.05);
+    box-shadow: 0 15px 40px rgba(255, 107, 107, 0.6);
+}
+
+.btn-no {
+    background: linear-gradient(135deg, #636e72, #2d3436);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.confetti-piece {
+    position: fixed;
+    width: 10px;
+    height: 10px;
+    animation: confetti-fall 3s ease-in-out forwards;
+    pointer-events: none;
+    z-index: 100;
+}
+
+@keyframes confetti-fall {
+    0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+.activity-card {
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+.activity-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 30px rgba(255, 107, 107, 0.3);
+}
+.activity-card.selected {
+    border-color: #ff6b6b;
+    background: rgba(255, 107, 107, 0.15);
+    transform: scale(1.02);
+}
+
+.countdown-box {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    padding: 12px 20px;
+    min-width: 70px;
+}
+
+.progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #ff6b6b, #feca57);
+    transition: width 0.5s ease;
+    z-index: 50;
+}
