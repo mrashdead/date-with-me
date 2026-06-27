@@ -1,168 +1,341 @@
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>💕 یه سوال مهم دارم ازت</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>دعوت به دیت 💖</title>
+
+  <!-- Font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap"
+    rel="stylesheet"
+  />
+
+  <!-- Persian Datepicker -->
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css"
+  />
+
+  <!-- Tailwind -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Custom -->
+  <link rel="stylesheet" href="css/style.css" />
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body>
+  <!-- Ambient Background -->
+  <div class="bg-blur bg-blur-1"></div>
+  <div class="bg-blur bg-blur-2"></div>
+  <div class="bg-blur bg-blur-3"></div>
+  <div id="hearts-bg" aria-hidden="true"></div>
 
-    <!-- Progress Bar -->
-    <div class="progress-bar" id="progressBar"></div>
+  <main class="app-shell">
+    <section class="romance-card">
+      <!-- Header -->
+      <header class="mb-6">
+        <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+          <div>
+            <p class="eyebrow">Date Invitation Experience</p>
+            <h1 class="main-title">یک سوال مهم با طراحی خاص ✨</h1>
+          </div>
+          <div class="status-pill" id="stepLabel">مرحله 1 از 8</div>
+        </div>
 
-    <!-- Floating Hearts -->
-    <div id="hearts-bg"></div>
+        <div class="progress-wrap">
+          <div id="progressBar" class="progress-bar"></div>
+        </div>
 
-    <!-- ===== PAGE 1 ===== -->
-    <div id="page1" class="page active">
-        <div class="card rounded-3xl p-8 text-center w-full max-w-lg mx-auto">
-            <div class="text-6xl mb-6 float-animation">💕</div>
-            <h1 class="text-2xl md:text-3xl font-bold text-white mb-3">یه سوال مهم دارم ازت...</h1>
-            <p class="text-gray-300 text-lg mb-8">با من میای بریم دیت؟ 🥺</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center items-center relative">
-                <button id="yesBtn" class="btn-yes text-white font-bold py-4 px-10 rounded-2xl text-lg w-full sm:w-auto">
-                    بله! 🥰
-                </button>
-                <button id="noBtn" class="no-btn btn-no text-white font-bold py-4 px-10 rounded-2xl text-lg w-full sm:w-auto">
-                    نه 😅
-                </button>
+        <div class="step-dots mt-4">
+          <span class="step-dot active"></span>
+          <span class="step-dot"></span>
+          <span class="step-dot"></span>
+          <span class="step-dot"></span>
+          <span class="step-dot"></span>
+          <span class="step-dot"></span>
+          <span class="step-dot"></span>
+          <span class="step-dot"></span>
+        </div>
+      </header>
+
+      <!-- Steps Container -->
+      <div class="steps-container">
+        <!-- Step 1 -->
+        <section id="step1" class="step active">
+          <div class="step-icon">🌷</div>
+          <h2 class="step-title">سلام خوش‌اومدی</h2>
+          <p class="step-desc">
+            قبل از اینکه یه سوال مهم ازت بپرسم، دوست دارم یه کوچولو بیشتر
+            باهات آشنا بشم.
+          </p>
+
+          <div class="mt-8 flex justify-center">
+            <button class="primary-btn" data-next="2">شروع کنیم</button>
+          </div>
+        </section>
+
+        <!-- Step 2 -->
+        <section id="step2" class="step">
+          <div class="step-icon">💫</div>
+          <h2 class="step-title">یه آشنایی اولیه</h2>
+          <p class="step-desc">
+            فقط چند تا چیز کوچیک بگو تا این تجربه برای تو شخصی‌تر و قشنگ‌تر بشه.
+          </p>
+
+          <div class="form-grid mt-8">
+            <div class="input-group">
+              <label for="firstName">اسم</label>
+              <input id="firstName" type="text" placeholder="مثلاً سارا" />
             </div>
-            <p id="noHint" class="text-gray-500 text-sm mt-4 hidden">فکر نکنم بتونی بزنی نه 😏</p>
-        </div>
-    </div>
 
-    <!-- ===== PAGE 2 ===== -->
-    <div id="page2" class="page">
-        <div class="card rounded-3xl p-8 text-center w-full max-w-lg mx-auto">
-            <div class="text-6xl mb-6 heartbeat">🎉</div>
-            <h1 class="text-3xl font-bold text-white mb-3">یسسسس! 🥳</h1>
-            <p class="text-gray-300 text-lg mb-2">میدونستم که آره میگی!</p>
-            <p class="text-gray-400 mb-8">حالا بیا برنامه‌ریزی کنیم...</p>
-            <button id="goPage3" class="btn-yes text-white font-bold py-4 px-10 rounded-2xl text-lg">
-                بزن بریم! 🚀
-            </button>
-        </div>
-    </div>
-
-    <!-- ===== PAGE 3 ===== -->
-    <div id="page3" class="page">
-        <div class="card rounded-3xl p-8 text-center w-full max-w-lg mx-auto">
-            <div class="text-5xl mb-6">📅</div>
-            <h1 class="text-2xl font-bold text-white mb-6">کی بریم؟</h1>
-            <div class="space-y-4 mb-8">
-                <div class="text-right">
-                    <label class="text-gray-300 text-sm block mb-2">📆 تاریخ</label>
-                    <input type="text" id="dateInput" readonly
-                        class="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-white text-center focus:outline-none focus:border-pink-400 cursor-pointer"
-                        placeholder="انتخاب تاریخ 📅">
-                </div>
-                <div class="text-right">
-                    <label class="text-gray-300 text-sm block mb-2">⏰ ساعت</label>
-                    <select id="timeInput" class="w-full bg-white/10 border border-white/20 rounded-xl p-3 text-white text-center focus:outline-none focus:border-pink-400">
-                        <option value="" class="bg-gray-800">انتخاب کن</option>
-                        <option value="10:00" class="bg-gray-800">☀️ ساعت ۸ صبح</option>
-                        <option value="16:00" class="bg-gray-800">🌆 ساعت ۴ عصر</option>
-                        <option value="18:00" class="bg-gray-800">🌇 ساعت ۶ عصر</option>
-                        <option value="20:00" class="bg-gray-800">🌙 ساعت ۸ شب</option>
-                        <option value="21:00" class="bg-gray-800">✨ ساعت ۹ شب</option>
-                    </select>
-                </div>
+            <div class="input-group">
+              <label for="lastName">فامیل</label>
+              <input id="lastName" type="text" placeholder="مثلاً احمدی" />
             </div>
-            <button id="goPage4" class="btn-yes text-white font-bold py-4 px-10 rounded-2xl text-lg w-full">
-                مرحله بعد ➡️
-            </button>
-        </div>
-    </div>
+          </div>
 
-    <!-- ===== PAGE 4 ===== -->
-    <div id="page4" class="page">
-        <div class="card rounded-3xl p-8 text-center w-full max-w-lg mx-auto">
-            <div class="text-5xl mb-4">🎯</div>
-            <h1 class="text-2xl font-bold text-white mb-2">چیکار کنیم؟</h1>
-            <p class="text-gray-400 text-sm mb-6">هرچندتا دوست داری انتخاب کن</p>
-            <div class="grid grid-cols-2 gap-3 mb-8" id="activitiesGrid">
-                <div class="activity-card card rounded-xl p-4" data-activity="cafe">
-                    <div class="text-3xl mb-2">☕</div><p class="text-white text-sm">کافه</p>
-                </div>
-                <div class="activity-card card rounded-xl p-4" data-activity="restaurant">
-                    <div class="text-3xl mb-2">🍽️</div><p class="text-white text-sm">رستوران</p>
-                </div>
-                <div class="activity-card card rounded-xl p-4" data-activity="cinema">
-                    <div class="text-3xl mb-2">🎬</div><p class="text-white text-sm">سینما</p>
-                </div>
-                <div class="activity-card card rounded-xl p-4" data-activity="park">
-                    <div class="text-3xl mb-2">🌳</div><p class="text-white text-sm">پارک و قدم زدن</p>
-                </div>
-                <div class="activity-card card rounded-xl p-4" data-activity="museum">
-                    <div class="text-3xl mb-2">🎨</div><p class="text-white text-sm">موزه / گالری</p>
-                </div>
-                <div class="activity-card card rounded-xl p-4" data-activity="game">
-                    <div class="text-3xl mb-2">🎮</div><p class="text-white text-sm">بازی و تفریح</p>
-                </div>
+          <div class="mt-6">
+            <label class="block mb-3 text-sm text-slate-300">علایقت چیه؟</label>
+            <div id="interestsWrap" class="chips-wrap">
+              <button type="button" class="chip" data-interest="کافه">کافه</button>
+              <button type="button" class="chip" data-interest="پیاده‌روی">پیاده‌روی</button>
+              <button type="button" class="chip" data-interest="فیلم">فیلم</button>
+              <button type="button" class="chip" data-interest="موسیقی">موسیقی</button>
+              <button type="button" class="chip" data-interest="کتاب">کتاب</button>
+              <button type="button" class="chip" data-interest="طبیعت">طبیعت</button>
+              <button type="button" class="chip" data-interest="بستنی">بستنی</button>
+              <button type="button" class="chip" data-interest="رستوران">رستوران</button>
             </div>
-            <button id="goPage5" class="btn-yes text-white font-bold py-4 px-10 rounded-2xl text-lg w-full">
-                بعدی ➡️
-            </button>
-        </div>
-    </div>
+          </div>
 
-    <!-- ===== PAGE 5 ===== -->
-    <div id="page5" class="page">
-        <div class="card rounded-3xl p-8 text-center w-full max-w-lg mx-auto">
-            <div class="text-5xl mb-4">💡</div>
-            <h1 class="text-2xl font-bold text-white mb-2">پیشنهادات من</h1>
-            <p class="text-gray-400 text-sm mb-6">بر اساس انتخابت اینا رو پیشنهاد میدم</p>
-            <div id="suggestionsContainer" class="space-y-3 mb-8 text-right"></div>
-            <button id="goPage6" class="btn-yes text-white font-bold py-4 px-10 rounded-2xl text-lg w-full">
-                عالیه! نهایی کن 💕
-            </button>
-        </div>
-    </div>
+          <p id="profileError" class="error-text hidden mt-4">
+            لطفاً حداقل اسم و یک علاقه را وارد کن.
+          </p>
 
-    <!-- ===== PAGE 6 ===== -->
-    <div id="page6" class="page">
-        <div class="card rounded-3xl p-8 text-center w-full max-w-lg mx-auto">
-            <div class="text-6xl mb-4 heartbeat">💖</div>
-            <h1 class="text-2xl font-bold text-white mb-3">خیلی خوشحالم که قبول کردی!</h1>
-            <p class="text-gray-300 text-lg mb-2" id="finalDateText"></p>
-            <p class="text-gray-400 mb-6" id="finalTimeText"></p>
-            <div class="mb-6">
-                <p class="text-gray-400 text-sm mb-3">⏳ شمارش معکوس تا دیدنت:</p>
-                <div class="flex justify-center gap-3">
-                    <div class="countdown-box text-center">
-                        <div class="text-2xl font-bold text-white" id="cd-days">--</div>
-                        <div class="text-xs text-gray-400">روز</div>
-                    </div>
-                    <div class="countdown-box text-center">
-                        <div class="text-2xl font-bold text-white" id="cd-hours">--</div>
-                        <div class="text-xs text-gray-400">ساعت</div>
-                    </div>
-                    <div class="countdown-box text-center">
-                        <div class="text-2xl font-bold text-white" id="cd-mins">--</div>
-                        <div class="text-xs text-gray-400">دقیقه</div>
-                    </div>
-                    <div class="countdown-box text-center">
-                        <div class="text-2xl font-bold text-white" id="cd-secs">--</div>
-                        <div class="text-xs text-gray-400">ثانیه</div>
-                    </div>
-                </div>
+          <div class="mt-8 flex justify-center">
+            <button id="saveProfileBtn" class="primary-btn">ادامه</button>
+          </div>
+        </section>
+
+        <!-- Step 3 -->
+        <section id="step3" class="step">
+          <div class="step-icon">🫶</div>
+          <h2 class="step-title">قبل از سوال اصلی...</h2>
+          <p class="step-desc" id="introText">
+            من علیرضا هستم؛
+            طرفدار گفت‌وگوی خوب، حس خوب، و قرارهای ساده ولی به‌یادموندنی.
+          </p>
+
+          <div class="intro-card mt-8">
+            <p>
+              اگر قرار باشه یه لحظه خوب ساخته بشه، معمولاً از یک گفت‌وگوی خوب،
+              یک انتخاب خوب، و یک حس واقعی شروع میشه.
+            </p>
+          </div>
+
+          <div class="mt-8 flex justify-center">
+            <button class="primary-btn" data-next="4">خب، سوال مهم رو بپرس</button>
+          </div>
+        </section>
+
+        <!-- Step 4 -->
+        <section id="step4" class="step question-step">
+          <div class="step-icon">💖</div>
+          <h2 class="step-title" id="questionTitle">با من میای بریم دیت؟</h2>
+          <p class="step-desc">
+            خیلی محترمانه، خیلی جدی، و البته با مقدار کمی اصرار بامزه 😌
+          </p>
+
+          <div class="question-actions mt-10" id="questionArea">
+            <button id="yesBtn" class="primary-btn big-btn">بله 💘</button>
+            <button id="noBtn" class="secondary-btn big-btn">خیر 😶</button>
+          </div>
+
+          <p id="noHint" class="hint-text hidden mt-6">
+            به نظرم universe با گزینه «بله» موافق‌تره ✨
+          </p>
+        </section>
+
+        <!-- Step 5 -->
+        <section id="step5" class="step">
+          <div class="step-icon celebrate-icon">🎉</div>
+          <h2 class="step-title">این بهترین جواب ممکن بود!</h2>
+          <p class="step-desc" id="celebrateText">
+            خیلی خوشحال شدم که قبول کردی. حالا بزن بریم یه قرار خوب و به‌یادموندنی براش بچینیم.
+          </p>
+
+          <div class="mt-8 flex justify-center">
+            <button class="primary-btn" data-next="6">بزن بریم</button>
+          </div>
+        </section>
+
+        <!-- Step 6 -->
+        <section id="step6" class="step">
+          <div class="step-icon">📅</div>
+          <h2 class="step-title">زمان قرار رو انتخاب کن</h2>
+          <p class="step-desc">
+            فقط از امروز تا یک هفته آینده قابل انتخابه.
+          </p>
+
+          <div class="form-grid mt-8">
+            <div class="input-group">
+              <label for="dateInput">تاریخ</label>
+              <input id="dateInput" type="text" readonly placeholder="تاریخ را انتخاب کن" />
             </div>
-            <p class="text-pink-300 text-lg font-medium">بی‌صبرانه منتظرتم 🦋</p>
-        </div>
-    </div>
 
-    <!-- Toast -->
-    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md border border-white/20 text-white px-6 py-3 rounded-2xl text-sm shadow-lg transition-all duration-300 opacity-0 pointer-events-none z-50">
-        <span id="toastMsg"></span>
-    </div>
+            <div class="input-group">
+              <label for="timeInput">ساعت</label>
+              <select id="timeInput">
+                <option value="">انتخاب ساعت</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+              </select>
+            </div>
+          </div>
 
-    <script src="js/app.js"></script>
+          <p id="schedulePreview" class="soft-note hidden mt-5"></p>
+          <p id="scheduleError" class="error-text hidden mt-4">
+            لطفاً هم تاریخ و هم ساعت را انتخاب کن.
+          </p>
+
+          <div class="mt-8 flex justify-center">
+            <button id="saveScheduleBtn" class="primary-btn">ادامه</button>
+          </div>
+        </section>
+
+        <!-- Step 7 -->
+        <section id="step7" class="step">
+          <div class="step-icon">🎈</div>
+          <h2 class="step-title">دوست داری قراره‌مون چه حال‌وهوایی داشته باشه؟</h2>
+          <p class="step-desc">
+            یکی را انتخاب کن تا بر اساسش پیشنهادهای بهتر بدهم.
+          </p>
+
+          <div id="activitiesWrap" class="cards-grid mt-8">
+            <button class="activity-card" data-activity="کافه">
+              <span class="emoji">☕</span>
+              <h3>کافه</h3>
+              <p>آروم، گرم، مناسب گفت‌وگو</p>
+            </button>
+
+            <button class="activity-card" data-activity="پیاده‌روی">
+              <span class="emoji">🚶</span>
+              <h3>پیاده‌روی</h3>
+              <p>سبک، راحت، صمیمی</p>
+            </button>
+
+            <button class="activity-card" data-activity="سینما">
+              <span class="emoji">🎬</span>
+              <h3>سینما</h3>
+              <p>سرگرم‌کننده و متفاوت</p>
+            </button>
+
+            <button class="activity-card" data-activity="رستوران">
+              <span class="emoji">🍽️</span>
+              <h3>رستوران</h3>
+              <p>کلاسیک و رسمی‌تر</p>
+            </button>
+
+            <button class="activity-card" data-activity="بستنی">
+              <span class="emoji">🍦</span>
+              <h3>بستنی</h3>
+              <p>سبک، خوشحال و بامزه</p>
+            </button>
+
+            <button class="activity-card" data-activity="کتاب‌فروشی">
+              <span class="emoji">📚</span>
+              <h3>کتاب‌فروشی</h3>
+              <p>خاص، آروم و متفاوت</p>
+            </button>
+          </div>
+
+          <p id="activityError" class="error-text hidden mt-4">
+            لطفاً یک گزینه را انتخاب کن.
+          </p>
+
+          <div class="mt-8 flex justify-center">
+            <button id="saveActivityBtn" class="primary-btn">پیشنهادها رو ببین</button>
+          </div>
+        </section>
+
+        <!-- Step 8 -->
+        <section id="step8" class="step">
+          <div class="step-icon">✨</div>
+          <h2 class="step-title">پیشنهادهای من برای این قرار</h2>
+          <p class="step-desc">
+            با توجه به علایقت و انتخابی که داشتی، این‌ها می‌تونن عالی باشن.
+          </p>
+
+          <div id="suggestionsWrap" class="suggestions-list mt-8"></div>
+
+          <p id="suggestionError" class="error-text hidden mt-4">
+            لطفاً یکی از پیشنهادها را انتخاب کن.
+          </p>
+
+          <div class="mt-8 flex justify-center">
+            <button id="finishBtn" class="primary-btn">تایید نهایی</button>
+          </div>
+        </section>
+
+        <!-- Step 9 -->
+        <section id="step9" class="step">
+          <div class="step-icon">💌</div>
+          <h2 class="step-title">قرارمون نهایی شد</h2>
+          <p class="step-desc">
+            خوشحالم که قبولش کردی. این هم خلاصه قرار قشنگمون:
+          </p>
+
+          <div class="summary-card mt-8">
+            <div class="summary-row">
+              <span>نام:</span>
+              <strong id="summaryName">-</strong>
+            </div>
+            <div class="summary-row">
+              <span>تاریخ:</span>
+              <strong id="summaryDate">-</strong>
+            </div>
+            <div class="summary-row">
+              <span>ساعت:</span>
+              <strong id="summaryTime">-</strong>
+            </div>
+            <div class="summary-row">
+              <span>نوع قرار:</span>
+              <strong id="summaryActivity">-</strong>
+            </div>
+            <div class="summary-row align-start">
+              <span>پیشنهاد نهایی:</span>
+              <strong id="summarySuggestion">-</strong>
+            </div>
+          </div>
+
+          <div class="final-message mt-8">
+            <p id="finalMessageText">
+              خوشحال شدم که قبول کردی. همون روز می‌بینمت 🌹
+            </p>
+          </div>
+
+          <div class="mt-8 flex justify-center gap-3 flex-wrap">
+            <button id="restartBtn" class="secondary-btn">شروع دوباره</button>
+            <button id="copySummaryBtn" class="primary-btn">کپی خلاصه قرار</button>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
+
+  <!-- Scripts -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+  <script src="js/app.js"></script>
 </body>
 </html>
