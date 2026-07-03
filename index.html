@@ -23,7 +23,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
 
   <!-- Custom -->
-  <link rel="stylesheet" href="css/style.css" />
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
   <!-- Ambient Background -->
@@ -38,10 +38,9 @@
       <header class="mb-6">
         <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
           <div>
-            <p class="eyebrow">Date Invitation Experience</p>
-            <h1 class="main-title">یک سوال مهم با طراحی خاص ✨</h1>
+            <h1 class="main-title">یک سوال مهم .... ✨</h1>
           </div>
-          <div class="status-pill" id="stepLabel">مرحله 1 از 8</div>
+          <div class="status-pill" id="stepLabel">مرحله 1 از 10</div>
         </div>
 
         <div class="progress-wrap">
@@ -50,6 +49,8 @@
 
         <div class="step-dots mt-4">
           <span class="step-dot active"></span>
+          <span class="step-dot"></span>
+          <span class="step-dot"></span>
           <span class="step-dot"></span>
           <span class="step-dot"></span>
           <span class="step-dot"></span>
@@ -86,32 +87,34 @@
 
           <div class="form-grid mt-8">
             <div class="input-group">
-              <label for="firstName">اسم</label>
-              <input id="firstName" type="text" placeholder="مثلاً سارا" />
+              <label for="firstName">اسم زیبات چیه !؟</label>
+              <input id="firstName" type="text" placeholder="اسم کوچکت 😊" />
             </div>
 
             <div class="input-group">
-              <label for="lastName">فامیل</label>
-              <input id="lastName" type="text" placeholder="مثلاً احمدی" />
+              <label for="lastName">بخوام رسمی صدات بزنم چی ؟!</label>
+              <input id="lastName" type="text" placeholder="خانم ... 😒" />
             </div>
           </div>
 
           <div class="mt-6">
             <label class="block mb-3 text-sm text-slate-300">علایقت چیه؟</label>
             <div id="interestsWrap" class="chips-wrap">
-              <button type="button" class="chip" data-interest="کافه">کافه</button>
-              <button type="button" class="chip" data-interest="پیاده‌روی">پیاده‌روی</button>
-              <button type="button" class="chip" data-interest="فیلم">فیلم</button>
-              <button type="button" class="chip" data-interest="موسیقی">موسیقی</button>
-              <button type="button" class="chip" data-interest="کتاب">کتاب</button>
-              <button type="button" class="chip" data-interest="طبیعت">طبیعت</button>
-              <button type="button" class="chip" data-interest="بستنی">بستنی</button>
-              <button type="button" class="chip" data-interest="رستوران">رستوران</button>
+              <button type="button" class="chip" data-interest="کافه">کافه ☕</button>
+              <button type="button" class="chip" data-interest="پیاده‌روی">پیاده‌روی 🚶‍♂️‍➡️</button>
+              <button type="button" class="chip" data-interest="فیلم">فیلم 🎬</button>
+              <button type="button" class="chip" data-interest="موسیقی">موسیقی 🎵</button>
+              <button type="button" class="chip" data-interest="کتاب">کتاب 📚</button>
+              <button type="button" class="chip" data-interest="طبیعت">طبیعت 🌳</button>
+              <button type="button" class="chip" data-interest="بستنی">بستنی 🍦</button>
+              <button type="button" class="chip" data-interest="رستوران">رستوران 🍽️</button>
+              <button type="button" class="chip" data-interest="گیم">گیمر 🎮</button>
+              <button type="button" class="chip" data-interest="دوس ندارم بگم">دوس ندارم بگم 🙂‍↔️</button>
             </div>
           </div>
 
           <p id="profileError" class="error-text hidden mt-4">
-            لطفاً حداقل اسم و یک علاقه را وارد کن.
+           🥲 لطفاً حداقل اسم و یک علاقه را وارد کن.
           </p>
 
           <div class="mt-8 flex justify-center">
@@ -125,13 +128,14 @@
           <h2 class="step-title">قبل از سوال اصلی...</h2>
           <p class="step-desc" id="introText">
             من علیرضا هستم؛
-            طرفدار گفت‌وگوی خوب، حس خوب، و قرارهای ساده ولی به‌یادموندنی.
+           خلاقیتم را در دنیای دیجیتال خالی می‌کنم و انرژی‌ام را در دنیای واقعی
           </p>
 
           <div class="intro-card mt-8">
             <p>
-              اگر قرار باشه یه لحظه خوب ساخته بشه، معمولاً از یک گفت‌وگوی خوب،
-              یک انتخاب خوب، و یک حس واقعی شروع میشه.
+             به نظرم زندگی یک بازی بزرگ است و من دوست دارم هم طراحش باشم، هم بازیکنش.
+             <br>
+             تو هم میخوای شریک شی 😜
             </p>
           </div>
 
@@ -161,9 +165,9 @@
         <!-- Step 5 -->
         <section id="step5" class="step">
           <div class="step-icon celebrate-icon">🎉</div>
-          <h2 class="step-title">این بهترین جواب ممکن بود!</h2>
+          <h2 class="step-title">میدوسنتم درخواستم رو رد نمیکنی! 😝</h2>
           <p class="step-desc" id="celebrateText">
-            خیلی خوشحال شدم که قبول کردی. حالا بزن بریم یه قرار خوب و به‌یادموندنی براش بچینیم.
+            خیلی خوشحال شدم که قبول کردی. حالا بزن بریم یه قرار خوب و به‌یادموندنی بچینیم.
           </p>
 
           <div class="mt-8 flex justify-center">
@@ -176,7 +180,7 @@
           <div class="step-icon">📅</div>
           <h2 class="step-title">زمان قرار رو انتخاب کن</h2>
           <p class="step-desc">
-            فقط از امروز تا یک هفته آینده قابل انتخابه.
+            فقط از امروز تا یک هفته آینده قابل قبوله.
           </p>
 
           <div class="form-grid mt-8">
@@ -189,15 +193,14 @@
               <label for="timeInput">ساعت</label>
               <select id="timeInput">
                 <option value="">انتخاب ساعت</option>
-                <option value="16:00">16:00</option>
                 <option value="17:00">17:00</option>
-                <option value="17:30">17:30</option>
+
                 <option value="18:00">18:00</option>
-                <option value="18:30">18:30</option>
+
                 <option value="19:00">19:00</option>
-                <option value="19:30">19:30</option>
+
                 <option value="20:00">20:00</option>
-                <option value="20:30">20:30</option>
+
               </select>
             </div>
           </div>
@@ -256,6 +259,12 @@
               <h3>کتاب‌فروشی</h3>
               <p>خاص، آروم و متفاوت</p>
             </button>
+
+            <button class="activity-card" data-activity="گیم کلاب">
+              <span class="emoji">🎮</span>
+              <h3>گیم کلاب</h3>
+              <p>شاد، پر انرژی، رقابتی</p>
+            </button>
           </div>
 
           <p id="activityError" class="error-text hidden mt-4">
@@ -282,16 +291,48 @@
           </p>
 
           <div class="mt-8 flex justify-center">
-            <button id="finishBtn" class="primary-btn">تایید نهایی</button>
+            <button id="finishBtn" class="primary-btn">ادامه</button>
           </div>
         </section>
 
         <!-- Step 9 -->
         <section id="step9" class="step">
+          <div class="step-icon">📱</div>
+          <h2 class="step-title">اطلاعات ارتباطی</h2>
+          <p class="step-desc">
+            لطفاً یکی از راه‌های ارتباطی را وارد کن تا هماهنگی قرار راحت‌تر انجام شود.
+          </p>
+
+          <div class="form-grid mt-8">
+            <div class="input-group">
+              <label for="instagramInput">پیج اینستاگرام</label>
+              <input id="instagramInput" type="text" placeholder="instagram.com/username" />
+            </div>
+            <div class="input-group">
+              <label for="telegramInput">آیدی تلگرام</label>
+              <input id="telegramInput" type="text" placeholder="@telegram_id" />
+            </div>
+            <div class="input-group">
+              <label for="phoneInput">شماره تلفن</label>
+              <input id="phoneInput" type="tel" placeholder="09xx xxx xxxx" />
+            </div>
+          </div>
+
+          <p id="contactError" class="error-text hidden mt-4">
+            لطفاً حداقل یک روش ارتباطی وارد کن.
+          </p>
+
+          <div class="mt-8 flex justify-center">
+            <button id="saveContactBtn" class="primary-btn">ارسال و رفتن به خلاصه</button>
+          </div>
+        </section>
+
+        <!-- Step 10 -->
+        <section id="step10" class="step">
           <div class="step-icon">💌</div>
           <h2 class="step-title">قرارمون نهایی شد</h2>
           <p class="step-desc">
-            خوشحالم که قبولش کردی. این هم خلاصه قرار قشنگمون:
+            خوشحال شدم که قبولش کردی. این هم خلاصه قرار قشنگمون:
           </p>
 
           <div class="summary-card mt-8">
@@ -299,21 +340,21 @@
               <span>نام:</span>
               <strong id="summaryName">-</strong>
             </div>
-            <div class="summary-row">
-              <span>تاریخ:</span>
-              <strong id="summaryDate">-</strong>
-            </div>
-            <div class="summary-row">
-              <span>ساعت:</span>
-              <strong id="summaryTime">-</strong>
-            </div>
-            <div class="summary-row">
-              <span>نوع قرار:</span>
-              <strong id="summaryActivity">-</strong>
+            <div class="summary-row align-start">
+              <span>قرار انتخابی:</span>
+              <strong id="summarySuggestion">-</strong>
             </div>
             <div class="summary-row align-start">
-              <span>پیشنهاد نهایی:</span>
-              <strong id="summarySuggestion">-</strong>
+              <span>اینستاگرام:</span>
+              <strong id="summaryInstagram">-</strong>
+            </div>
+            <div class="summary-row align-start">
+              <span>تلگرام:</span>
+              <strong id="summaryTelegram">-</strong>
+            </div>
+            <div class="summary-row align-start">
+              <span>شماره تلفن:</span>
+              <strong id="summaryPhone">-</strong>
             </div>
           </div>
 
@@ -324,7 +365,6 @@
           </div>
 
           <div class="mt-8 flex justify-center gap-3 flex-wrap">
-            <button id="restartBtn" class="secondary-btn">شروع دوباره</button>
             <button id="copySummaryBtn" class="primary-btn">کپی خلاصه قرار</button>
           </div>
         </section>
@@ -336,6 +376,12 @@
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
-  <script src="js/app.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init("3rADitjzNZUmkE1RX");
+    })();
+  </script>
+  <script src="app.js"></script>
 </body>
 </html>

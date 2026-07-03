@@ -1,104 +1,125 @@
-const TOTAL_STEPS = 9;
+const TOTAL_STEPS = 10;
 
 const state = {
   currentStep: 1,
   profile: {
     firstName: "",
     lastName: "",
-    interests: []
+    interests: [],
   },
   selectedDate: "",
   selectedTime: "",
   selectedActivity: "",
   selectedSuggestion: "",
-  noAttempts: 0
+  instagram: "",
+  telegram: "",
+  phone: "",
+  noAttempts: 0,
 };
 
 const activitySuggestions = {
-  "کافه": [
+  کافه: [
     {
       title: "کافه دنج + گفت‌وگوی طولانی",
-      desc: "اول یک کافه آروم با نور ملایم، بعدش یک گفت‌وگوی راحت و بدون عجله."
+      desc: "اول یک کافه آروم با نور ملایم، بعدش یک گفت‌وگوی راحت و بدون عجله.",
     },
     {
       title: "کافه + پیاده‌روی کوتاه",
-      desc: "بعد از نوشیدنی، یک پیاده‌روی سبک و صمیمی برای ادامه حال خوب."
+      desc: "بعد از نوشیدنی، یک پیاده‌روی سبک و صمیمی برای ادامه حال خوب.",
     },
     {
       title: "کافه + دسر مشترک",
-      desc: "یک کافه خوب با یک دسر ساده که فضا را شیرین‌تر و بامزه‌تر می‌کند."
-    }
+      desc: "یک کافه خوب با یک دسر ساده که فضا را شیرین‌تر و بامزه‌تر می‌کند.",
+    },
   ],
-  "پیاده‌روی": [
+  پیاده‌روی: [
     {
       title: "پیاده‌روی عصرگاهی + نوشیدنی",
-      desc: "شروع با قدم‌زدن در یک مسیر خوب و بعدش یک نوشیدنی takeaway."
+      desc: "شروع با قدم‌زدن در یک مسیر خوب و بعدش یک نوشیدنی takeaway.",
     },
     {
       title: "پیاده‌روی + عکاسی یادگاری",
-      desc: "اگر فضا خوب بود، چند عکس ساده و قشنگ هم می‌تونه خاطره‌اش را بهتر کند."
+      desc: "اگر فضا خوب بود، چند عکس ساده و قشنگ هم می‌تونه خاطره‌اش را بهتر کند.",
     },
     {
       title: "پیاده‌روی + بستنی",
-      desc: "یک قرار سبک، بدون فشار، با پایان خوش و ساده."
-    }
+      desc: "یک قرار سبک، بدون فشار، با پایان خوش و ساده.",
+    },
   ],
-  "سینما": [
+  سینما: [
     {
       title: "سینما + کافه بعدش",
-      desc: "فیلم ببینید و بعدش درباره‌اش حرف بزنید؛ این مدل قرار معمولاً خیلی خوب جواب می‌دهد."
+      desc: "فیلم ببینید و بعدش درباره‌اش حرف بزنید؛ این مدل قرار معمولاً خیلی خوب جواب می‌دهد.",
     },
     {
       title: "فیلم سبک + گفت‌وگوی کوتاه",
-      desc: "یک فیلم خوب با فضای راحت، بدون اینکه قرار زیادی رسمی یا خشک شود."
+      desc: "یک فیلم خوب با فضای راحت، بدون اینکه قرار زیادی رسمی یا خشک شود.",
     },
     {
       title: "سینما + قدم‌زدن کوتاه",
-      desc: "بعد از فیلم، کمی قدم‌زدن باعث می‌شود ارتباط بهتر و طبیعی‌تر شود."
-    }
+      desc: "بعد از فیلم، کمی قدم‌زدن باعث می‌شود ارتباط بهتر و طبیعی‌تر شود.",
+    },
   ],
-  "رستوران": [
+  رستوران: [
     {
       title: "شام سبک + دسر",
-      desc: "یک فضای کلاسیک، مرتب و کمی رسمی‌تر برای یک قرار جدی‌تر."
+      desc: "یک فضای کلاسیک، مرتب و کمی رسمی‌تر برای یک قرار جدی‌تر.",
     },
     {
       title: "رستوران دنج + گفت‌وگوی طولانی",
-      desc: "اگر هدفت شناخت بیشتر و فضای عمیق‌تر است، این انتخاب خیلی خوب است."
+      desc: "اگر هدفت شناخت بیشتر و فضای عمیق‌تر است، این انتخاب خیلی خوب است.",
     },
     {
       title: "رستوران + قدم‌زدن بعدش",
-      desc: "بعد از غذا، یک پیاده‌روی کوتاه قرار را از حالت خشک خارج می‌کند."
-    }
+      desc: "بعد از غذا، یک پیاده‌روی کوتاه قرار را از حالت خشک خارج می‌کند.",
+    },
   ],
-  "بستنی": [
+  بستنی: [
     {
       title: "بستنی + قدم‌زدن سبک",
-      desc: "قرار شاد، ساده و کم‌فشار که حس خوبی می‌سازد."
+      desc: "قرار شاد، ساده و کم‌فشار که حس خوبی می‌سازد.",
     },
     {
       title: "بستنی + نشستن در فضای باز",
-      desc: "اگر هوا خوب باشد، انتخابی جمع‌وجور ولی جذاب است."
+      desc: "اگر هوا خوب باشد، انتخابی جمع‌وجور ولی جذاب است.",
     },
     {
       title: "بستنی + گشت شهری",
-      desc: "برای فضای غیررسمی و راحت، این مدل خیلی طبیعی و خوب است."
-    }
+      desc: "برای فضای غیررسمی و راحت، این مدل خیلی طبیعی و خوب است.",
+    },
   ],
-  "کتاب‌فروشی": [
+  کتاب‌فروشی: [
     {
       title: "کتاب‌فروشی + کافه",
-      desc: "اول کتاب‌فروشی، بعد یک کافه آرام؛ ترکیب خاص، متفاوت و باکلاس."
+      desc: "اول کتاب‌فروشی، بعد یک کافه آرام؛ ترکیب خاص، متفاوت و باکلاس.",
     },
     {
       title: "کتاب‌گردی + گفت‌وگوی عمیق",
-      desc: "اگر اهل حرف‌های عمیق و سلیقه مشترک باشید، این انتخاب خیلی قشنگ می‌شود."
+      desc: "اگر اهل حرف‌های عمیق و سلیقه مشترک باشید، این انتخاب خیلی قشنگ می‌شود.",
     },
     {
       title: "کتاب + قدم‌زدن",
-      desc: "یک قرار آروم، کم‌هیاهو و متفاوت از کلیشه‌های معمول."
-    }
-  ]
+      desc: "یک قرار آروم، کم‌هیاهو و متفاوت از کلیشه‌های معمول.",
+    },
+  ],
+  گیم‌کلاب: [
+    {
+      title: "گیم کلاب تنافسی",
+      desc: "یک گیم کلاب آرام با بازی‌های سرگرم‌کننده و رقابت دوستانه.",
+    },
+    {
+      title: "گیم + کافه",
+      desc: "بازی کردن، قهوه خوردن و فضایی راحت برای گفت‌وگو.",
+    },
+    {
+      title: "گیم + اسنک‌ها و نوشیدنی",
+      desc: "یک قرار شاد و سرگرم‌کننده با غذا و نوشیدنی خوب.",
+    },
+    {
+      title: "گیم کلاب VIP با چالش‌های دونفره",
+      desc: "یک تجربه خاص با اتاق اختصاصی، مسابقه هیجان‌انگیز و لحظه‌هایی که هم بازی و هم شریک قرار، حسابی لبخند بزنند.",
+    },
+  ],
 };
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -109,6 +130,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bindScheduleStep();
   bindActivityStep();
   bindSuggestionStep();
+  bindContactStep();
   bindFinalStep();
   initDatePicker();
   updateProgress();
@@ -137,6 +159,20 @@ function goToStep(stepNumber) {
   }
 }
 
+function sendViaEmailJS(data) {
+  console.log("EmailJS payload:", data);
+
+  return emailjs
+    .send("service_9bk9nyb", "template_jn3mrcu", data, "3rADitjzNZUmkE1RX")
+    .then(function (response) {
+      console.log("EmailJS SUCCESS!", response.status, response.text);
+    })
+    .catch(function (error) {
+      console.error("EmailJS FAILED...", error);
+      throw error;
+    });
+}
+
 function updateProgress() {
   const progress = ((state.currentStep - 1) / (TOTAL_STEPS - 1)) * 100;
   const progressBar = document.getElementById("progressBar");
@@ -162,7 +198,9 @@ function bindProfileStep() {
       const interest = chip.dataset.interest;
 
       if (state.profile.interests.includes(interest)) {
-        state.profile.interests = state.profile.interests.filter((i) => i !== interest);
+        state.profile.interests = state.profile.interests.filter(
+          (i) => i !== interest,
+        );
       } else {
         state.profile.interests.push(interest);
       }
@@ -189,7 +227,8 @@ function bindProfileStep() {
 }
 
 function personalizeTexts() {
-  const fullName = `${state.profile.firstName} ${state.profile.lastName}`.trim();
+  const fullName =
+    `${state.profile.firstName} ${state.profile.lastName}`.trim();
   const firstName = state.profile.firstName || "تو";
 
   document.getElementById("introText").innerHTML = `
@@ -198,7 +237,8 @@ function personalizeTexts() {
     من علیرضا هستم؛ طرفدار گفت‌وگوی خوب، حس خوب، و قرارهای ساده ولی به‌یادموندنی.
   `;
 
-  document.getElementById("questionTitle").textContent = `${firstName}، با من میای بریم دیت؟ 💖`;
+  document.getElementById("questionTitle").textContent =
+    `${firstName}، با من میای بریم دیت؟ 💖`;
 
   document.getElementById("celebrateText").textContent =
     `${firstName}، واقعاً خوشحالم که قبول کردی. حالا بریم بهترین حالت این قرار رو باهم بچینیم.`;
@@ -240,10 +280,14 @@ function bindQuestionStep() {
   };
 
   noBtn.addEventListener("mouseenter", moveNoButton);
-  noBtn.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    moveNoButton();
-  }, { passive: false });
+  noBtn.addEventListener(
+    "touchstart",
+    (e) => {
+      e.preventDefault();
+      moveNoButton();
+    },
+    { passive: false },
+  );
 
   noBtn.addEventListener("click", (e) => {
     e.preventDefault();
@@ -265,7 +309,7 @@ function initDatePicker() {
       const value = document.getElementById("dateInput").value;
       state.selectedDate = value;
       updateSchedulePreview();
-    }
+    },
   });
 
   document.getElementById("timeInput").addEventListener("change", (e) => {
@@ -331,6 +375,53 @@ function bindActivityStep() {
   });
 }
 
+function bindContactStep() {
+  const saveContactBtn = document.getElementById("saveContactBtn");
+  const contactError = document.getElementById("contactError");
+
+  saveContactBtn.addEventListener("click", () => {
+    const instagram = document.getElementById("instagramInput").value.trim();
+    const telegram = document.getElementById("telegramInput").value.trim();
+    const phone = document.getElementById("phoneInput").value.trim();
+
+    if (!instagram && !telegram && !phone) {
+      contactError.textContent = "لطفاً حداقل یک راه ارتباطی وارد کن.";
+      contactError.classList.remove("hidden");
+      return;
+    }
+
+    contactError.classList.add("hidden");
+    state.instagram = instagram;
+    state.telegram = telegram;
+    state.phone = phone;
+
+    const payload = {
+      first_name: state.profile.firstName || "ناشناس",
+      last_name: state.profile.lastName || "",
+      interests: state.profile.interests.join(", ") || "",
+      date: state.selectedDate || "ثبت نشده",
+      time: state.selectedTime || "ثبت نشده",
+      activity: state.selectedActivity || "",
+      suggestion: state.selectedSuggestion || "",
+      instagram: state.instagram || "",
+      telegram: state.telegram || "",
+      phone: state.phone || "",
+      final_answer: "accepted",
+    };
+
+    sendViaEmailJS(payload)
+      .then(() => {
+        fillSummary();
+        goToStep(10);
+      })
+      .catch(() => {
+        alert("مشکلی در ارسال ایمیل رخ داد. لطفاً بعداً دوباره امتحان کن.");
+        fillSummary();
+        goToStep(10);
+      });
+  });
+}
+
 function renderSuggestions() {
   const wrap = document.getElementById("suggestionsWrap");
   wrap.innerHTML = "";
@@ -383,16 +474,29 @@ function buildSmartSuggestions() {
     }
 
     if (interests.includes("کتاب") && state.selectedActivity === "کافه") {
-      smartDesc += " برای آدم‌های اهل کتاب، کافه‌های آرام معمولاً انتخاب خیلی خوبی هستند.";
+      smartDesc +=
+        " برای آدم‌های اهل کتاب، کافه‌های آرام معمولاً انتخاب خیلی خوبی هستند.";
     }
 
-    if (state.selectedTime && ["19:00", "19:30", "20:00", "20:30"].includes(state.selectedTime)) {
-      smartDesc += " چون ساعت انتخابی عصر به شب نزدیکه، نور و فضای قرار هم رمانتیک‌تر میشه.";
+    if (interests.includes("گیم")) {
+      smartDesc += " اگر علاقه‌ای به بازی‌های سرگرم‌کننده داری، این قرار یقیناً خوب جواب می‌دهد.";
+    }
+
+    if (interests.includes("دوس ندارم بگم")) {
+      smartDesc += " بدون نیاز به توضیح، این انتخاب نشون‌دهنده سلیقه و رمز‌آلودگی‌ات است.";
+    }
+
+    if (
+      state.selectedTime &&
+      ["19:00", "19:30", "20:00", "20:30"].includes(state.selectedTime)
+    ) {
+      smartDesc +=
+        " چون ساعت انتخابی عصر به شب نزدیکه، نور و فضای قرار هم رمانتیک‌تر میشه.";
     }
 
     return {
       title: item.title,
-      desc: smartDesc
+      desc: smartDesc,
     };
   });
 }
@@ -414,33 +518,34 @@ function bindSuggestionStep() {
 }
 
 function fillSummary() {
-  const fullName = `${state.profile.firstName} ${state.profile.lastName}`.trim();
+  const fullName =
+    `${state.profile.firstName} ${state.profile.lastName}`.trim();
 
-  document.getElementById("summaryName").textContent = fullName || state.profile.firstName;
-  document.getElementById("summaryDate").textContent = state.selectedDate;
-  document.getElementById("summaryTime").textContent = state.selectedTime;
-  document.getElementById("summaryActivity").textContent = state.selectedActivity;
-  document.getElementById("summarySuggestion").textContent = state.selectedSuggestion;
+  document.getElementById("summaryName").textContent =
+    fullName || state.profile.firstName;
+
+  // استخراج تنها عنوان از پیشنهاد (قبل از " - ")
+  const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
+  document.getElementById("summarySuggestion").textContent = suggestionTitle;
+  document.getElementById("summaryInstagram").textContent =
+    state.instagram || "-";
+  document.getElementById("summaryTelegram").textContent =
+    state.telegram || "-";
+  document.getElementById("summaryPhone").textContent =
+    state.phone || "-";
 
   document.getElementById("finalMessageText").textContent =
     `${state.profile.firstName}، خوشحال شدم که این قرار رو قبول کردی. پس ${state.selectedDate} ساعت ${state.selectedTime} می‌بینمت 🌹`;
 }
 
 function bindFinalStep() {
-  const restartBtn = document.getElementById("restartBtn");
   const copySummaryBtn = document.getElementById("copySummaryBtn");
 
-  restartBtn.addEventListener("click", () => {
-    resetApp();
-  });
-
   copySummaryBtn.addEventListener("click", async () => {
+    const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
     const text = `
 نام: ${`${state.profile.firstName} ${state.profile.lastName}`.trim()}
-تاریخ: ${state.selectedDate}
-ساعت: ${state.selectedTime}
-نوع قرار: ${state.selectedActivity}
-پیشنهاد نهایی: ${state.selectedSuggestion}
+پیشنهاد قرار: ${suggestionTitle}
     `.trim();
 
     try {
@@ -455,81 +560,85 @@ function bindFinalStep() {
   });
 }
 function setupNoButton() {
-    const noBtn = document.getElementById('noBtn');
-    const yesBtn = document.getElementById('yesBtn');
-    const card = noBtn.closest('.card');
-    let attempts = 0;
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const card = noBtn.closest(".card");
+  let attempts = 0;
 
-    function escape() {
-        attempts++;
+  function escape() {
+    attempts++;
 
-        if (attempts >= 2) {
-            document.getElementById('noHint').classList.remove('hidden');
-        }
-
-        const cardRect = card.getBoundingClientRect();
-        const noRect = noBtn.getBoundingClientRect();
-        const yesRect = yesBtn.getBoundingClientRect();
-
-        const isMobile = window.innerWidth < 640;
-
-        let x = 0;
-        let y = 0;
-        let safe = false;
-        let maxTries = 20;
-
-        while (!safe && maxTries > 0) {
-            maxTries--;
-
-            if (isMobile) {
-                // موبایل: فرار بیشتر عمودی/کناری
-                x = (Math.random() - 0.5) * 120;
-                y = (Math.random() - 0.5) * 220;
-            } else {
-                // دسکتاپ: فرار آزادتر
-                x = (Math.random() - 0.5) * 200;
-                y = (Math.random() - 0.5) * 120;
-            }
-
-            const futureLeft = noRect.left + x;
-            const futureTop = noRect.top + y;
-            const futureRight = futureLeft + noRect.width;
-            const futureBottom = futureTop + noRect.height;
-
-            const overlap =
-                futureRight > yesRect.left &&
-                futureLeft < yesRect.right &&
-                futureBottom > yesRect.top &&
-                futureTop < yesRect.bottom;
-
-            const insideCard =
-                futureLeft >= cardRect.left + 10 &&
-                futureTop >= cardRect.top + 10 &&
-                futureRight <= cardRect.right - 10 &&
-                futureBottom <= cardRect.bottom - 10;
-
-            if (!overlap && insideCard) {
-                safe = true;
-            }
-        }
-
-        noBtn.style.position = 'relative';
-        noBtn.style.zIndex = '5';
-        noBtn.style.transform = `translate(${x}px, ${y}px)`;
+    if (attempts >= 2) {
+      document.getElementById("noHint").classList.remove("hidden");
     }
 
-    noBtn.addEventListener('mouseenter', escape);
-    noBtn.addEventListener('touchstart', (e) => {
-        e.preventDefault();
-        escape();
-    }, { passive: false });
+    const cardRect = card.getBoundingClientRect();
+    const noRect = noBtn.getBoundingClientRect();
+    const yesRect = yesBtn.getBoundingClientRect();
+
+    const isMobile = window.innerWidth < 640;
+
+    let x = 0;
+    let y = 0;
+    let safe = false;
+    let maxTries = 20;
+
+    while (!safe && maxTries > 0) {
+      maxTries--;
+
+      if (isMobile) {
+        // موبایل: فرار بیشتر عمودی/کناری
+        x = (Math.random() - 0.5) * 120;
+        y = (Math.random() - 0.5) * 220;
+      } else {
+        // دسکتاپ: فرار آزادتر
+        x = (Math.random() - 0.5) * 200;
+        y = (Math.random() - 0.5) * 120;
+      }
+
+      const futureLeft = noRect.left + x;
+      const futureTop = noRect.top + y;
+      const futureRight = futureLeft + noRect.width;
+      const futureBottom = futureTop + noRect.height;
+
+      const overlap =
+        futureRight > yesRect.left &&
+        futureLeft < yesRect.right &&
+        futureBottom > yesRect.top &&
+        futureTop < yesRect.bottom;
+
+      const insideCard =
+        futureLeft >= cardRect.left + 10 &&
+        futureTop >= cardRect.top + 10 &&
+        futureRight <= cardRect.right - 10 &&
+        futureBottom <= cardRect.bottom - 10;
+
+      if (!overlap && insideCard) {
+        safe = true;
+      }
+    }
+
+    noBtn.style.position = "relative";
+    noBtn.style.zIndex = "5";
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+  }
+
+  noBtn.addEventListener("mouseenter", escape);
+  noBtn.addEventListener(
+    "touchstart",
+    (e) => {
+      e.preventDefault();
+      escape();
+    },
+    { passive: false },
+  );
 }
 function resetApp() {
   state.currentStep = 1;
   state.profile = {
     firstName: "",
     lastName: "",
-    interests: []
+    interests: [],
   };
   state.selectedDate = "";
   state.selectedTime = "";
@@ -542,9 +651,15 @@ function resetApp() {
   document.getElementById("dateInput").value = "";
   document.getElementById("timeInput").value = "";
 
-  document.querySelectorAll(".chip").forEach((chip) => chip.classList.remove("selected"));
-  document.querySelectorAll(".activity-card").forEach((card) => card.classList.remove("selected"));
-  document.querySelectorAll(".suggestion-card").forEach((card) => card.classList.remove("selected"));
+  document
+    .querySelectorAll(".chip")
+    .forEach((chip) => chip.classList.remove("selected"));
+  document
+    .querySelectorAll(".activity-card")
+    .forEach((card) => card.classList.remove("selected"));
+  document
+    .querySelectorAll(".suggestion-card")
+    .forEach((card) => card.classList.remove("selected"));
 
   document.getElementById("profileError").classList.add("hidden");
   document.getElementById("scheduleError").classList.add("hidden");
