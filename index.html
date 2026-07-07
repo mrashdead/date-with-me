@@ -1,387 +1,458 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="fa" dir="rtl">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>دعوت به دیت 💖</title>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>دعوت به دیت 💖</title>
 
-  <!-- Font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap"
-    rel="stylesheet"
-  />
+    <!-- Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
 
-  <!-- Persian Datepicker -->
-  <link
-    rel="stylesheet"
-    href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css"
-  />
+    <!-- Persian Datepicker -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/css/persian-datepicker.min.css"
+    />
 
-  <!-- Tailwind -->
-  <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Tailwind -->
+    <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Custom -->
-  <link rel="stylesheet" href="style.css" />
-</head>
-<body>
-  <!-- Ambient Background -->
-  <div class="bg-blur bg-blur-1"></div>
-  <div class="bg-blur bg-blur-2"></div>
-  <div class="bg-blur bg-blur-3"></div>
-  <div id="hearts-bg" aria-hidden="true"></div>
+    <!-- Custom -->
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <!-- Ambient Background -->
+    <div class="bg-blur bg-blur-1"></div>
+    <div class="bg-blur bg-blur-2"></div>
+    <div class="bg-blur bg-blur-3"></div>
+    <div id="hearts-bg" aria-hidden="true"></div>
 
-  <main class="app-shell">
-    <section class="romance-card">
-      <!-- Header -->
-      <header class="mb-6">
-        <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
-          <div>
-            <h1 class="main-title">یک سوال مهم .... ✨</h1>
-          </div>
-          <div class="status-pill" id="stepLabel">مرحله 1 از 10</div>
-        </div>
-
-        <div class="progress-wrap">
-          <div id="progressBar" class="progress-bar"></div>
-        </div>
-
-        <div class="step-dots mt-4">
-          <span class="step-dot active"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-          <span class="step-dot"></span>
-        </div>
-      </header>
-
-      <!-- Steps Container -->
-      <div class="steps-container">
-        <!-- Step 1 -->
-        <section id="step1" class="step active">
-          <div class="step-icon">🌷</div>
-          <h2 class="step-title">سلام خوش‌اومدی</h2>
-          <p class="step-desc">
-            قبل از اینکه یه سوال مهم ازت بپرسم، دوست دارم یه کوچولو بیشتر
-            باهات آشنا بشم.
-          </p>
-
-          <div class="mt-8 flex justify-center">
-            <button class="primary-btn" data-next="2">شروع کنیم</button>
-          </div>
-        </section>
-
-        <!-- Step 2 -->
-        <section id="step2" class="step">
-          <div class="step-icon">💫</div>
-          <h2 class="step-title">یه آشنایی اولیه</h2>
-          <p class="step-desc">
-            فقط چند تا چیز کوچیک بگو تا این تجربه برای تو شخصی‌تر و قشنگ‌تر بشه.
-          </p>
-
-          <div class="form-grid mt-8">
-            <div class="input-group">
-              <label for="firstName">اسم زیبات چیه !؟</label>
-              <input id="firstName" type="text" placeholder="اسم کوچکت 😊" />
+    <main class="app-shell">
+      <section class="romance-card">
+        <!-- Header -->
+        <header class="mb-6">
+          <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
+            <div>
+              <h1 class="main-title">یک سوال مهم .... ✨</h1>
             </div>
-
-            <div class="input-group">
-              <label for="lastName">بخوام رسمی صدات بزنم چی ؟!</label>
-              <input id="lastName" type="text" placeholder="خانم ... 😒" />
-            </div>
+            <div class="status-pill" id="stepLabel">مرحله 1 از 10</div>
           </div>
 
-          <div class="mt-6">
-            <label class="block mb-3 text-sm text-slate-300">علایقت چیه؟</label>
-            <div id="interestsWrap" class="chips-wrap">
-              <button type="button" class="chip" data-interest="کافه">کافه ☕</button>
-              <button type="button" class="chip" data-interest="پیاده‌روی">پیاده‌روی 🚶‍♂️‍➡️</button>
-              <button type="button" class="chip" data-interest="فیلم">فیلم 🎬</button>
-              <button type="button" class="chip" data-interest="موسیقی">موسیقی 🎵</button>
-              <button type="button" class="chip" data-interest="کتاب">کتاب 📚</button>
-              <button type="button" class="chip" data-interest="طبیعت">طبیعت 🌳</button>
-              <button type="button" class="chip" data-interest="بستنی">بستنی 🍦</button>
-              <button type="button" class="chip" data-interest="رستوران">رستوران 🍽️</button>
-              <button type="button" class="chip" data-interest="گیم">گیمر 🎮</button>
-              <button type="button" class="chip" data-interest="دوس ندارم بگم">دوس ندارم بگم 🙂‍↔️</button>
-            </div>
+          <div class="progress-wrap">
+            <div id="progressBar" class="progress-bar"></div>
           </div>
 
-          <p id="profileError" class="error-text hidden mt-4">
-           🥲 لطفاً حداقل اسم و یک علاقه را وارد کن.
-          </p>
-
-          <div class="mt-8 flex justify-center">
-            <button id="saveProfileBtn" class="primary-btn">ادامه</button>
+          <div class="step-dots mt-4">
+            <span class="step-dot active"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
           </div>
-        </section>
+        </header>
 
-        <!-- Step 3 -->
-        <section id="step3" class="step">
-          <div class="step-icon">🫶</div>
-          <h2 class="step-title">قبل از سوال اصلی...</h2>
-          <p class="step-desc" id="introText">
-            من علیرضا هستم؛
-           خلاقیتم را در دنیای دیجیتال خالی می‌کنم و انرژی‌ام را در دنیای واقعی
-          </p>
-
-          <div class="intro-card mt-8">
-            <p>
-             به نظرم زندگی یک بازی بزرگ است و من دوست دارم هم طراحش باشم، هم بازیکنش.
-             <br>
-             تو هم میخوای شریک شی 😜
+        <!-- Steps Container -->
+        <div class="steps-container">
+          <!-- Step 1 -->
+          <section id="step1" class="step active">
+            <div class="step-icon">🌷</div>
+            <h2 class="step-title">سلام خوش اومدی عزیز،</h2>
+            <p class="step-desc">
+              بذار اول یه کم از حال‌وهوای هم سر دربیاریم بعد بریم سر اصل مطلب
             </p>
-          </div>
 
-          <div class="mt-8 flex justify-center">
-            <button class="primary-btn" data-next="4">خب، سوال مهم رو بپرس</button>
-          </div>
-        </section>
-
-        <!-- Step 4 -->
-        <section id="step4" class="step question-step">
-          <div class="step-icon">💖</div>
-          <h2 class="step-title" id="questionTitle">با من میای بریم دیت؟</h2>
-          <p class="step-desc">
-            خیلی محترمانه، خیلی جدی، و البته با مقدار کمی اصرار بامزه 😌
-          </p>
-
-          <div class="question-actions mt-10" id="questionArea">
-            <button id="yesBtn" class="primary-btn big-btn">بله 💘</button>
-            <button id="noBtn" class="secondary-btn big-btn">خیر 😶</button>
-          </div>
-
-          <p id="noHint" class="hint-text hidden mt-6">
-            به نظرم universe با گزینه «بله» موافق‌تره ✨
-          </p>
-        </section>
-
-        <!-- Step 5 -->
-        <section id="step5" class="step">
-          <div class="step-icon celebrate-icon">🎉</div>
-          <h2 class="step-title">میدوسنتم درخواستم رو رد نمیکنی! 😝</h2>
-          <p class="step-desc" id="celebrateText">
-            خیلی خوشحال شدم که قبول کردی. حالا بزن بریم یه قرار خوب و به‌یادموندنی بچینیم.
-          </p>
-
-          <div class="mt-8 flex justify-center">
-            <button class="primary-btn" data-next="6">بزن بریم</button>
-          </div>
-        </section>
-
-        <!-- Step 6 -->
-        <section id="step6" class="step">
-          <div class="step-icon">📅</div>
-          <h2 class="step-title">زمان قرار رو انتخاب کن</h2>
-          <p class="step-desc">
-            فقط از امروز تا یک هفته آینده قابل قبوله.
-          </p>
-
-          <div class="form-grid mt-8">
-            <div class="input-group">
-              <label for="dateInput">تاریخ</label>
-              <input id="dateInput" type="text" readonly placeholder="تاریخ را انتخاب کن" />
+            <div class="mt-8 flex justify-center">
+              <button class="primary-btn" data-next="2">شروع کنیم</button>
             </div>
+          </section>
 
-            <div class="input-group">
-              <label for="timeInput">ساعت</label>
-              <select id="timeInput">
-                <option value="">انتخاب ساعت</option>
-                <option value="17:00">17:00</option>
-
-                <option value="18:00">18:00</option>
-
-                <option value="19:00">19:00</option>
-
-                <option value="20:00">20:00</option>
-
-              </select>
-            </div>
-          </div>
-
-          <p id="schedulePreview" class="soft-note hidden mt-5"></p>
-          <p id="scheduleError" class="error-text hidden mt-4">
-            لطفاً هم تاریخ و هم ساعت را انتخاب کن.
-          </p>
-
-          <div class="mt-8 flex justify-center">
-            <button id="saveScheduleBtn" class="primary-btn">ادامه</button>
-          </div>
-        </section>
-
-        <!-- Step 7 -->
-        <section id="step7" class="step">
-          <div class="step-icon">🎈</div>
-          <h2 class="step-title">دوست داری قراره‌مون چه حال‌وهوایی داشته باشه؟</h2>
-          <p class="step-desc">
-            یکی را انتخاب کن تا بر اساسش پیشنهادهای بهتر بدهم.
-          </p>
-
-          <div id="activitiesWrap" class="cards-grid mt-8">
-            <button class="activity-card" data-activity="کافه">
-              <span class="emoji">☕</span>
-              <h3>کافه</h3>
-              <p>آروم، گرم، مناسب گفت‌وگو</p>
-            </button>
-
-            <button class="activity-card" data-activity="پیاده‌روی">
-              <span class="emoji">🚶</span>
-              <h3>پیاده‌روی</h3>
-              <p>سبک، راحت، صمیمی</p>
-            </button>
-
-            <button class="activity-card" data-activity="سینما">
-              <span class="emoji">🎬</span>
-              <h3>سینما</h3>
-              <p>سرگرم‌کننده و متفاوت</p>
-            </button>
-
-            <button class="activity-card" data-activity="رستوران">
-              <span class="emoji">🍽️</span>
-              <h3>رستوران</h3>
-              <p>کلاسیک و رسمی‌تر</p>
-            </button>
-
-            <button class="activity-card" data-activity="بستنی">
-              <span class="emoji">🍦</span>
-              <h3>بستنی</h3>
-              <p>سبک، خوشحال و بامزه</p>
-            </button>
-
-            <button class="activity-card" data-activity="کتاب‌فروشی">
-              <span class="emoji">📚</span>
-              <h3>کتاب‌فروشی</h3>
-              <p>خاص، آروم و متفاوت</p>
-            </button>
-
-            <button class="activity-card" data-activity="گیم کلاب">
-              <span class="emoji">🎮</span>
-              <h3>گیم کلاب</h3>
-              <p>شاد، پر انرژی، رقابتی</p>
-            </button>
-          </div>
-
-          <p id="activityError" class="error-text hidden mt-4">
-            لطفاً یک گزینه را انتخاب کن.
-          </p>
-
-          <div class="mt-8 flex justify-center">
-            <button id="saveActivityBtn" class="primary-btn">پیشنهادها رو ببین</button>
-          </div>
-        </section>
-
-        <!-- Step 8 -->
-        <section id="step8" class="step">
-          <div class="step-icon">✨</div>
-          <h2 class="step-title">پیشنهادهای من برای این قرار</h2>
-          <p class="step-desc">
-            با توجه به علایقت و انتخابی که داشتی، این‌ها می‌تونن عالی باشن.
-          </p>
-
-          <div id="suggestionsWrap" class="suggestions-list mt-8"></div>
-
-          <p id="suggestionError" class="error-text hidden mt-4">
-            لطفاً یکی از پیشنهادها را انتخاب کن.
-          </p>
-
-          <div class="mt-8 flex justify-center">
-            <button id="finishBtn" class="primary-btn">ادامه</button>
-          </div>
-        </section>
-
-        <!-- Step 9 -->
-        <section id="step9" class="step">
-          <div class="step-icon">📱</div>
-          <h2 class="step-title">اطلاعات ارتباطی</h2>
-          <p class="step-desc">
-            لطفاً یکی از راه‌های ارتباطی را وارد کن تا هماهنگی قرار راحت‌تر انجام شود.
-          </p>
-
-          <div class="form-grid mt-8">
-            <div class="input-group">
-              <label for="instagramInput">پیج اینستاگرام</label>
-              <input id="instagramInput" type="text" placeholder="instagram.com/username" />
-            </div>
-            <div class="input-group">
-              <label for="telegramInput">آیدی تلگرام</label>
-              <input id="telegramInput" type="text" placeholder="@telegram_id" />
-            </div>
-            <div class="input-group">
-              <label for="phoneInput">شماره تلفن</label>
-              <input id="phoneInput" type="tel" placeholder="09xx xxx xxxx" />
-            </div>
-          </div>
-
-          <p id="contactError" class="error-text hidden mt-4">
-            لطفاً حداقل یک روش ارتباطی وارد کن.
-          </p>
-
-          <div class="mt-8 flex justify-center">
-            <button id="saveContactBtn" class="primary-btn">ارسال و رفتن به خلاصه</button>
-          </div>
-        </section>
-
-        <!-- Step 10 -->
-        <section id="step10" class="step">
-          <div class="step-icon">💌</div>
-          <h2 class="step-title">قرارمون نهایی شد</h2>
-          <p class="step-desc">
-            خوشحال شدم که قبولش کردی. این هم خلاصه قرار قشنگمون:
-          </p>
-
-          <div class="summary-card mt-8">
-            <div class="summary-row">
-              <span>نام:</span>
-              <strong id="summaryName">-</strong>
-            </div>
-            <div class="summary-row align-start">
-              <span>قرار انتخابی:</span>
-              <strong id="summarySuggestion">-</strong>
-            </div>
-            <div class="summary-row align-start">
-              <span>اینستاگرام:</span>
-              <strong id="summaryInstagram">-</strong>
-            </div>
-            <div class="summary-row align-start">
-              <span>تلگرام:</span>
-              <strong id="summaryTelegram">-</strong>
-            </div>
-            <div class="summary-row align-start">
-              <span>شماره تلفن:</span>
-              <strong id="summaryPhone">-</strong>
-            </div>
-          </div>
-
-          <div class="final-message mt-8">
-            <p id="finalMessageText">
-              خوشحال شدم که قبول کردی. همون روز می‌بینمت 🌹
+          <!-- Step 2: نام و نشان -->
+          <section id="step2" class="step">
+            <div class="step-icon">💫</div>
+            <h2 class="step-title">بذار اول با اسمت آشنا شم</h2>
+            <p class="step-desc">
+              خیلی خوشحالم که اینجایی. برای شروع، اسم قشنگت رو بگو تا بدونم با
+              کی دارم وقت می‌گذرونم.
             </p>
-          </div>
 
-          <div class="mt-8 flex justify-center gap-3 flex-wrap">
-            <button id="copySummaryBtn" class="primary-btn">کپی خلاصه قرار</button>
-          </div>
-        </section>
-      </div>
-    </section>
-  </main>
+            <div class="form-grid mt-8">
+              <div class="input-group">
+                <label for="firstName">اسم قشنگت؟</label>
+                <input id="firstName" type="text" placeholder="اسم کوچکت 😊" />
+              </div>
 
-  <!-- Scripts -->
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
-  <script>
-    (function () {
-      emailjs.init("3rADitjzNZUmkE1RX");
-    })();
-  </script>
-  <script src="app.js"></script>
-</body>
+              <div class="input-group">
+                <label for="lastName">اگه بخوام رسمی صدات بزنم، چی بگم؟</label>
+                <input id="lastName" type="text" placeholder="خانم ..." />
+              </div>
+            </div>
+
+            <p id="nameError" class="error-text hidden mt-4">
+              🥲 اسم کوچکت رو نگفتی!
+            </p>
+
+            <div class="mt-8 flex justify-center">
+              <button id="saveNameBtn" class="primary-btn">
+                ادامه
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 3: سلیقه و علاقه‌ها -->
+          <section id="step3" class="step">
+            <div class="step-icon">🎨</div>
+            <h2 class="step-title">سلیقه‌ت چیه؟</h2>
+            <p class="step-desc">
+             یه کم از سلیقه‌ت بگو تا بهتر بشناسمت...
+            </p>
+
+            <div class="mt-8">
+              <label class="block mb-3 text-sm text-slate-300"
+                >چیزایی که دوست داری رو انتخاب کن:</label
+              >
+              <div id="interestsWrap" class="chips-wrap">
+                <button type="button" class="chip" data-interest="کافه">
+                  کافه ☕
+                </button>
+                <button type="button" class="chip" data-interest="پیاده‌روی">
+                  پیاده‌روی 🚶‍♂️‍➡️
+                </button>
+                <button type="button" class="chip" data-interest="فیلم">
+                  فیلم 🎬
+                </button>
+                <button type="button" class="chip" data-interest="موسیقی">
+                  موسیقی 🎵
+                </button>
+                <button type="button" class="chip" data-interest="کتاب">
+                  کتاب 📚
+                </button>
+                <button type="button" class="chip" data-interest="طبیعت">
+                  طبیعت 🌳
+                </button>
+                <button type="button" class="chip" data-interest="بستنی">
+                  بستنی 🍦
+                </button>
+                <button type="button" class="chip" data-interest="رستوران">
+                  رستوران 🍽️
+                </button>
+                <button type="button" class="chip" data-interest="گیم">
+                  گیمر 🎮
+                </button>
+                <button
+                  type="button"
+                  class="chip"
+                  data-interest="دوس ندارم بگم"
+                >
+                  ترجیح می‌دم نگم 🙂‍↔️
+                </button>
+              </div>
+            </div>
+
+            <p id="interestError" class="error-text hidden mt-4">
+              🥲 حداقل یه مورد رو انتخاب کن
+            </p>
+
+            <div class="mt-8 flex justify-center">
+              <button id="saveInterestsBtn" class="primary-btn">
+                ادامه
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 4 -->
+          <section id="step4" class="step">
+            <div class="step-icon">🫶</div>
+            <h2 class="step-title">قبل از سوال اصلی...</h2>
+            <p class="step-desc" id="introText">
+              من علیرضام،
+از اون مدل آدما که یه قهوه و یه گفت‌وگوی خوب براشون از خیلی چیزا جذاب‌تره.
+            </p>
+
+            <div class="intro-card mt-8">
+              <p>
+                به نظرم زندگی یک بازی بزرگ است و من دوست دارم هم طراحش باشم، هم
+                بازیکنش.
+                <br />
+                تو هم میخوای شریک شی 😜
+              </p>
+            </div>
+
+            <div class="mt-8 flex justify-center">
+              <button class="primary-btn" data-next="5">
+                خب، سوال مهم رو بپرس
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 5 -->
+          <section id="step5" class="step question-step">
+            <div class="step-icon">💖</div>
+            <h2 class="step-title" id="questionTitle">با من میای بریم دیت؟</h2>
+            <p class="step-desc">
+              خیلی محترمانه، خیلی جدی، و البته با مقدار کمی اصرار بامزه 😌
+            </p>
+
+            <div class="question-actions mt-10" id="questionArea">
+              <button id="yesBtn" class="primary-btn big-btn">بله 💘</button>
+              <button id="noBtn" class="secondary-btn big-btn">خیر 😶</button>
+            </div>
+
+            <p id="noHint" class="hint-text hidden mt-6">
+              به نظرم universe با گزینه «بله» موافق‌تره ✨
+            </p>
+          </section>
+
+          <!-- Step 6 -->
+          <section id="step6" class="step">
+            <div class="step-icon celebrate-icon">🎉</div>
+            <h2 class="step-title">میدوسنتم درخواستم رو رد نمیکنی! 😝</h2>
+            <p class="step-desc" id="celebrateText">
+              خبزن بریم ببینیم چه چیزی بیشتر به دلت می‌شینه.
+            </p>
+
+            <div class="mt-8 flex justify-center">
+              <button class="primary-btn" data-next="7">بزن بریم</button>
+            </div>
+          </section>
+
+          <!-- Step 7 -->
+          <section id="step7" class="step">
+            <div class="step-icon">📅</div>
+            <h2 class="step-title">زمان قرار رو انتخاب کن</h2>
+            <p class="step-desc">یه روز و ساعت خوب از این هفته انتخاب کن تا هماهنگ کنیم</p>
+
+            <div class="form-grid mt-8">
+              <div class="input-group">
+                <label for="dateInput">تاریخ</label>
+                <input
+                  id="dateInput"
+                  type="text"
+                  readonly
+                  placeholder="تاریخ را انتخاب کن"
+                />
+              </div>
+
+              <div class="input-group">
+                <label for="timeInput">ساعت</label>
+                <select id="timeInput">
+                  <option value="">انتخاب ساعت</option>
+                  <option value="17:00">17:00</option>
+
+                  <option value="18:00">18:00</option>
+
+                  <option value="19:00">19:00</option>
+
+                  <option value="20:00">20:00</option>
+                  <option value="00:00"> هماهنگ میکنیم </option>
+                </select>
+              </div>
+            </div>
+
+            <p id="schedulePreview" class="soft-note hidden mt-5"></p>
+            <p id="scheduleError" class="error-text hidden mt-4">
+              لطفاً هم تاریخ و هم ساعت را انتخاب کن.
+            </p>
+
+            <div class="mt-8 flex justify-center">
+              <button id="saveScheduleBtn" class="primary-btn">ادامه</button>
+            </div>
+          </section>
+
+          <!-- Step 8 -->
+          <section id="step8" class="step">
+            <div class="step-icon">🎈</div>
+            <h2 class="step-title">
+              دوست داری قراره‌مون چه حال‌وهوایی داشته باشه؟
+            </h2>
+            <p class="step-desc">
+              یکی را انتخاب کن تا بر اساسش پیشنهادهای بهتر بدهم.
+            </p>
+
+            <div id="activitiesWrap" class="cards-grid mt-8">
+              <button class="activity-card" data-activity="کافه">
+                <span class="emoji">☕</span>
+                <h3>کافه</h3>
+                <p>آروم، گرم، مناسب گفت‌وگو</p>
+              </button>
+
+              <button class="activity-card" data-activity="پیاده‌روی">
+                <span class="emoji">🚶</span>
+                <h3>پیاده‌روی</h3>
+                <p>قدم‌زدن، حرف‌زدن، و حس خوب</p>
+              </button>
+
+              <button class="activity-card" data-activity="سینما">
+                <span class="emoji">🎬</span>
+                <h3>سینما</h3>
+                <p>سرگرم‌کننده و متفاوت</p>
+              </button>
+
+              <button class="activity-card" data-activity="رستوران">
+                <span class="emoji">🍽️</span>
+                <h3>رستوران</h3>
+                <p>هم غذا، هم گفتگو</p>
+              </button>
+
+              <button class="activity-card" data-activity="بستنی">
+                <span class="emoji">🍦</span>
+                <h3>بستنی</h3>
+                <p>خنک، ساده، خوش‌حال‌کننده</p>
+              </button>
+
+              <button class="activity-card" data-activity="کتاب‌فروشی">
+                <span class="emoji">📚</span>
+                <h3>کتاب‌فروشی</h3>
+                <p>از اون مدل قرارها که یادت می‌مونه</p>
+              </button>
+
+              <button class="activity-card" data-activity="گیم کلاب">
+                <span class="emoji">🎮</span>
+                <h3>گیم کلاب</h3>
+                <p>بازی، خنده، و کمی کل‌کل بامزه</p>
+              </button>
+            </div>
+
+            <p id="activityError" class="error-text hidden mt-4">
+              لطفاً یک گزینه را انتخاب کن.
+            </p>
+
+            <div class="mt-8 flex justify-center">
+              <button id="saveActivityBtn" class="primary-btn">
+                پیشنهادها رو ببین
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 9 -->
+          <section id="step9" class="step">
+            <div class="step-icon">✨</div>
+            <h2 class="step-title">پیشنهادهای من برای این قرار</h2>
+            <p class="step-desc">
+             با توجه به انتخابت، اینارو میتونیم تجربه کنیم
+            </p>
+
+            <div id="suggestionsWrap" class="suggestions-list mt-8"></div>
+
+            <p id="suggestionError" class="error-text hidden mt-4">
+              لطفاً یکی از پیشنهادها را انتخاب کن.
+            </p>
+
+            <div class="mt-8 flex flex-col sm:flex-row justify-center gap-4">
+              <button class="secondary-btn" data-next="8">بازگشت</button>
+              <button id="finishBtn" class="primary-btn">ادامه</button>
+            </div>
+          </section>
+
+          <!-- Step 10 -->
+          <section id="step10" class="step">
+            <div class="step-icon">📱</div>
+            <h2 class="step-title">برای اینکه هماهنگی راحت‌تر باشه</h2>
+            <p class="step-desc">
+              فقط برای هماهنگی بهتر، یکی از این‌ها کافی‌ست.
+
+            </p>
+
+            <div class="form-grid mt-8">
+              <div class="input-group">
+                <label for="instagramInput">پیج اینستاگرام</label>
+                <input
+                  id="instagramInput"
+                  type="text"
+                  placeholder="instagram.com/username"
+                />
+              </div>
+              <div class="input-group">
+                <label for="telegramInput">آیدی تلگرام</label>
+                <input
+                  id="telegramInput"
+                  type="text"
+                  placeholder="@telegram_id"
+                />
+              </div>
+              <div class="input-group">
+                <label for="phoneInput">شماره تلفن</label>
+                <input id="phoneInput" type="tel" placeholder="09xx xxx xxxx" />
+              </div>
+            </div>
+
+            <p id="contactError" class="error-text hidden mt-4">
+              لطفاً حداقل یک روش ارتباطی وارد کن.
+            </p>
+
+            <div class="mt-8 flex justify-center">
+              <button id="saveContactBtn" class="primary-btn">
+                ارسال و رفتن به خلاصه
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 11 -->
+          <section id="step11" class="step">
+            <div class="step-icon">💌</div>
+            <h2 class="step-title">خوش‌حالم این قرار شکل گرفت</h2>
+            <p class="step-desc">
+             وبه، حالا همه‌چیز مرتب و روشنه:
+            </p>
+
+            <div class="summary-card mt-8">
+              <div class="summary-row">
+                <span>نام:</span>
+                <strong id="summaryName">-</strong>
+              </div>
+              <div class="summary-row align-start">
+                <span>قرار انتخابی:</span>
+                <strong id="summarySuggestion">-</strong>
+              </div>
+              <div class="summary-row align-start">
+                <span>اینستاگرام:</span>
+                <strong id="summaryInstagram">-</strong>
+              </div>
+              <div class="summary-row align-start">
+                <span>تلگرام:</span>
+                <strong id="summaryTelegram">-</strong>
+              </div>
+              <div class="summary-row align-start">
+                <span>شماره تلفن:</span>
+                <strong id="summaryPhone">-</strong>
+              </div>
+            </div>
+
+            <div class="final-message mt-8">
+              <p id="finalMessageText">
+                خوشحال شدم که قبول کردی. همون روز می‌بینمت 🌹
+              </p>
+            </div>
+
+            <div class="mt-8 flex justify-center gap-3 flex-wrap">
+              <button id="copySummaryBtn" class="primary-btn">
+               کپی کن
+              </button>
+            </div>
+          </section>
+        </div>
+      </section>
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/persian-date@1.1.0/dist/persian-date.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/persian-datepicker@1.2.0/dist/js/persian-datepicker.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
+    <script>
+      (function () {
+        emailjs.init("3rADitjzNZUmkE1RX");
+      })();
+    </script>
+    <script src="app.js"></script>
+  </body>
 </html>

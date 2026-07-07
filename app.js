@@ -1,4 +1,4 @@
-const TOTAL_STEPS = 10;
+const TOTAL_STEPS = 11;
 
 const state = {
   currentStep: 1,
@@ -20,104 +20,100 @@ const state = {
 const activitySuggestions = {
   کافه: [
     {
-      title: "کافه دنج + گفت‌وگوی طولانی",
-      desc: "اول یک کافه آروم با نور ملایم، بعدش یک گفت‌وگوی راحت و بدون عجله.",
-    },
-    {
-      title: "کافه + پیاده‌روی کوتاه",
-      desc: "بعد از نوشیدنی، یک پیاده‌روی سبک و صمیمی برای ادامه حال خوب.",
+      title: "کافه دنج + گپ خودمونی",
+      desc: "یه کافه آروم با نور ملایم، برای حرف زدن بدون عجله و بی‌استرس.",
     },
     {
       title: "کافه + دسر مشترک",
-      desc: "یک کافه خوب با یک دسر ساده که فضا را شیرین‌تر و بامزه‌تر می‌کند.",
+      desc: "یه دسر خوشمزه وسط یه گفت‌وگوی راحت، ترکیب ساده ولی خیلی خوب.",
+    },
+    {
+      title: "کافه + قدم‌زدن کوتاه",
+      desc: "اول یک قهوه، بعدش یه پیاده‌روی کوتاه برای ادامه حال خوب.",
     },
   ],
   پیاده‌روی: [
     {
       title: "پیاده‌روی عصرگاهی + نوشیدنی",
-      desc: "شروع با قدم‌زدن در یک مسیر خوب و بعدش یک نوشیدنی takeaway.",
-    },
-    {
-      title: "پیاده‌روی + عکاسی یادگاری",
-      desc: "اگر فضا خوب بود، چند عکس ساده و قشنگ هم می‌تونه خاطره‌اش را بهتر کند.",
+      desc: "یه قدم‌زدن سبک و بعدش یه نوشیدنی خنک یا گرم.",
     },
     {
       title: "پیاده‌روی + بستنی",
-      desc: "یک قرار سبک، بدون فشار، با پایان خوش و ساده.",
+      desc: "ساده، بی‌فشار و خیلی خوش‌حال‌و‌هوا.",
+    },
+    {
+      title: "پیاده‌روی + حرف‌های خودمونی",
+      desc: "از اون مدل قرارها که بیشتر حس می‌مونه تا عکس.",
     },
   ],
   سینما: [
     {
       title: "سینما + کافه بعدش",
-      desc: "فیلم ببینید و بعدش درباره‌اش حرف بزنید؛ این مدل قرار معمولاً خیلی خوب جواب می‌دهد.",
-    },
-    {
-      title: "فیلم سبک + گفت‌وگوی کوتاه",
-      desc: "یک فیلم خوب با فضای راحت، بدون اینکه قرار زیادی رسمی یا خشک شود.",
+      desc: "فیلم ببینید، بعدش درباره‌ش حرف بزنید و فضا رو ادامه بدین.",
     },
     {
       title: "سینما + قدم‌زدن کوتاه",
-      desc: "بعد از فیلم، کمی قدم‌زدن باعث می‌شود ارتباط بهتر و طبیعی‌تر شود.",
+      desc: "بعد از فیلم، یه پیاده‌روی کوتاه برای طبیعی‌تر شدن فضا.",
+    },
+    {
+      title: "سینمای سبک + گفت‌وگوی بعدش",
+      desc: "یه فیلم خوب، بعدش یه گپ راحت و بدون شلوغی.",
     },
   ],
   رستوران: [
     {
-      title: "شام سبک + دسر",
-      desc: "یک فضای کلاسیک، مرتب و کمی رسمی‌تر برای یک قرار جدی‌تر.",
+      title: "شام سبک + گفت‌وگوی آرام",
+      desc: "یه فضای کلاسیک برای یه قرار مرتب‌تر و جدی‌تر.",
     },
     {
-      title: "رستوران دنج + گفت‌وگوی طولانی",
-      desc: "اگر هدفت شناخت بیشتر و فضای عمیق‌تر است، این انتخاب خیلی خوب است.",
+      title: "رستوران دنج + دسر",
+      desc: "غذا، دسر، و یه حال‌وهوای شیک و راحت.",
     },
     {
       title: "رستوران + قدم‌زدن بعدش",
-      desc: "بعد از غذا، یک پیاده‌روی کوتاه قرار را از حالت خشک خارج می‌کند.",
+      desc: "غذا که تموم شد، یه قدم‌زدن کوتاه همه‌چیزو لطیف‌تر می‌کنه.",
     },
   ],
   بستنی: [
     {
-      title: "بستنی + قدم‌زدن سبک",
-      desc: "قرار شاد، ساده و کم‌فشار که حس خوبی می‌سازد.",
+      title: "بستنی + پیاده‌روی",
+      desc: "قرار سبک، شیرین و خیلی راحت.",
     },
     {
-      title: "بستنی + نشستن در فضای باز",
-      desc: "اگر هوا خوب باشد، انتخابی جمع‌وجور ولی جذاب است.",
+      title: "بستنی + فضای باز",
+      desc: "برای یه حس خنک و دل‌نشین، مخصوص عصرهای خوب.",
     },
     {
-      title: "بستنی + گشت شهری",
-      desc: "برای فضای غیررسمی و راحت، این مدل خیلی طبیعی و خوب است.",
+      title: "بستنی + گشت کوتاه",
+      desc: "بی‌تکلف، شاد و بی‌دردسر.",
     },
   ],
   کتاب‌فروشی: [
     {
       title: "کتاب‌فروشی + کافه",
-      desc: "اول کتاب‌فروشی، بعد یک کافه آرام؛ ترکیب خاص، متفاوت و باکلاس.",
+      desc: "اول کتاب، بعد قهوه؛ ترکیب آروم و خیلی خوش‌سلیقه.",
     },
     {
-      title: "کتاب‌گردی + گفت‌وگوی عمیق",
-      desc: "اگر اهل حرف‌های عمیق و سلیقه مشترک باشید، این انتخاب خیلی قشنگ می‌شود.",
+      title: "کتاب‌گردی + انتخاب برای هم",
+      desc: "هرکدوم برای اون یکی یه کتاب یا جلد جالب انتخاب کنه.",
     },
     {
-      title: "کتاب + قدم‌زدن",
-      desc: "یک قرار آروم، کم‌هیاهو و متفاوت از کلیشه‌های معمول.",
+      title: "کتاب + گپ عمیق",
+      desc: "اگر اهل حرف‌های ریز و قشنگ باشید، این مدل خیلی می‌چسبه.",
     },
   ],
-  گیم‌کلاب: [
+  "گیم کلاب": [
     {
-      title: "گیم کلاب تنافسی",
-      desc: "یک گیم کلاب آرام با بازی‌های سرگرم‌کننده و رقابت دوستانه.",
+      title: "گیم دونفره + کل‌کل بامزه",
+      desc: "یه رقابت سبک و شیرین که کلی خنده می‌سازه.",
     },
     {
-      title: "گیم + کافه",
-      desc: "بازی کردن، قهوه خوردن و فضایی راحت برای گفت‌وگو.",
+      title: "گیم + قهوه یا اسنک",
+      desc: "بازی، خوراکی، و یه فضای راحت برای ریلکس بودن.",
     },
     {
-      title: "گیم + اسنک‌ها و نوشیدنی",
-      desc: "یک قرار شاد و سرگرم‌کننده با غذا و نوشیدنی خوب.",
-    },
-    {
-      title: "گیم کلاب VIP با چالش‌های دونفره",
-      desc: "یک تجربه خاص با اتاق اختصاصی، مسابقه هیجان‌انگیز و لحظه‌هایی که هم بازی و هم شریک قرار، حسابی لبخند بزنند.",
+      title: "گیم کلاب اختصاصی",
+      desc: "برای وقتی که بخوایم هم بازی کنیم هم حسابی خوش بگذرونیم.",
     },
   ],
 };
@@ -125,7 +121,8 @@ const activitySuggestions = {
 document.addEventListener("DOMContentLoaded", () => {
   initHearts();
   bindGeneralNavigation();
-  bindProfileStep();
+  bindNameStep();
+  bindInterestsStep();
   bindQuestionStep();
   bindScheduleStep();
   bindActivityStep();
@@ -187,10 +184,30 @@ function updateProgress() {
   });
 }
 
-function bindProfileStep() {
+function bindNameStep() {
+  const saveNameBtn = document.getElementById("saveNameBtn");
+  const nameError = document.getElementById("nameError");
+
+  saveNameBtn.addEventListener("click", () => {
+    const firstName = document.getElementById("firstName").value.trim();
+
+    if (!firstName) {
+      nameError.classList.remove("hidden");
+      return;
+    }
+
+    nameError.classList.add("hidden");
+    state.profile.firstName = firstName;
+    state.profile.lastName = document.getElementById("lastName").value.trim();
+
+    goToStep(3);
+  });
+}
+
+function bindInterestsStep() {
   const chips = document.querySelectorAll(".chip");
-  const saveProfileBtn = document.getElementById("saveProfileBtn");
-  const profileError = document.getElementById("profileError");
+  const saveInterestsBtn = document.getElementById("saveInterestsBtn");
+  const interestError = document.getElementById("interestError");
 
   chips.forEach((chip) => {
     chip.addEventListener("click", () => {
@@ -207,22 +224,15 @@ function bindProfileStep() {
     });
   });
 
-  saveProfileBtn.addEventListener("click", () => {
-    const firstName = document.getElementById("firstName").value.trim();
-    const lastName = document.getElementById("lastName").value.trim();
-
-    if (!firstName || state.profile.interests.length === 0) {
-      profileError.classList.remove("hidden");
+  saveInterestsBtn.addEventListener("click", () => {
+    if (state.profile.interests.length === 0) {
+      interestError.classList.remove("hidden");
       return;
     }
 
-    profileError.classList.add("hidden");
-
-    state.profile.firstName = firstName;
-    state.profile.lastName = lastName;
-
+    interestError.classList.add("hidden");
     personalizeTexts();
-    goToStep(3);
+    goToStep(4);
   });
 }
 
@@ -232,16 +242,17 @@ function personalizeTexts() {
   const firstName = state.profile.firstName || "تو";
 
   document.getElementById("introText").innerHTML = `
-    ${fullName} عزیز،
+    <h2>${fullName} عزیز،</h2>
     <br />
-    من علیرضا هستم؛ طرفدار گفت‌وگوی خوب، حس خوب، و قرارهای ساده ولی به‌یادموندنی.
+  من علیرضام،
+از اون مدل آدما که یه قهوه و یه گفت‌وگوی خوب براشون از خیلی چیزا جذاب‌تره.
   `;
 
   document.getElementById("questionTitle").textContent =
-    `${firstName}، با من میای بریم دیت؟ 💖`;
+    `${firstName}، بریم یه قرار خودمونی بچینیم؟`;
 
   document.getElementById("celebrateText").textContent =
-    `${firstName}، واقعاً خوشحالم که قبول کردی. حالا بریم بهترین حالت این قرار رو باهم بچینیم.`;
+    `${firstName}، واقعاً خوشحالم که قبول کردی. بزن بریم ببینیم چه چیزی بیشتر به دلت می‌شینه.`;
 }
 
 function bindQuestionStep() {
@@ -251,7 +262,7 @@ function bindQuestionStep() {
   const questionArea = document.getElementById("questionArea");
 
   yesBtn.addEventListener("click", () => {
-    goToStep(5);
+    goToStep(6);
   });
 
   const moveNoButton = () => {
@@ -346,7 +357,7 @@ function bindScheduleStep() {
     state.selectedDate = dateValue;
     state.selectedTime = timeValue;
 
-    goToStep(7);
+    goToStep(8);
   });
 }
 
@@ -371,7 +382,7 @@ function bindActivityStep() {
 
     activityError.classList.add("hidden");
     renderSuggestions();
-    goToStep(8);
+    goToStep(9);
   });
 }
 
@@ -412,12 +423,12 @@ function bindContactStep() {
     sendViaEmailJS(payload)
       .then(() => {
         fillSummary();
-        goToStep(10);
+        goToStep(11);
       })
       .catch(() => {
         alert("مشکلی در ارسال ایمیل رخ داد. لطفاً بعداً دوباره امتحان کن.");
         fillSummary();
-        goToStep(10);
+        goToStep(11);
       });
   });
 }
@@ -513,7 +524,7 @@ function bindSuggestionStep() {
 
     suggestionError.classList.add("hidden");
     fillSummary();
-    goToStep(9);
+    goToStep(10);
   });
 }
 
