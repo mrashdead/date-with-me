@@ -441,9 +441,9 @@ window.addEventListener('themeApplied', (event) => {
 
 ## Support & Documentation
 
-📚 **Full Documentation**: See `PREMIUM_FEATURES_GUIDE.md`  
-📋 **Quick Start**: See `PREMIUM_FEATURES_CHECKLIST.md`  
-💻 **Code Comments**: Read inline comments in `premium-features.js`  
+📚 **Full Documentation**: See `PREMIUM_FEATURES_GUIDE.md`
+📋 **Quick Start**: See `PREMIUM_FEATURES_CHECKLIST.md`
+💻 **Code Comments**: Read inline comments in `premium-features.js`
 🔗 **External Resources**:
 - [html2canvas Docs](https://html2canvas.herokuapp.com/)
 - [Canvas API MDN](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API)
@@ -455,8 +455,8 @@ window.addEventListener('themeApplied', (event) => {
 
 You now have:
 
-✅ **Dynamic Theme System** - Automatic theme switching based on interests  
-✅ **Vibe Matching Meter** - Engaging compatibility animation with smart loading  
-✅ **Digital Ticket Generator** - Premium ticket with download & share options  
+✅ **Dynamic Theme System** - Automatic theme switching based on interests
+✅ **Vibe Matching Meter** - Engaging compatibility animation with smart loading
+✅ **Digital Ticket Generator** - Premium ticket with download & share options
 
 Your date-invitation website is now significantly more engaging, modern, and delightful! 💖✨

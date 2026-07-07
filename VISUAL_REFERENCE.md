@@ -104,7 +104,7 @@ Step 9: Suggestion Selected
             │
             ├─ 4.2-4.5 seconds: Message Phase
             │  └─ Result message fades in
-            │     ├─ High match (92%+): 
+            │     ├─ High match (92%+):
             │     │  "دقیقاً دنبال بودم! 💘"
             │     │  "خیلی خوب سازگار هستیم! 🔥"
             │     └─ Medium match:
@@ -185,7 +185,7 @@ Step 11: Contact Info Entry
 ```html
 <div id="vibeMeterContainer">
   <div class="vibe-meter-wrapper">
-    
+
     <!-- Loading State -->
     <div class="vibe-loading">
       <div class="vibe-spinner"></div>  <!-- CSS animation: spin -->
@@ -196,7 +196,7 @@ Step 11: Contact Info Entry
     <div class="vibe-result hidden">
       <div class="vibe-percentage-wrapper">
         <div class="vibe-circle">
-          
+
           <!-- SVG Progress Ring -->
           <svg viewBox="0 0 200 200">
             <circle />  <!-- Background circle -->
@@ -226,7 +226,7 @@ Step 11: Contact Info Entry
 
 ```html
 <div class="digital-ticket">
-  
+
   <!-- Left Section: Main Content -->
   <div class="ticket-left">
     <div class="ticket-header">
@@ -301,7 +301,7 @@ Step 11: Contact Info Entry
 /* CSS Custom Properties transition smoothly */
 @media (prefers-reduced-motion: no-preference) {
   :root {
-    transition: 
+    transition:
       --bg-1 600ms cubic-bezier(0.4, 0, 0.2, 1),
       --bg-2 600ms cubic-bezier(0.4, 0, 0.2, 1),
       --primary-1 600ms cubic-bezier(0.4, 0, 0.2, 1),
@@ -370,7 +370,7 @@ Step 11: Contact Info Entry
 ```javascript
 // Theme Applied Event
 window.dispatchEvent(new CustomEvent('themeApplied', {
-  detail: { 
+  detail: {
     theme: 'coffee',
     message: 'Coffee theme activated'
   }
@@ -422,22 +422,22 @@ const state = {
 // Use requestAnimationFrame for smooth animations
 const animatePercentage = (targetPercentage) => {
   const startTime = Date.now();
-  
+
   const animate = () => {
     const elapsed = Date.now() - startTime;
     const progress = Math.min(elapsed / 1200, 1);
-    
+
     // Use cubic-out easing for natural feel
     const easeOutCubic = 1 - Math.pow(1 - progress, 3);
     const current = Math.floor(easeOutCubic * targetPercentage);
-    
+
     updateUI(current);
-    
+
     if (progress < 1) {
       requestAnimationFrame(animate);
     }
   };
-  
+
   requestAnimationFrame(animate);
 };
 ```

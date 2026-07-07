@@ -466,7 +466,7 @@ function bindContactStep() {
     // Prepare ticket data
     const fullName = `${state.profile.firstName} ${state.profile.lastName}`.trim();
     const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
-    
+
     TicketGenerator.setData({
       name: fullName || state.profile.firstName,
       dateStyle: suggestionTitle,
@@ -570,14 +570,14 @@ function bindSuggestionStep() {
     }
 
     suggestionError.classList.add("hidden");
-    
+
     // Show vibe meter and proceed to step 10
     goToStep(10);
-    
+
     // Trigger vibe meter animation
     setTimeout(() => {
       VibeMeter.show('vibeMeterContainer');
-      
+
       // Auto-proceed after meter completes
       setTimeout(() => {
         document.getElementById('continueAfterVibe').classList.remove('hidden');
