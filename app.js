@@ -1,4 +1,4 @@
-const TOTAL_STEPS = 11;
+const TOTAL_STEPS = 13;
 
 const state = {
   currentStep: 1,
@@ -152,6 +152,22 @@ function goToStep(stepNumber) {
     nextStep.classList.add("active");
     state.currentStep = stepNumber;
     updateProgress();
+    // If we navigate to the schedule step, ensure the Persian datepicker is initialized
+    if (stepNumber === 7) {
+      setTimeout(() => {
+        try {
+          initDatePicker();
+          const dateEl = document.getElementById('dateInput');
+          if (dateEl) {
+            // remove readonly so mobile keyboards or interactions work and focus to open picker
+            dateEl.removeAttribute('readonly');
+            dateEl.focus();
+          }
+        } catch (err) {
+          console.warn('Datepicker init error:', err);
+        }
+      }, 60);
+    }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
 }
@@ -307,26 +323,67 @@ function bindQuestionStep() {
 }
 
 function initDatePicker() {
-  const today = new persianDate();
-  const nextWeek = new persianDate().add("days", 7);
+  try {
+    if (typeof persianDate !== 'undefined' && $.fn && $.fn.persianDatepicker) {
+      const today = new persianDate();
+      const nextWeek = new persianDate().add("days", 7);
 
-  $("#dateInput").persianDatepicker({
-    format: "YYYY/MM/DD",
-    initialValue: false,
-    autoClose: true,
-    minDate: today,
-    maxDate: nextWeek,
-    onSelect: function () {
-      const value = document.getElementById("dateInput").value;
-      state.selectedDate = value;
-      updateSchedulePreview();
-    },
-  });
+      $("#dateInput").persianDatepicker({
+        format: "YYYY/MM/DD",
+        initialValue: false,
+        autoClose: true,
+        minDate: today,
+        maxDate: nextWeek,
+        onSelect: function () {
+          const value = document.getElementById("dateInput").value;
+          state.selectedDate = value;
+          updateSchedulePreview();
+        },
+      });
+    } else {
+      // Fallback: use native date input so the picker opens reliably
+      const dateEl = document.getElementById('dateInput');
+      if (dateEl) {
+        try {
+          dateEl.type = 'date';
+        } catch (e) {
+          // some browsers may not allow changing type; ensure readonly removed
+        }
 
-  document.getElementById("timeInput").addEventListener("change", (e) => {
-    state.selectedTime = e.target.value;
-    updateSchedulePreview();
-  });
+        dateEl.removeAttribute('readonly');
+        dateEl.addEventListener('change', (e) => {
+          state.selectedDate = e.target.value;
+          updateSchedulePreview();
+        });
+      }
+    }
+
+    const timeEl = document.getElementById("timeInput");
+    if (timeEl) {
+      timeEl.addEventListener("change", (e) => {
+        state.selectedTime = e.target.value;
+        updateSchedulePreview();
+      });
+    }
+  } catch (err) {
+    console.warn('Datepicker init error:', err);
+    // Ensure basic behavior even on error
+    const dateEl = document.getElementById('dateInput');
+    if (dateEl) {
+      dateEl.removeAttribute('readonly');
+      dateEl.addEventListener('change', (e) => {
+        state.selectedDate = e.target.value;
+        updateSchedulePreview();
+      });
+    }
+    const timeEl = document.getElementById('timeInput');
+    if (timeEl) {
+      timeEl.addEventListener('change', (e) => {
+        state.selectedTime = e.target.value;
+        updateSchedulePreview();
+      });
+    }
+  }
 }
 
 function updateSchedulePreview() {
@@ -406,30 +463,20 @@ function bindContactStep() {
     state.telegram = telegram;
     state.phone = phone;
 
-    const payload = {
-      first_name: state.profile.firstName || "ناشناس",
-      last_name: state.profile.lastName || "",
-      interests: state.profile.interests.join(", ") || "",
-      date: state.selectedDate || "ثبت نشده",
-      time: state.selectedTime || "ثبت نشده",
-      activity: state.selectedActivity || "",
-      suggestion: state.selectedSuggestion || "",
-      instagram: state.instagram || "",
-      telegram: state.telegram || "",
-      phone: state.phone || "",
-      final_answer: "accepted",
-    };
+    // Prepare ticket data
+    const fullName = `${state.profile.firstName} ${state.profile.lastName}`.trim();
+    const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
+    
+    TicketGenerator.setData({
+      name: fullName || state.profile.firstName,
+      dateStyle: suggestionTitle,
+      interests: state.profile.interests,
+      dateTime: `${state.selectedDate} ${state.selectedTime}`,
+    });
 
-    sendViaEmailJS(payload)
-      .then(() => {
-        fillSummary();
-        goToStep(11);
-      })
-      .catch(() => {
-        alert("مشکلی در ارسال ایمیل رخ داد. لطفاً بعداً دوباره امتحان کن.");
-        fillSummary();
-        goToStep(11);
-      });
+    // Show ticket
+    goToStep(12);
+    TicketGenerator.show('ticketContainer');
   });
 }
 
@@ -523,8 +570,23 @@ function bindSuggestionStep() {
     }
 
     suggestionError.classList.add("hidden");
-    fillSummary();
+    
+    // Show vibe meter and proceed to step 10
     goToStep(10);
+    
+    // Trigger vibe meter animation
+    setTimeout(() => {
+      VibeMeter.show('vibeMeterContainer');
+      
+      // Auto-proceed after meter completes
+      setTimeout(() => {
+        document.getElementById('continueAfterVibe').classList.remove('hidden');
+        // Auto click after animation completes
+        setTimeout(() => {
+          goToStep(11);
+        }, 2500);
+      }, 4500);
+    }, 500);
   });
 }
 
@@ -550,25 +612,60 @@ function fillSummary() {
 }
 
 function bindFinalStep() {
+  // Step 12 - Ticket actions
+  const finalCompleteBtn = document.getElementById("finalCompleteBtn");
+  if (finalCompleteBtn) {
+    finalCompleteBtn.addEventListener("click", () => {
+      // Send email with all data
+      const payload = {
+        first_name: state.profile.firstName || "ناشناس",
+        last_name: state.profile.lastName || "",
+        interests: state.profile.interests.join(", ") || "",
+        date: state.selectedDate || "ثبت نشده",
+        time: state.selectedTime || "ثبت نشده",
+        activity: state.selectedActivity || "",
+        suggestion: state.selectedSuggestion || "",
+        instagram: state.instagram || "",
+        telegram: state.telegram || "",
+        phone: state.phone || "",
+        final_answer: "accepted",
+      };
+
+      sendViaEmailJS(payload)
+        .then(() => {
+          fillSummary();
+          goToStep(13);
+        })
+        .catch(() => {
+          alert("مشکلی در ارسال ایمیل رخ داد.");
+          fillSummary();
+          goToStep(13);
+        });
+    });
+  }
+
+  // Step 13 - Summary
   const copySummaryBtn = document.getElementById("copySummaryBtn");
 
-  copySummaryBtn.addEventListener("click", async () => {
-    const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
-    const text = `
+  if (copySummaryBtn) {
+    copySummaryBtn.addEventListener("click", async () => {
+      const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
+      const text = `
 نام: ${`${state.profile.firstName} ${state.profile.lastName}`.trim()}
 پیشنهاد قرار: ${suggestionTitle}
-    `.trim();
+      `.trim();
 
-    try {
-      await navigator.clipboard.writeText(text);
-      copySummaryBtn.textContent = "کپی شد ✅";
-      setTimeout(() => {
-        copySummaryBtn.textContent = "کپی خلاصه قرار";
-      }, 1800);
-    } catch (err) {
-      alert("کپی خودکار انجام نشد، ولی می‌تونی متن رو دستی برداری.");
-    }
-  });
+      try {
+        await navigator.clipboard.writeText(text);
+        copySummaryBtn.textContent = "کپی شد ✅";
+        setTimeout(() => {
+          copySummaryBtn.textContent = "کپی خلاصه قرار";
+        }, 1800);
+      } catch (err) {
+        alert("کپی خودکار انجام نشد، ولی می‌تونی متن رو دستی برداری.");
+      }
+    });
+  }
 }
 function setupNoButton() {
   const noBtn = document.getElementById("noBtn");

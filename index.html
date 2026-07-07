@@ -24,6 +24,8 @@
 
     <!-- Custom -->
     <link rel="stylesheet" href="style.css" />
+    
+    <!-- Premium Features CSS (injected by script) -->
   </head>
   <body>
     <!-- Ambient Background -->
@@ -353,8 +355,25 @@
             </div>
           </section>
 
-          <!-- Step 10 -->
+          <!-- Step 10: Vibe Matching Meter -->
           <section id="step10" class="step">
+            <div class="step-icon">⚡</div>
+            <h2 class="step-title">تطابق ویبرایشن‌ت رو بررسی میکنم...</h2>
+            <p class="step-desc">
+             یه لحظه صبر کن، الگوریتم شناسایی عشق رو اجرا میکنم 💫
+            </p>
+
+            <div id="vibeMeterContainer" class="mt-8"></div>
+
+            <div class="mt-8 flex justify-center">
+              <button class="primary-btn hidden" onclick="goToStep(11)" id="continueAfterVibe">
+                ادامه
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 11: Contact Information -->
+          <section id="step11" class="step">
             <div class="step-icon">📱</div>
             <h2 class="step-title">برای اینکه هماهنگی راحت‌تر باشه</h2>
             <p class="step-desc">
@@ -386,18 +405,36 @@
             </div>
 
             <p id="contactError" class="error-text hidden mt-4">
-              لطفاً حداقل یک روش ارتباطی وارد کن.
+              لطفاً حداقل یک راه ارتباطی وارد کن.
             </p>
 
             <div class="mt-8 flex justify-center">
               <button id="saveContactBtn" class="primary-btn">
-                ارسال و رفتن به خلاصه
+                ادامه
               </button>
             </div>
           </section>
 
-          <!-- Step 11 -->
-          <section id="step11" class="step">
+          <!-- Step 12: Digital Ticket Generator -->
+          <section id="step12" class="step">
+            <div class="step-icon">🎫</div>
+            <h2 class="step-title">بلیت رسمی دعوتت آماده‌ست 🎬</h2>
+            <p class="step-desc">
+             اینجا بلیت رسمی قرار عاشقانه‌ات است. می‌تونی دانلود کنی یا شریک شوی 💖
+            </p>
+
+            <div id="ticketContainer" class="mt-8"></div>
+
+            <div class="mt-8 flex justify-center gap-3 flex-wrap">
+              <button class="secondary-btn" data-next="11">بازگشت</button>
+              <button id="finalCompleteBtn" class="primary-btn">
+               تمام!
+              </button>
+            </div>
+          </section>
+
+          <!-- Step 13: Final Summary -->
+          <section id="step13" class="step">
             <div class="step-icon">💌</div>
             <h2 class="step-title">خوش‌حالم این قرار شکل گرفت</h2>
             <p class="step-desc">
@@ -453,6 +490,11 @@
         emailjs.init("3rADitjzNZUmkE1RX");
       })();
     </script>
+    
+    <!-- Premium Features Module -->
+    <script src="premium-features.js"></script>
+    
+    <!-- Main App -->
     <script src="app.js"></script>
   </body>
 </html>
