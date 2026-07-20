@@ -60,6 +60,8 @@
             <span class="step-dot"></span>
             <span class="step-dot"></span>
             <span class="step-dot"></span>
+            <span class="step-dot"></span>
+            <span class="step-dot"></span>
           </div>
         </header>
 
@@ -235,34 +237,31 @@
 
             <div class="form-grid mt-8">
               <div class="input-group">
-                <label for="dateInput">تاریخ</label>
-                <input
-                  id="dateInput"
-                  type="text"
-                  readonly
-                  placeholder="تاریخ را انتخاب کن"
-                />
+                <label>روز هفته</label>
+                <div id="dateOptionsWrap" class="cards-grid mt-3">
+                  <button type="button" class="activity-card day-card" data-day="شنبه">شنبه</button>
+                  <button type="button" class="activity-card day-card" data-day="یکشنبه">یکشنبه</button>
+                  <button type="button" class="activity-card day-card" data-day="دوشنبه">دوشنبه</button>
+                  <button type="button" class="activity-card day-card" data-day="سه‌شنبه">سه‌شنبه</button>
+                  <button type="button" class="activity-card day-card" data-day="چهارشنبه">چهارشنبه</button>
+                  <button type="button" class="activity-card day-card" data-day="پنج‌شنبه">پنج‌شنبه</button>
+                  <button type="button" class="activity-card day-card" data-day="جمعه">جمعه</button>
+                </div>
               </div>
 
               <div class="input-group">
-                <label for="timeInput">ساعت</label>
-                <select id="timeInput">
-                  <option value="">انتخاب ساعت</option>
-                  <option value="17:00">17:00</option>
-
-                  <option value="18:00">18:00</option>
-
-                  <option value="19:00">19:00</option>
-
-                  <option value="20:00">20:00</option>
-                  <option value="00:00"> هماهنگ میکنیم </option>
-                </select>
+                <label>بازه زمانی</label>
+                <div id="timeOptionsWrap" class="chips-wrap mt-3">
+                  <button type="button" class="chip time-chip" data-time="عصر">عصر</button>
+                  <button type="button" class="chip time-chip" data-time="شب">شب</button>
+                  <button type="button" class="chip time-chip" data-time="هماهنگ میکنیم">هماهنگ میکنیم</button>
+                </div>
               </div>
             </div>
 
             <p id="schedulePreview" class="soft-note hidden mt-5"></p>
             <p id="scheduleError" class="error-text hidden mt-4">
-              لطفاً هم تاریخ و هم ساعت را انتخاب کن.
+              لطفاً یک روز و یک بازه زمانی را انتخاب کن.
             </p>
 
             <div class="mt-8 flex justify-center">
@@ -424,57 +423,6 @@
             </p>
 
             <div id="ticketContainer" class="mt-8"></div>
-
-            <div class="mt-8 flex justify-center gap-3 flex-wrap">
-              <button class="secondary-btn" data-next="11">بازگشت</button>
-              <button id="finalCompleteBtn" class="primary-btn">
-               تمام!
-              </button>
-            </div>
-          </section>
-
-          <!-- Step 13: Final Summary -->
-          <section id="step13" class="step">
-            <div class="step-icon">💌</div>
-            <h2 class="step-title">خوش‌حالم این قرار شکل گرفت</h2>
-            <p class="step-desc">
-             وبه، حالا همه‌چیز مرتب و روشنه:
-            </p>
-
-            <div class="summary-card mt-8">
-              <div class="summary-row">
-                <span>نام:</span>
-                <strong id="summaryName">-</strong>
-              </div>
-              <div class="summary-row align-start">
-                <span>قرار انتخابی:</span>
-                <strong id="summarySuggestion">-</strong>
-              </div>
-              <div class="summary-row align-start">
-                <span>اینستاگرام:</span>
-                <strong id="summaryInstagram">-</strong>
-              </div>
-              <div class="summary-row align-start">
-                <span>تلگرام:</span>
-                <strong id="summaryTelegram">-</strong>
-              </div>
-              <div class="summary-row align-start">
-                <span>شماره تلفن:</span>
-                <strong id="summaryPhone">-</strong>
-              </div>
-            </div>
-
-            <div class="final-message mt-8">
-              <p id="finalMessageText">
-                خوشحال شدم که قبول کردی. همون روز می‌بینمت 🌹
-              </p>
-            </div>
-
-            <div class="mt-8 flex justify-center gap-3 flex-wrap">
-              <button id="copySummaryBtn" class="primary-btn">
-               کپی کن
-              </button>
-            </div>
           </section>
         </div>
       </section>

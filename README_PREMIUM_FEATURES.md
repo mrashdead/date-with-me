@@ -165,8 +165,8 @@ ThemeSystem.applyTheme('gaming');
 TicketGenerator.setData({
   name: fullName,
   dateStyle: suggestionTitle,
-  interests: state.profile.interests,
-  dateTime: `${state.selectedDate} ${state.selectedTime}`
+   interests: state.profile.interests,
+   dateTime: `${state.selectedDate || state.selectedDay} ${state.selectedTime || state.selectedTimeSlot}`
 });
 TicketGenerator.show('ticketContainer');
 ```

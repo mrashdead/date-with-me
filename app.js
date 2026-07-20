@@ -1,4 +1,4 @@
-const TOTAL_STEPS = 13;
+const TOTAL_STEPS = 12;
 
 const state = {
   currentStep: 1,
@@ -9,6 +9,8 @@ const state = {
   },
   selectedDate: "",
   selectedTime: "",
+  selectedDay: "",
+  selectedTimeSlot: "",
   selectedActivity: "",
   selectedSuggestion: "",
   instagram: "",
@@ -129,6 +131,7 @@ document.addEventListener("DOMContentLoaded", () => {
   bindSuggestionStep();
   bindContactStep();
   bindFinalStep();
+  TicketGenerator.init();
   initDatePicker();
   updateProgress();
 });
@@ -156,15 +159,10 @@ function goToStep(stepNumber) {
     if (stepNumber === 7) {
       setTimeout(() => {
         try {
-          initDatePicker();
-          const dateEl = document.getElementById('dateInput');
-          if (dateEl) {
-            // remove readonly so mobile keyboards or interactions work and focus to open picker
-            dateEl.removeAttribute('readonly');
-            dateEl.focus();
-          }
+          // Initialize day/time buttons for schedule selection
+          bindDayAndTimeButtons();
         } catch (err) {
-          console.warn('Datepicker init error:', err);
+          console.warn('Schedule init error:', err);
         }
       }, 60);
     }
@@ -323,74 +321,38 @@ function bindQuestionStep() {
 }
 
 function initDatePicker() {
-  try {
-    if (typeof persianDate !== 'undefined' && $.fn && $.fn.persianDatepicker) {
-      const today = new persianDate();
-      const nextWeek = new persianDate().add("days", 7);
+  // Legacy datepicker removed. Use day/time-slot buttons instead.
+  bindDayAndTimeButtons();
+}
 
-      $("#dateInput").persianDatepicker({
-        format: "YYYY/MM/DD",
-        initialValue: false,
-        autoClose: true,
-        minDate: today,
-        maxDate: nextWeek,
-        onSelect: function () {
-          const value = document.getElementById("dateInput").value;
-          state.selectedDate = value;
-          updateSchedulePreview();
-        },
-      });
-    } else {
-      // Fallback: use native date input so the picker opens reliably
-      const dateEl = document.getElementById('dateInput');
-      if (dateEl) {
-        try {
-          dateEl.type = 'date';
-        } catch (e) {
-          // some browsers may not allow changing type; ensure readonly removed
-        }
+function bindDayAndTimeButtons() {
+  const dayButtons = document.querySelectorAll('.day-card');
+  const timeChips = document.querySelectorAll('.time-chip');
 
-        dateEl.removeAttribute('readonly');
-        dateEl.addEventListener('change', (e) => {
-          state.selectedDate = e.target.value;
-          updateSchedulePreview();
-        });
-      }
-    }
+  dayButtons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      dayButtons.forEach((b) => b.classList.remove('selected'));
+      btn.classList.add('selected');
+      state.selectedDay = btn.dataset.day;
+      updateSchedulePreview();
+    });
+  });
 
-    const timeEl = document.getElementById("timeInput");
-    if (timeEl) {
-      timeEl.addEventListener("change", (e) => {
-        state.selectedTime = e.target.value;
-        updateSchedulePreview();
-      });
-    }
-  } catch (err) {
-    console.warn('Datepicker init error:', err);
-    // Ensure basic behavior even on error
-    const dateEl = document.getElementById('dateInput');
-    if (dateEl) {
-      dateEl.removeAttribute('readonly');
-      dateEl.addEventListener('change', (e) => {
-        state.selectedDate = e.target.value;
-        updateSchedulePreview();
-      });
-    }
-    const timeEl = document.getElementById('timeInput');
-    if (timeEl) {
-      timeEl.addEventListener('change', (e) => {
-        state.selectedTime = e.target.value;
-        updateSchedulePreview();
-      });
-    }
-  }
+  timeChips.forEach((chip) => {
+    chip.addEventListener('click', () => {
+      timeChips.forEach((c) => c.classList.remove('selected'));
+      chip.classList.add('selected');
+      state.selectedTimeSlot = chip.dataset.time;
+      updateSchedulePreview();
+    });
+  });
 }
 
 function updateSchedulePreview() {
   const preview = document.getElementById("schedulePreview");
 
-  if (state.selectedDate && state.selectedTime) {
-    preview.textContent = `عالیه، پس فعلاً ${state.selectedDate} ساعت ${state.selectedTime} در نظر گرفته شده ✨`;
+  if (state.selectedDay && state.selectedTimeSlot) {
+    preview.textContent = `عالیه، پس فعلاً ${state.selectedDay} — ${state.selectedTimeSlot} در نظر گرفته شده ✨`;
     preview.classList.remove("hidden");
   } else {
     preview.classList.add("hidden");
@@ -400,19 +362,16 @@ function updateSchedulePreview() {
 function bindScheduleStep() {
   const saveScheduleBtn = document.getElementById("saveScheduleBtn");
   const scheduleError = document.getElementById("scheduleError");
-
   saveScheduleBtn.addEventListener("click", () => {
-    const dateValue = document.getElementById("dateInput").value.trim();
-    const timeValue = document.getElementById("timeInput").value.trim();
-
-    if (!dateValue || !timeValue) {
+    if (!state.selectedDay || !state.selectedTimeSlot) {
       scheduleError.classList.remove("hidden");
       return;
     }
 
     scheduleError.classList.add("hidden");
-    state.selectedDate = dateValue;
-    state.selectedTime = timeValue;
+    // keep selectedDay and selectedTimeSlot in state; clear legacy fields
+    state.selectedDate = state.selectedDay;
+    state.selectedTime = state.selectedTimeSlot === 'هماهنگ میکنیم' ? '' : state.selectedTimeSlot;
 
     goToStep(8);
   });
@@ -463,20 +422,43 @@ function bindContactStep() {
     state.telegram = telegram;
     state.phone = phone;
 
-    // Prepare ticket data
     const fullName = `${state.profile.firstName} ${state.profile.lastName}`.trim();
     const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
+    const dateValue = state.selectedDate || state.selectedDay || "ثبت نشده";
+    const timeValue = state.selectedTime || state.selectedTimeSlot || "ثبت نشده";
 
     TicketGenerator.setData({
-      name: fullName || state.profile.firstName,
+      name: fullName || state.profile.firstName || 'مهمان',
       dateStyle: suggestionTitle,
       interests: state.profile.interests,
-      dateTime: `${state.selectedDate} ${state.selectedTime}`,
+      dateTime: `${dateValue} ${timeValue}`,
     });
 
-    // Show ticket
-    goToStep(12);
-    TicketGenerator.show('ticketContainer');
+    const payload = {
+      first_name: state.profile.firstName || "ناشناس",
+      last_name: state.profile.lastName || "",
+      interests: state.profile.interests.join(", ") || "",
+      date: dateValue,
+      time: timeValue,
+      activity: state.selectedActivity || "",
+      suggestion: state.selectedSuggestion || "",
+      Instagram: state.instagram || "",
+      instagram: state.instagram || "",
+      telegram: state.telegram || "",
+      phone: state.phone || "",
+      final_answer: "accepted",
+    };
+
+    sendViaEmailJS(payload)
+      .then(() => {
+        goToStep(12);
+        TicketGenerator.show('ticketContainer');
+      })
+      .catch(() => {
+        alert("مشکلی در ارسال ایمیل رخ داد، ولی بلیت نمایش داده می‌شود.");
+        goToStep(12);
+        TicketGenerator.show('ticketContainer');
+      });
   });
 }
 
@@ -506,6 +488,7 @@ function renderSuggestions() {
 
       btn.classList.add("selected");
       state.selectedSuggestion = `${item.title} - ${item.desc}`;
+      console.debug('suggestion selected:', state.selectedSuggestion);
     });
 
     wrap.appendChild(btn);
@@ -544,12 +527,9 @@ function buildSmartSuggestions() {
       smartDesc += " بدون نیاز به توضیح، این انتخاب نشون‌دهنده سلیقه و رمز‌آلودگی‌ات است.";
     }
 
-    if (
-      state.selectedTime &&
-      ["19:00", "19:30", "20:00", "20:30"].includes(state.selectedTime)
-    ) {
-      smartDesc +=
-        " چون ساعت انتخابی عصر به شب نزدیکه، نور و فضای قرار هم رمانتیک‌تر میشه.";
+    // If time-slot indicates evening-ish, add a note
+    if (state.selectedTimeSlot && ["عصر", "شب"].includes(state.selectedTimeSlot)) {
+      smartDesc += " چون بازه زمانی انتخابی عصر/شب است، نور و فضای قرار رمانتیک‌تر میشه.";
     }
 
     return {
@@ -559,29 +539,47 @@ function buildSmartSuggestions() {
   });
 }
 
+
 function bindSuggestionStep() {
-  const finishBtn = document.getElementById("finishBtn");
+  let finishBtn = document.getElementById("finishBtn");
   const suggestionError = document.getElementById("suggestionError");
 
+  if (!finishBtn) {
+    // Try again once if DOM wasn't ready for some reason
+    finishBtn = document.querySelector('#finishBtn');
+  }
+
+  if (!finishBtn) {
+    console.warn('finishBtn not found in DOM - suggestion step binding skipped');
+    return;
+  }
+
   finishBtn.addEventListener("click", () => {
+    console.debug('finishBtn clicked, current selectedSuggestion:', state.selectedSuggestion);
     if (!state.selectedSuggestion) {
-      suggestionError.classList.remove("hidden");
+      if (suggestionError) suggestionError.classList.remove("hidden");
       return;
     }
 
-    suggestionError.classList.add("hidden");
+    if (suggestionError) suggestionError.classList.add("hidden");
 
     // Show vibe meter and proceed to step 10
     goToStep(10);
 
-    // Trigger vibe meter animation
+    // Trigger vibe meter animation (if available) and auto-proceed
     setTimeout(() => {
-      VibeMeter.show('vibeMeterContainer');
+      try {
+        if (typeof VibeMeter !== 'undefined' && VibeMeter && VibeMeter.show) {
+          VibeMeter.show('vibeMeterContainer');
+        }
+      } catch (e) {
+        console.warn('VibeMeter error', e);
+      }
 
       // Auto-proceed after meter completes
       setTimeout(() => {
-        document.getElementById('continueAfterVibe').classList.remove('hidden');
-        // Auto click after animation completes
+        const cont = document.getElementById('continueAfterVibe');
+        if (cont) cont.classList.remove('hidden');
         setTimeout(() => {
           goToStep(11);
         }, 2500);
@@ -590,82 +588,9 @@ function bindSuggestionStep() {
   });
 }
 
-function fillSummary() {
-  const fullName =
-    `${state.profile.firstName} ${state.profile.lastName}`.trim();
-
-  document.getElementById("summaryName").textContent =
-    fullName || state.profile.firstName;
-
-  // استخراج تنها عنوان از پیشنهاد (قبل از " - ")
-  const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
-  document.getElementById("summarySuggestion").textContent = suggestionTitle;
-  document.getElementById("summaryInstagram").textContent =
-    state.instagram || "-";
-  document.getElementById("summaryTelegram").textContent =
-    state.telegram || "-";
-  document.getElementById("summaryPhone").textContent =
-    state.phone || "-";
-
-  document.getElementById("finalMessageText").textContent =
-    `${state.profile.firstName}، خوشحال شدم که این قرار رو قبول کردی. پس ${state.selectedDate} ساعت ${state.selectedTime} می‌بینمت 🌹`;
-}
-
 function bindFinalStep() {
-  // Step 12 - Ticket actions
-  const finalCompleteBtn = document.getElementById("finalCompleteBtn");
-  if (finalCompleteBtn) {
-    finalCompleteBtn.addEventListener("click", () => {
-      // Send email with all data
-      const payload = {
-        first_name: state.profile.firstName || "ناشناس",
-        last_name: state.profile.lastName || "",
-        interests: state.profile.interests.join(", ") || "",
-        date: state.selectedDate || "ثبت نشده",
-        time: state.selectedTime || "ثبت نشده",
-        activity: state.selectedActivity || "",
-        suggestion: state.selectedSuggestion || "",
-        instagram: state.instagram || "",
-        telegram: state.telegram || "",
-        phone: state.phone || "",
-        final_answer: "accepted",
-      };
-
-      sendViaEmailJS(payload)
-        .then(() => {
-          fillSummary();
-          goToStep(13);
-        })
-        .catch(() => {
-          alert("مشکلی در ارسال ایمیل رخ داد.");
-          fillSummary();
-          goToStep(13);
-        });
-    });
-  }
-
-  // Step 13 - Summary
-  const copySummaryBtn = document.getElementById("copySummaryBtn");
-
-  if (copySummaryBtn) {
-    copySummaryBtn.addEventListener("click", async () => {
-      const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
-      const text = `
-نام: ${`${state.profile.firstName} ${state.profile.lastName}`.trim()}
-پیشنهاد قرار: ${suggestionTitle}
-      `.trim();
-
-      try {
-        await navigator.clipboard.writeText(text);
-        copySummaryBtn.textContent = "کپی شد ✅";
-        setTimeout(() => {
-          copySummaryBtn.textContent = "کپی خلاصه قرار";
-        }, 1800);
-      } catch (err) {
-        alert("کپی خودکار انجام نشد، ولی می‌تونی متن رو دستی برداری.");
-      }
-    });
-  }
+  // No final summary page in the new flow.
+  // Ticket display is the final step after contact submission.
 }
 function setupNoButton() {
   const noBtn = document.getElementById("noBtn");
@@ -750,14 +675,19 @@ function resetApp() {
   };
   state.selectedDate = "";
   state.selectedTime = "";
+  state.selectedDay = "";
+  state.selectedTimeSlot = "";
   state.selectedActivity = "";
   state.selectedSuggestion = "";
   state.noAttempts = 0;
 
   document.getElementById("firstName").value = "";
   document.getElementById("lastName").value = "";
-  document.getElementById("dateInput").value = "";
-  document.getElementById("timeInput").value = "";
+  const dateEl = document.getElementById("dateInput");
+  if (dateEl) dateEl.value = "";
+  // clear selected UI states for day/time chips
+  document.querySelectorAll('.day-card').forEach((b) => b.classList.remove('selected'));
+  document.querySelectorAll('.time-chip').forEach((c) => c.classList.remove('selected'));
 
   document
     .querySelectorAll(".chip")
