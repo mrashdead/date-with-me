@@ -498,46 +498,11 @@ function renderSuggestions() {
 
 function buildSmartSuggestions() {
   const baseSuggestions = activitySuggestions[state.selectedActivity] || [];
-  const interests = state.profile.interests;
 
-  return baseSuggestions.map((item) => {
-    let smartDesc = item.desc;
-
-    if (interests.includes("موسیقی")) {
-      smartDesc += " اگر موزیک خوب هم همراهش باشد، فضا خیلی دلنشین‌تر می‌شود.";
-    }
-
-    if (interests.includes("پیاده‌روی") && !smartDesc.includes("پیاده")) {
-      smartDesc += " حتی می‌شود آخرش یک پیاده‌روی کوتاه هم بهش اضافه کرد.";
-    }
-
-    if (interests.includes("بستنی") && state.selectedActivity !== "بستنی") {
-      smartDesc += " اگر خواستی می‌شود با یک بستنی خوشحال‌کننده هم تمامش کرد.";
-    }
-
-    if (interests.includes("کتاب") && state.selectedActivity === "کافه") {
-      smartDesc +=
-        " برای آدم‌های اهل کتاب، کافه‌های آرام معمولاً انتخاب خیلی خوبی هستند.";
-    }
-
-    if (interests.includes("گیم")) {
-      smartDesc += " اگر علاقه‌ای به بازی‌های سرگرم‌کننده داری، این قرار یقیناً خوب جواب می‌دهد.";
-    }
-
-    if (interests.includes("دوس ندارم بگم")) {
-      smartDesc += " بدون نیاز به توضیح، این انتخاب نشون‌دهنده سلیقه و رمز‌آلودگی‌ات است.";
-    }
-
-    // If time-slot indicates evening-ish, add a note
-    if (state.selectedTimeSlot && ["عصر", "شب"].includes(state.selectedTimeSlot)) {
-      smartDesc += " چون بازه زمانی انتخابی عصر/شب است، نور و فضای قرار رمانتیک‌تر میشه.";
-    }
-
-    return {
-      title: item.title,
-      desc: smartDesc,
-    };
-  });
+  return baseSuggestions.map((item) => ({
+    title: item.title,
+    desc: item.desc,
+  }));
 }
 
 
