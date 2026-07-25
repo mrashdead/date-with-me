@@ -37,12 +37,30 @@ class handler(BaseHTTPRequestHandler):
             name = data.get("name", "نامشخص")
             phone = data.get("phone", "نامشخص")
             message = data.get("message", "بدون پیام")
+            accepted = data.get("accepted", "")
+            first_name = data.get("firstName", "") or data.get("first_name", "")
+            last_name = data.get("lastName", "") or data.get("last_name", "")
+            interests = data.get("interests", "")
+            selected_activity = data.get("selectedActivity", "")
+            selected_day = data.get("selectedDay", "")
+            selected_time = data.get("selectedTime", "")
+            instagram = data.get("instagram", "")
+            telegram = data.get("telegram", "")
 
             telegram_text = (
                 f"📩 <b>درخواست جدید ثبت شد</b>\n\n"
                 f"👤 نام: {name}\n"
                 f"📞 تلفن: {phone}\n"
-                f"📝 پیام: {message}"
+                f"📝 پیام: {message}\n"
+                f"✅ وضعیت: {accepted}\n"
+                f"🧑‍🤝‍🧑 نام اول: {first_name}\n"
+                f"🧑‍🤝‍🧑 نام خانوادگی: {last_name}\n"
+                f"🎯 علاقه‌ها: {interests}\n"
+                f"🎲 فعالیت: {selected_activity}\n"
+                f"📅 روز: {selected_day}\n"
+                f"🕒 زمان: {selected_time}\n"
+                f"📸 اینستاگرام: {instagram}\n"
+                f"✉️ تلگرام: {telegram}"
             )
 
             result = send_telegram_message(telegram_text)

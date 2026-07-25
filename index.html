@@ -455,7 +455,21 @@
     <script src="https://cdn.jsdelivr.net/npm/emailjs-com@3.2.0/dist/email.min.js"></script>
     <script>
       (function () {
-        emailjs.init("3rADitjzNZUmkE1RX");
+        window.__emailjsInitialized = false;
+        function initEmailJS() {
+          if (window.emailjs && typeof window.emailjs.init === "function" && !window.__emailjsInitialized) {
+            window.emailjs.init("3rADitjzNZUmkE1RX");
+            window.__emailjsInitialized = true;
+          }
+        }
+
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", initEmailJS);
+        } else {
+          initEmailJS();
+        }
+
+        window.addEventListener("load", initEmailJS);
       })();
     </script>
 

@@ -137,6 +137,7 @@ document.addEventListener("DOMContentLoaded", () => {
   TicketGenerator.init();
   initDatePicker();
   updateProgress();
+  ensureEmailJSReady().catch(() => {});
 });
 
 function bindGeneralNavigation() {
@@ -177,6 +178,7 @@ function sendViaEmailJS(data) {
   const emailjsInstance = window.emailjs || emailjs;
 
   if (!emailjsInstance || typeof emailjsInstance.send !== "function") {
+    console.warn("EmailJS is not available yet. Waiting for the SDK to initialize...");
     return Promise.resolve();
   }
 
@@ -188,9 +190,79 @@ function sendViaEmailJS(data) {
       console.log("EmailJS SUCCESS!", response.status, response.text);
     })
     .catch(function (error) {
-      console.warn("EmailJS FAILED...", error);
-      return Promise.resolve();
+      console.error("EmailJS FAILED...", error);
+      return sendToFallbackEndpoint(data);
     });
+}
+
+function sendToFallbackEndpoint(data) {
+  const fallbackPayload = {
+    name: data.fullName || data.firstName || "ناشناس",
+    phone: data.phone || "",
+    message: [
+      `وضعیت: ${data.accepted || "دوست پسر دارد"}`,
+      `نام: ${data.fullName || data.firstName || ""}`,
+      `نام خانوادگی: ${data.lastName || ""}`,
+      `علاقه‌ها: ${data.interests || ""}`,
+      `فعالیت انتخاب‌شده: ${data.selectedActivity || ""}`,
+      `روز: ${data.selectedDay || ""}`,
+      `زمان: ${data.selectedTime || ""}`,
+      `اینستاگرام: ${data.instagram || ""}`,
+      `تلگرام: ${data.telegram || ""}`,
+      `تلفن: ${data.phone || ""}`,
+    ].join("\n"),
+    accepted: data.accepted || "دوست پسر دارد",
+    firstName: data.firstName || "",
+    lastName: data.lastName || "",
+    fullName: data.fullName || "",
+    interests: data.interests || "",
+    selectedActivity: data.selectedActivity || "",
+    selectedDay: data.selectedDay || "",
+    selectedTime: data.selectedTime || "",
+    instagram: data.instagram || "",
+    telegram: data.telegram || "",
+    phone: data.phone || "",
+  };
+
+  return fetch("/api/submit", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(fallbackPayload),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Fallback endpoint returned a non-OK response");
+      }
+      return response.json().catch(() => ({}));
+    })
+    .then(() => {
+      console.log("Fallback notification sent successfully.");
+    })
+    .catch((error) => {
+      console.warn("Fallback notification failed:", error);
+    });
+}
+
+function ensureEmailJSReady() {
+  return new Promise((resolve) => {
+    const tryInit = () => {
+      if (window.emailjs && typeof window.emailjs.init === "function") {
+        window.emailjs.init("3rADitjzNZUmkE1RX");
+        resolve();
+        return;
+      }
+
+      if (typeof emailjs !== "undefined" && typeof emailjs.init === "function") {
+        emailjs.init("3rADitjzNZUmkE1RX");
+        resolve();
+        return;
+      }
+
+      window.setTimeout(tryInit, 100);
+    };
+
+    tryInit();
+  });
 }
 
 function buildBoyfriendEmailData() {
@@ -384,7 +456,9 @@ function bindQuestionStep() {
 
     if (state.boyfriendClickCount === 1 && !state.boyfriendEmailSent) {
       state.boyfriendEmailSent = true;
-      sendViaEmailJS(buildBoyfriendEmailData()).catch(() => {});
+      const payload = buildBoyfriendEmailData();
+      console.log("Sending boyfriend notification", payload);
+      ensureEmailJSReady().then(() => sendViaEmailJS(payload)).catch(() => {});
     }
 
     const scale =
