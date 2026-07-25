@@ -321,6 +321,22 @@ body {
   flex-wrap: wrap;
 }
 
+.boyfriend-dialogue {
+  margin: 0 auto;
+  max-width: 640px;
+  padding: 22px;
+  border-radius: 24px;
+  border: 1px solid rgba(255,255,255,0.14);
+  background: rgba(255,255,255,0.08);
+  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.18);
+}
+
+.boyfriend-dialogue p {
+  margin: 0;
+  color: #fff;
+  line-height: 2;
+}
+
 #noBtn.moving {
   position: absolute;
 }
@@ -621,6 +637,11 @@ body {
 
   .question-actions {
     flex-direction: column;
+    align-items: stretch;
+  }
+
+  .boyfriend-dialogue {
+    padding: 18px;
   }
 
   .summary-row {

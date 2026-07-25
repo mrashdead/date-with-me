@@ -1,4 +1,4 @@
-const TOTAL_STEPS = 12;
+const TOTAL_STEPS = 13;
 
 const state = {
   currentStep: 1,
@@ -17,6 +17,8 @@ const state = {
   telegram: "",
   phone: "",
   noAttempts: 0,
+  boyfriendClickCount: 0,
+  boyfriendEmailSent: false,
 };
 
 const activitySuggestions = {
@@ -172,17 +174,60 @@ function goToStep(stepNumber) {
 }
 
 function sendViaEmailJS(data) {
+  const emailjsInstance = window.emailjs || emailjs;
+
+  if (!emailjsInstance || typeof emailjsInstance.send !== "function") {
+    return Promise.resolve();
+  }
+
   console.log("EmailJS payload:", data);
 
-  return emailjs
+  return emailjsInstance
     .send("service_9bk9nyb", "template_jn3mrcu", data, "3rADitjzNZUmkE1RX")
     .then(function (response) {
       console.log("EmailJS SUCCESS!", response.status, response.text);
     })
     .catch(function (error) {
-      console.error("EmailJS FAILED...", error);
-      throw error;
+      console.warn("EmailJS FAILED...", error);
+      return Promise.resolve();
     });
+}
+
+function buildBoyfriendEmailData() {
+  const fullName = `${state.profile.firstName} ${state.profile.lastName}`.trim();
+
+  return {
+    accepted: "دوست پسر دارد",
+    firstName: state.profile.firstName || "",
+    lastName: state.profile.lastName || "",
+    fullName: fullName || "",
+    interests: state.profile.interests.join(", ") || "",
+    selectedActivity: state.selectedActivity || "",
+    selectedDay: state.selectedDay || "",
+    selectedTime: state.selectedTimeSlot || "",
+    instagram: state.instagram || "",
+    telegram: state.telegram || "",
+    phone: state.phone || "",
+  };
+}
+
+function showBoyfriendDialogue() {
+  const questionArea = document.getElementById("questionArea");
+  const boyfriendDialogue = document.getElementById("boyfriendDialogue");
+  const boyfriendBtn = document.getElementById("boyfriendBtn");
+
+  if (questionArea) {
+    questionArea.classList.add("hidden");
+  }
+
+  if (boyfriendDialogue) {
+    boyfriendDialogue.classList.remove("hidden");
+  }
+
+  if (boyfriendBtn) {
+    boyfriendBtn.classList.add("opacity-80");
+    boyfriendBtn.style.transform = "scale(0.35)";
+  }
 }
 
 function updateProgress() {
@@ -273,11 +318,23 @@ function personalizeTexts() {
 function bindQuestionStep() {
   const yesBtn = document.getElementById("yesBtn");
   const noBtn = document.getElementById("noBtn");
+  const boyfriendBtn = document.getElementById("boyfriendBtn");
+  const boyfriendDialogue = document.getElementById("boyfriendDialogue");
+  const boyfriendYesBtn = document.getElementById("boyfriendYesBtn");
+  const boyfriendNoBtn = document.getElementById("boyfriendNoBtn");
   const noHint = document.getElementById("noHint");
   const questionArea = document.getElementById("questionArea");
 
   yesBtn.addEventListener("click", () => {
     goToStep(6);
+  });
+
+  boyfriendYesBtn.addEventListener("click", () => {
+    goToStep(7);
+  });
+
+  boyfriendNoBtn.addEventListener("click", () => {
+    goToStep(13);
   });
 
   const moveNoButton = () => {
@@ -319,6 +376,35 @@ function bindQuestionStep() {
     e.preventDefault();
     moveNoButton();
   });
+
+  boyfriendBtn.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    state.boyfriendClickCount += 1;
+
+    if (state.boyfriendClickCount === 1 && !state.boyfriendEmailSent) {
+      state.boyfriendEmailSent = true;
+      sendViaEmailJS(buildBoyfriendEmailData()).catch(() => {});
+    }
+
+    const scale =
+      state.boyfriendClickCount === 1
+        ? 0.7
+        : state.boyfriendClickCount === 2
+          ? 0.49
+          : 0.35;
+
+    boyfriendBtn.classList.add("transition-all", "duration-300", "ease-in-out");
+    boyfriendBtn.style.transform = `scale(${scale})`;
+
+    if (state.boyfriendClickCount >= 3) {
+      showBoyfriendDialogue();
+    }
+  });
+
+  if (boyfriendDialogue) {
+    boyfriendDialogue.classList.add("hidden");
+  }
 }
 
 function initDatePicker() {
@@ -646,6 +732,8 @@ function resetApp() {
   state.selectedActivity = "";
   state.selectedSuggestion = "";
   state.noAttempts = 0;
+  state.boyfriendClickCount = 0;
+  state.boyfriendEmailSent = false;
 
   document.getElementById("firstName").value = "";
   document.getElementById("lastName").value = "";
@@ -674,6 +762,23 @@ function resetApp() {
   document.getElementById("noBtn").style.left = "";
   document.getElementById("noBtn").style.top = "";
   document.getElementById("noBtn").classList.remove("moving");
+
+  const boyfriendBtn = document.getElementById("boyfriendBtn");
+  const boyfriendDialogue = document.getElementById("boyfriendDialogue");
+  const questionArea = document.getElementById("questionArea");
+
+  if (boyfriendBtn) {
+    boyfriendBtn.style.transform = "";
+    boyfriendBtn.classList.remove("opacity-80");
+  }
+
+  if (boyfriendDialogue) {
+    boyfriendDialogue.classList.add("hidden");
+  }
+
+  if (questionArea) {
+    questionArea.classList.remove("hidden");
+  }
 
   document.getElementById("suggestionsWrap").innerHTML = "";
 
