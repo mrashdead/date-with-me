@@ -40,9 +40,9 @@
         <header class="mb-6">
           <div class="flex items-center justify-between gap-3 mb-4 flex-wrap">
             <div>
-              <h1 class="main-title">یک سوال مهم .... ✨</h1>
+              <h1 class="main-title" data-site-copy="topTitle">یک سوال مهم</h1>
             </div>
-            <div class="status-pill" id="stepLabel">مرحله 1 از 10</div>
+            <div class="status-pill" id="stepLabel">مرحله 1 از 13</div>
           </div>
 
           <div class="progress-wrap">
@@ -62,6 +62,7 @@
             <span class="step-dot"></span>
             <span class="step-dot"></span>
             <span class="step-dot"></span>
+            <span class="step-dot"></span>
           </div>
         </header>
 
@@ -70,8 +71,8 @@
           <!-- Step 1 -->
           <section id="step1" class="step active">
             <div class="step-icon">🌷</div>
-            <h2 class="step-title">سلام خوش اومدی عزیز،</h2>
-            <p class="step-desc">
+            <h2 class="step-title" data-site-copy="welcomeTitle">سلام، خوش اومدی</h2>
+            <p class="step-desc" data-site-copy="welcomeDescription">
               بذار اول یه کم از حال‌وهوای هم سر دربیاریم بعد بریم سر اصل مطلب
             </p>
 
@@ -83,8 +84,8 @@
           <!-- Step 2: نام و نشان -->
           <section id="step2" class="step">
             <div class="step-icon">💫</div>
-            <h2 class="step-title">بذار اول با اسمت آشنا شم</h2>
-            <p class="step-desc">
+            <h2 class="step-title" data-site-copy="nameTitle">بذار اول با اسمت آشنا شم</h2>
+            <p class="step-desc" data-site-copy="nameDescription">
               خیلی خوشحالم که اینجایی. برای شروع، اسم قشنگت رو بگو تا بدونم با
               کی دارم وقت می‌گذرونم.
             </p>
@@ -115,13 +116,13 @@
           <!-- Step 3: سلیقه و علاقه‌ها -->
           <section id="step3" class="step">
             <div class="step-icon">🎨</div>
-            <h2 class="step-title">سلیقه‌ت چیه؟</h2>
-            <p class="step-desc">
+            <h2 class="step-title" data-site-copy="interestTitle">سلیقه‌ت چیه؟</h2>
+            <p class="step-desc" data-site-copy="interestDescription">
              یه کم از سلیقه‌ت بگو تا بهتر بشناسمت...
             </p>
 
             <div class="mt-8">
-              <label class="block mb-3 text-sm text-slate-300"
+              <label class="block mb-3 text-sm text-slate-300" data-site-copy="interestPrompt"
                 >چیزایی که دوست داری رو انتخاب کن:</label
               >
               <div id="interestsWrap" class="chips-wrap">
@@ -176,7 +177,7 @@
           <!-- Step 4 -->
           <section id="step4" class="step">
             <div class="step-icon">🫶</div>
-            <h2 class="step-title">قبل از سوال اصلی...</h2>
+            <h2 class="step-title" data-site-copy="storyTitle">قبل از سوال اصلی...</h2>
             <p class="step-desc" id="introText">
               من علیرضام،
 از اون مدل آدما که یه قهوه و یه گفت‌وگوی خوب براشون از خیلی چیزا جذاب‌تره.
@@ -201,15 +202,17 @@
           <!-- Step 5 -->
           <section id="step5" class="step question-step">
             <div class="step-icon">💖</div>
-            <h2 class="step-title" id="questionTitle">با من میای بریم دیت؟</h2>
-            <p class="step-desc">
+            <h2 class="step-title" id="questionTitle" data-site-copy="questionTitle">با من میای بریم دیت؟</h2>
+            <p class="step-desc" data-site-copy="questionDescription">
               خیلی محترمانه، خیلی جدی، و البته با مقدار کمی اصرار بامزه 😌
             </p>
 
             <div class="question-actions mt-10" id="questionArea">
-              <button id="yesBtn" class="primary-btn big-btn">بله 💘</button>
-              <button id="noBtn" class="secondary-btn big-btn">خیر 😶</button>
-              <button id="boyfriendBtn" class="secondary-btn big-btn">دوست پسر دارم</button>
+              <button id="yesBtn" class="primary-btn big-btn"><span data-site-copy="yesLabel">بله</span> 💘</button>
+              <div class="no-button-arena" id="noButtonArena">
+                <button id="noBtn" class="secondary-btn big-btn"><span data-site-copy="noLabel">خیر</span> 😶</button>
+              </div>
+              <button id="boyfriendBtn" class="secondary-btn big-btn" data-site-copy="partnerLabel">دوست‌پسر دارم</button>
             </div>
 
             <div id="boyfriendDialogue" class="boyfriend-dialogue hidden mt-6">
@@ -243,12 +246,12 @@
           <!-- Step 7 -->
           <section id="step7" class="step">
             <div class="step-icon">📅</div>
-            <h2 class="step-title">زمان قرار رو انتخاب کن</h2>
-            <p class="step-desc">یه روز و ساعت خوب از این هفته انتخاب کن تا هماهنگ کنیم</p>
+            <h2 class="step-title" data-site-copy="scheduleTitle">زمان قرار رو انتخاب کن</h2>
+            <p class="step-desc" data-site-copy="scheduleDescription">یک روز و ساعت مناسب انتخاب کن تا هماهنگ کنیم.</p>
 
             <div class="form-grid mt-8">
               <div class="input-group">
-                <label>روز هفته</label>
+                <label>روز یا تاریخ</label>
                 <div id="dateOptionsWrap" class="cards-grid mt-3">
                   <button type="button" class="activity-card day-card" data-day="شنبه">شنبه</button>
                   <button type="button" class="activity-card day-card" data-day="یکشنبه">یکشنبه</button>
@@ -261,7 +264,7 @@
               </div>
 
               <div class="input-group">
-                <label>بازه زمانی</label>
+                <label>ساعت قرار</label>
                 <div id="timeOptionsWrap" class="chips-wrap mt-3">
                   <button type="button" class="chip time-chip" data-time="عصر">عصر</button>
                   <button type="button" class="chip time-chip" data-time="شب">شب</button>
@@ -283,10 +286,10 @@
           <!-- Step 8 -->
           <section id="step8" class="step">
             <div class="step-icon">🎈</div>
-            <h2 class="step-title">
+            <h2 class="step-title" data-site-copy="activityTitle">
               دوست داری قراره‌مون چه حال‌وهوایی داشته باشه؟
             </h2>
-            <p class="step-desc">
+            <p class="step-desc" data-site-copy="activityDescription">
               یکی را انتخاب کن تا بر اساسش پیشنهادهای بهتر بدهم.
             </p>
 
@@ -348,8 +351,8 @@
           <!-- Step 9 -->
           <section id="step9" class="step">
             <div class="step-icon">✨</div>
-            <h2 class="step-title">پیشنهادهای من برای این قرار</h2>
-            <p class="step-desc">
+            <h2 class="step-title" data-site-copy="suggestionTitle">پیشنهادهای من برای این قرار</h2>
+            <p class="step-desc" data-site-copy="suggestionDescription">
              با توجه به انتخابت، اینارو میتونیم تجربه کنیم
             </p>
 

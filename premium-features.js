@@ -13,12 +13,12 @@ const ThemeSystem = {
       name: 'default',
       label: 'Default',
       colors: {
-        '--bg-1': '#0b1020',
-        '--bg-2': '#16112b',
-        '--primary-1': '#fb7185',
-        '--primary-2': '#c084fc',
-        '--primary-3': '#f9a8d4',
-        '--accent': '#f9a8d4',
+        '--bg-1': '#f7f5f1',
+        '--bg-2': '#f7f5f1',
+        '--primary-1': '#9f4353',
+        '--primary-2': '#9f4353',
+        '--primary-3': '#b86976',
+        '--accent': '#b86976',
       },
       effect: null,
     },
@@ -26,40 +26,40 @@ const ThemeSystem = {
       name: 'coffee',
       label: 'Coffee / Cozy ☕',
       colors: {
-        '--bg-1': '#1a1410',
-        '--bg-2': '#2d2218',
-        '--primary-1': '#d4a574',
-        '--primary-2': '#c9915e',
-        '--primary-3': '#e8c89f',
-        '--accent': '#d4a574',
+        '--bg-1': '#f7f5f1',
+        '--bg-2': '#f7f5f1',
+        '--primary-1': '#95654a',
+        '--primary-2': '#95654a',
+        '--primary-3': '#b8896d',
+        '--accent': '#b8896d',
       },
-      effect: 'steam',
+      effect: null,
     },
     nature: {
       name: 'nature',
       label: 'Nature / Fresh 🌿',
       colors: {
-        '--bg-1': '#0d1f14',
-        '--bg-2': '#132b1f',
-        '--primary-1': '#34d399',
-        '--primary-2': '#10b981',
-        '--primary-3': '#6ee7b7',
-        '--accent': '#34d399',
+        '--bg-1': '#f7f5f1',
+        '--bg-2': '#f7f5f1',
+        '--primary-1': '#547457',
+        '--primary-2': '#547457',
+        '--primary-3': '#7d9a7e',
+        '--accent': '#7d9a7e',
       },
-      effect: 'leaves',
+      effect: null,
     },
     gaming: {
       name: 'gaming',
       label: 'Gaming / Neon 🎮',
       colors: {
-        '--bg-1': '#0f0f1e',
-        '--bg-2': '#1a1a3f',
-        '--primary-1': '#00ffff',
-        '--primary-2': '#ff00ff',
-        '--primary-3': '#00ff88',
-        '--accent': '#00ffff',
+        '--bg-1': '#f7f5f1',
+        '--bg-2': '#f7f5f1',
+        '--primary-1': '#566b83',
+        '--primary-2': '#566b83',
+        '--primary-3': '#8396ac',
+        '--accent': '#8396ac',
       },
-      effect: 'neon',
+      effect: null,
     },
   },
 
@@ -797,15 +797,15 @@ const injectAnimations = () => {
     /* Digital Ticket Styles */
     .digital-ticket {
       display: flex;
-      background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-      border: 2px solid rgba(255, 255, 255, 0.2);
+      background: #ffffff;
+      border: 1px solid #e8e4de;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      box-shadow: none;
       max-width: 800px;
       margin: 0 auto;
       font-family: "Vazirmatn", sans-serif;
-      color: #fff;
+      color: var(--text-main);
     }
 
     .ticket-left {
@@ -825,7 +825,7 @@ const injectAnimations = () => {
 
     .ticket-subtitle {
       text-align: center;
-      color: #999;
+      color: var(--text-faint);
       font-size: 0.85rem;
       margin: 5px 0 0;
     }
@@ -839,13 +839,13 @@ const injectAnimations = () => {
     .ticket-field {
       text-align: right;
       padding: 10px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      border-bottom: 1px solid #e8e4de;
     }
 
     .field-label {
       display: block;
       font-size: 0.75rem;
-      color: #999;
+      color: var(--text-faint);
       text-transform: uppercase;
       letter-spacing: 1px;
       margin-bottom: 4px;
@@ -859,7 +859,7 @@ const injectAnimations = () => {
     }
 
     .ticket-baggage {
-      background: rgba(255, 255, 255, 0.05);
+      background: #f7f5f1;
       padding: 15px;
       border-radius: 8px;
       font-size: 0.9rem;
@@ -868,7 +868,7 @@ const injectAnimations = () => {
 
     .ticket-baggage p {
       margin: 0 0 10px;
-      color: #ccc;
+      color: var(--text-main);
     }
 
     .ticket-baggage ul {
@@ -879,15 +879,15 @@ const injectAnimations = () => {
 
     .ticket-baggage li {
       padding: 4px 0;
-      color: #aaa;
+      color: var(--text-soft);
     }
 
     .ticket-perforation {
       width: 2px;
       background: repeating-linear-gradient(
         to bottom,
-        rgba(255, 255, 255, 0.3) 0px,
-        rgba(255, 255, 255, 0.3) 10px,
+        #d9d3ca 0px,
+        #d9d3ca 10px,
         transparent 10px,
         transparent 20px
       );
@@ -901,7 +901,7 @@ const injectAnimations = () => {
       flex-direction: column;
       align-items: center;
       justify-content: space-around;
-      background: rgba(255, 255, 255, 0.03);
+      background: #fbf9f6;
     }
 
     .ticket-barcode {
@@ -918,7 +918,7 @@ const injectAnimations = () => {
       font-size: 0.7rem;
       letter-spacing: 2px;
       margin-top: 8px;
-      color: #999;
+      color: var(--text-faint);
     }
 
     .ticket-seal {
@@ -975,33 +975,34 @@ const injectAnimations = () => {
     }
 
     .ticket-btn {
+      min-height: 48px;
       padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
+      border: 1px solid transparent;
+      border-radius: 10px;
       font-weight: 600;
       cursor: pointer;
-      transition: all 0.3s ease;
+      transition: background-color 180ms ease, transform 180ms ease;
       font-size: 0.95rem;
     }
 
     .ticket-btn.primary {
-      background: linear-gradient(135deg, var(--primary-1), var(--primary-2));
+      background: var(--primary-1);
       color: #fff;
     }
 
     .ticket-btn.primary:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(251, 113, 133, 0.3);
+      background: #813644;
+      transform: translateY(-1px);
     }
 
     .ticket-btn.secondary {
-      background: rgba(255, 255, 255, 0.1);
-      color: var(--text-soft);
-      border: 1px solid rgba(255, 255, 255, 0.2);
+      background: #f7f5f1;
+      color: var(--text-main);
+      border-color: #e8e4de;
     }
 
     .ticket-btn.secondary:hover {
-      background: rgba(255, 255, 255, 0.15);
+      background: #efebe5;
     }
 
     /* Responsive */

@@ -1,0 +1,144 @@
+content:
+  - name: site
+    label: محتوای سایت و زمان‌بندی
+    type: file
+    path: content/site.json
+    format: json
+    operations:
+      delete: false
+    fields:
+      - name: copy
+        label: متن‌های صفحه
+        type: object
+        fields:
+          - { name: pageTitle, label: عنوان مرورگر, type: string }
+          - { name: topTitle, label: تیتر بالای صفحه, type: string }
+          - { name: welcomeTitle, label: تیتر شروع, type: string }
+          - { name: welcomeDescription, label: توضیح شروع, type: text }
+          - { name: nameTitle, label: تیتر نام, type: string }
+          - { name: nameDescription, label: توضیح نام, type: text }
+          - { name: interestTitle, label: تیتر علاقه‌ها, type: string }
+          - { name: interestDescription, label: توضیح علاقه‌ها, type: text }
+          - { name: interestPrompt, label: راهنمای انتخاب علاقه‌ها, type: string }
+          - { name: storyTitle, label: تیتر معرفی, type: string }
+          - { name: storyText, label: متن معرفی, type: text }
+          - { name: questionTitle, label: پرسش اصلی, type: string }
+          - { name: questionDescription, label: توضیح پرسش, type: text }
+          - { name: yesLabel, label: متن دکمه بله, type: string }
+          - { name: noLabel, label: متن دکمه نه, type: string }
+          - { name: partnerLabel, label: متن وضعیت رابطه, type: string }
+          - { name: scheduleTitle, label: تیتر انتخاب زمان, type: string }
+          - { name: scheduleDescription, label: توضیح انتخاب زمان, type: text }
+          - { name: activityTitle, label: تیتر انتخاب قرار, type: string }
+          - { name: activityDescription, label: توضیح انتخاب قرار, type: text }
+          - { name: suggestionTitle, label: تیتر پیشنهادها, type: string }
+          - { name: suggestionDescription, label: توضیح پیشنهادها, type: text }
+      - name: nameSettings
+        label: نام ازپیش‌تعیین‌شده
+        type: object
+        fields:
+          - { name: skipNameStep, label: مرحله نام رد شود, type: boolean }
+          - { name: firstName, label: نام, type: string }
+          - { name: lastName, label: نام خانوادگی, type: string }
+      - name: schedule
+        label: روزها و ساعت‌های مجاز
+        type: object
+        fields:
+          - name: days
+            label: روزها یا تاریخ‌های مجاز
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: value, label: مقدار ثبت‌شده, type: string }
+              - { name: label, label: متن دکمه, type: string }
+              - { name: enabled, label: این روز فعال باشد, type: boolean }
+          - name: times
+            label: ساعت‌های مجاز
+            type: object
+            list:
+              collapsible:
+                collapsed: true
+                summary: "{label}"
+            fields:
+              - { name: value, label: ساعت ثبت‌شده, type: string }
+              - { name: label, label: متن دکمه, type: string }
+              - { name: enabled, label: این ساعت فعال باشد, type: boolean }
+      - name: interests
+        label: علاقه‌ها
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{label}"
+        fields:
+          - { name: value, label: مقدار فنی, type: string }
+          - { name: label, label: عنوان نمایشی, type: string }
+          - { name: symbol, label: نماد, type: string }
+      - name: activities
+        label: کارت‌های نوع قرار
+        type: object
+        list:
+          collapsible:
+            collapsed: true
+            summary: "{title}"
+        fields:
+          - { name: value, label: مقدار فنی, type: string }
+          - { name: title, label: عنوان کارت, type: string }
+          - { name: description, label: توضیح کارت, type: text }
+          - { name: symbol, label: نماد, type: string }
+      - name: suggestions
+        label: پیشنهادها بر اساس نوع قرار
+        type: object
+        fields:
+          - name: کافه
+            label: پیشنهادهای کافه
+            type: object
+            list: true
+            fields:
+              - { name: title, label: عنوان, type: string }
+              - { name: desc, label: توضیح, type: text }
+          - name: پیاده‌روی
+            label: پیشنهادهای پیاده‌روی
+            type: object
+            list: true
+            fields:
+              - { name: title, label: عنوان, type: string }
+              - { name: desc, label: توضیح, type: text }
+          - name: سینما
+            label: پیشنهادهای سینما
+            type: object
+            list: true
+            fields:
+              - { name: title, label: عنوان, type: string }
+              - { name: desc, label: توضیح, type: text }
+          - name: رستوران
+            label: پیشنهادهای رستوران
+            type: object
+            list: true
+            fields:
+              - { name: title, label: عنوان, type: string }
+              - { name: desc, label: توضیح, type: text }
+          - name: بستنی
+            label: پیشنهادهای بستنی
+            type: object
+            list: true
+            fields:
+              - { name: title, label: عنوان, type: string }
+              - { name: desc, label: توضیح, type: text }
+          - name: کتاب‌فروشی
+            label: پیشنهادهای کتاب‌فروشی
+            type: object
+            list: true
+            fields:
+              - { name: title, label: عنوان, type: string }
+              - { name: desc, label: توضیح, type: text }
+          - name: گیم کلاب
+            label: پیشنهادهای گیم کلاب
+            type: object
+            list: true
+            fields:
+              - { name: title, label: عنوان, type: string }
+              - { name: desc, label: توضیح, type: text }

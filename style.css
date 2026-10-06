@@ -514,6 +514,15 @@ body {
   line-height: 2;
 }
 
+.bg-blur,
+#hearts-bg {
+  display: none;
+}
+
+.celebrate-icon {
+  animation: none;
+}
+
 .bg-blur {
   position: fixed;
   border-radius: 999px;
@@ -652,5 +661,451 @@ body {
   .status-pill {
     width: 100%;
     text-align: center;
+  }
+}
+
+/* Mobile-first refresh: warm paper surfaces, clearer controls, less wasted space. */
+:root {
+  color-scheme: light;
+  --bg-1: #f7f5f1;
+  --bg-2: #f7f5f1;
+  --card: #ffffff;
+  --card-border: #e8e4de;
+  --text-main: #282622;
+  --text-soft: #625f59;
+  --text-faint: #817d75;
+  --primary-1: #9f4353;
+  --primary-2: #9f4353;
+  --primary-3: #b86976;
+  --success: #346538;
+  --danger: #9f2f2d;
+  --shadow: 0 8px 30px rgba(46, 39, 31, 0.06);
+  --radius-xl: 20px;
+  --radius-lg: 14px;
+  --transition: 200ms ease;
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--bg-1);
+}
+
+body {
+  min-width: 320px;
+  color: var(--text-main);
+  background: var(--bg-1);
+  overflow-x: clip;
+}
+
+.app-shell {
+  min-height: 100vh;
+  min-height: 100dvh;
+  padding: clamp(12px, 3vw, 32px);
+}
+
+.romance-card {
+  width: min(820px, 100%);
+  min-height: 0;
+  padding: clamp(18px, 4vw, 36px);
+  border: 1px solid var(--card-border);
+  border-radius: var(--radius-xl);
+  background: var(--card);
+  box-shadow: var(--shadow);
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+.romance-card::before {
+  display: none;
+}
+
+.main-title,
+.step-title {
+  color: var(--text-main);
+  text-wrap: balance;
+}
+
+.eyebrow,
+.hint-text,
+.soft-note {
+  color: var(--primary-1);
+}
+
+.status-pill {
+  border-radius: 10px;
+  border-color: var(--card-border);
+  background: #f7f5f1;
+  color: var(--text-soft);
+}
+
+.progress-wrap {
+  height: 7px;
+  border: 0;
+  background: #eeeae4;
+}
+
+.progress-bar {
+  background: var(--primary-1);
+  box-shadow: none;
+}
+
+.step-dot {
+  background: #dedad3;
+}
+
+.step-dot.active {
+  background: var(--primary-1);
+}
+
+.steps-container {
+  min-height: 0;
+}
+
+.step-icon {
+  width: 64px;
+  height: 64px;
+  margin: 8px auto 16px;
+  border: 1px solid var(--card-border);
+  border-radius: 18px;
+  background: #fbf3f1;
+  box-shadow: none;
+}
+
+.step-desc {
+  max-width: 58ch;
+  color: var(--text-soft);
+  line-height: 1.85;
+  text-wrap: pretty;
+}
+
+.boyfriend-dialogue p,
+.summary-row strong,
+.final-message {
+  color: var(--text-main);
+}
+
+.final-message {
+  background: #fbf3f1;
+  border-color: var(--card-border);
+}
+
+.summary-row {
+  border-color: var(--card-border);
+}
+
+.input-group input,
+.input-group select {
+  min-height: 52px;
+  border-color: var(--card-border);
+  border-radius: 12px;
+  background: #fff;
+  color: var(--text-main);
+}
+
+.input-group input::placeholder {
+  color: var(--text-faint);
+}
+
+.input-group input:focus,
+.input-group select:focus {
+  border-color: var(--primary-1);
+  box-shadow: 0 0 0 3px rgba(159, 67, 83, 0.12);
+}
+
+.chip,
+.activity-card,
+.suggestion-card,
+.boyfriend-dialogue,
+.intro-card,
+.summary-card {
+  border-color: var(--card-border);
+  background: #fff;
+  color: var(--text-main);
+  box-shadow: none;
+}
+
+.chips-wrap {
+  gap: 10px;
+}
+
+.chip {
+  min-height: 48px;
+  border-radius: 12px;
+  padding: 11px 14px;
+  color: var(--text-soft);
+}
+
+.chip.selected,
+.activity-card.selected,
+.suggestion-card.selected {
+  border-color: #c99099;
+  background: #fbf3f1;
+  color: #71303b;
+  box-shadow: none;
+  transform: none;
+}
+
+.primary-btn,
+.secondary-btn {
+  min-height: 50px;
+  padding: 12px 20px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  font-size: 0.98rem;
+  transition: background-color 180ms ease, border-color 180ms ease, transform 180ms ease;
+  touch-action: manipulation;
+}
+
+.primary-btn {
+  background: var(--primary-1);
+  box-shadow: none;
+}
+
+.secondary-btn {
+  border-color: var(--card-border);
+  background: #f7f5f1;
+  color: var(--text-main);
+}
+
+.big-btn {
+  min-height: 54px;
+}
+
+.activity-card {
+  min-height: 140px;
+  border-radius: 14px;
+  padding: 18px 14px;
+}
+
+.activity-card .emoji {
+  border-radius: 12px;
+  background: #f7f5f1;
+}
+
+.activity-card p,
+.suggestion-desc,
+.intro-card {
+  color: var(--text-soft);
+}
+
+.suggestion-card {
+  border-radius: 14px;
+  padding: 18px;
+}
+
+.question-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: center;
+  justify-items: stretch;
+  gap: 12px;
+  min-height: 176px;
+  padding: 16px;
+  border-radius: 16px;
+  background: #fbf9f6;
+  border: 1px solid #eeeae4;
+  overflow: hidden;
+}
+
+.no-button-arena {
+  position: relative;
+  isolation: isolate;
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 84px;
+  min-width: 0;
+  overflow: hidden;
+  border-radius: 12px;
+}
+
+#noBtn.moving {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate3d(var(--no-x), var(--no-y), 0);
+  z-index: 2;
+}
+
+button,
+a,
+input,
+select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible,
+select:focus-visible {
+  outline: 3px solid rgba(159, 67, 83, 0.42);
+  outline-offset: 3px;
+}
+
+.error-text {
+  color: var(--danger);
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .primary-btn:hover {
+    background: #813644;
+    box-shadow: none;
+    transform: translateY(-1px);
+  }
+
+  .secondary-btn:hover,
+  .chip:hover,
+  .activity-card:hover,
+  .suggestion-card:hover {
+    border-color: #c9b9b1;
+    box-shadow: 0 2px 8px rgba(46, 39, 31, 0.05);
+    transform: translateY(-1px);
+  }
+}
+
+button:active {
+  transform: scale(0.985);
+}
+
+@media (max-width: 768px) {
+  .app-shell {
+    place-items: start center;
+    padding: 12px;
+  }
+
+  .romance-card {
+    min-height: 0;
+    padding: 18px 16px 24px;
+    border-radius: 18px;
+  }
+
+  .step-title {
+    font-size: clamp(1.35rem, 5vw, 1.65rem);
+    line-height: 1.45;
+  }
+
+  .steps-container {
+    min-height: 0;
+  }
+
+  .form-grid {
+    gap: 14px;
+  }
+
+  .question-actions {
+    min-height: 190px;
+    gap: 10px;
+    padding: 14px;
+  }
+
+  .big-btn {
+    width: auto;
+    min-width: 0;
+  }
+
+  .status-pill {
+    width: auto;
+  }
+}
+
+@media (max-width: 540px) {
+  .cards-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .cards-grid .activity-card {
+    min-width: 0;
+    min-height: 134px;
+    padding: 14px 10px;
+  }
+
+  .activity-card h3 {
+    font-size: 0.94rem;
+    overflow-wrap: anywhere;
+  }
+
+  .activity-card p {
+    font-size: 0.82rem;
+  }
+
+  .question-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    min-height: 0;
+    padding: 12px;
+  }
+
+  #yesBtn {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  #boyfriendBtn {
+    grid-column: 2;
+    grid-row: 1;
+    min-width: 0;
+    padding-inline: 8px;
+  }
+
+  .no-button-arena {
+    grid-column: 1 / -1;
+    grid-row: 2;
+    height: 76px;
+  }
+
+  .status-pill {
+    text-align: center;
+  }
+
+  .summary-row {
+    flex-direction: row;
+    align-items: center;
+  }
+}
+
+@media (max-width: 360px) {
+  .app-shell {
+    padding: 8px;
+  }
+
+  .romance-card {
+    padding-inline: 12px;
+  }
+
+  .cards-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .question-actions {
+    grid-template-columns: 1fr;
+  }
+
+  #yesBtn,
+  #boyfriendBtn,
+  .no-button-arena {
+    grid-column: 1;
+  }
+
+  #yesBtn {
+    grid-row: 1;
+  }
+
+  #boyfriendBtn {
+    grid-row: 2;
+  }
+
+  .no-button-arena {
+    grid-row: 3;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
   }
 }

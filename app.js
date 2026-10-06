@@ -11,6 +11,8 @@ const state = {
   selectedTime: "",
   selectedDay: "",
   selectedTimeSlot: "",
+  selectedDayLabel: "",
+  selectedTimeLabel: "",
   selectedActivity: "",
   selectedSuggestion: "",
   instagram: "",
@@ -21,7 +23,9 @@ const state = {
   boyfriendEmailSent: false,
 };
 
-const activitySuggestions = {
+let siteContent = null;
+
+let activitySuggestions = {
   کافه: [
     {
       title: "کافه‌ دارکو + گپ دونفره آرام",
@@ -124,6 +128,18 @@ const activitySuggestions = {
 
 
 document.addEventListener("DOMContentLoaded", () => {
+  fetchSiteContent()
+    .then((content) => {
+      siteContent = content;
+      applySiteContent(content);
+    })
+    .catch((error) => {
+      console.warn("Site content could not be loaded; using built-in content.", error);
+    })
+    .finally(initializeApp);
+});
+
+function initializeApp() {
   initHearts();
   bindGeneralNavigation();
   bindNameStep();
@@ -134,11 +150,170 @@ document.addEventListener("DOMContentLoaded", () => {
   bindSuggestionStep();
   bindContactStep();
   bindFinalStep();
-  TicketGenerator.init();
   initDatePicker();
   updateProgress();
   ensureEmailJSReady().catch(() => {});
-});
+}
+
+function fetchSiteContent() {
+  const contentUrl = new URL("./content/site.json", document.baseURI);
+  return fetch(contentUrl).then((response) => {
+    if (!response.ok) throw new Error(`Content request failed (${response.status})`);
+    return response.json();
+  });
+}
+
+function applySiteContent(content) {
+  if (content.copy && typeof content.copy === "object") {
+    document.querySelectorAll("[data-site-copy]").forEach((element) => {
+      const value = content.copy[element.dataset.siteCopy];
+      if (typeof value === "string") element.textContent = value;
+    });
+
+    if (typeof content.copy.pageTitle === "string") {
+      document.title = content.copy.pageTitle;
+    }
+  }
+
+  if (Array.isArray(content.interests)) {
+    renderInterestOptions(content.interests);
+    if (window.ThemeSystem) window.ThemeSystem.setupThemeListeners();
+  }
+  if (Array.isArray(content.activities)) renderActivityOptions(content.activities);
+  applyNameSettings(content.nameSettings);
+  renderScheduleOptions(content.schedule);
+  if (content.suggestions && typeof content.suggestions === "object") {
+    activitySuggestions = content.suggestions;
+  }
+}
+
+function applyNameSettings(settings = {}) {
+  const firstName = typeof settings.firstName === "string" ? settings.firstName.trim() : "";
+  const lastName = typeof settings.lastName === "string" ? settings.lastName.trim() : "";
+
+  document.getElementById("firstName").value = firstName;
+  document.getElementById("lastName").value = lastName;
+
+  if (settings.skipNameStep && firstName) {
+    state.profile.firstName = firstName;
+    state.profile.lastName = lastName;
+  }
+}
+
+function shouldSkipNameStep() {
+  const settings = siteContent?.nameSettings;
+  const firstName = typeof settings?.firstName === "string" ? settings.firstName.trim() : "";
+  return Boolean(settings?.skipNameStep && firstName);
+}
+
+function renderScheduleOptions(schedule) {
+  if (!schedule || !Array.isArray(schedule.days) || !Array.isArray(schedule.times)) return;
+  if (!schedule.days.length || !schedule.times.length) return;
+
+  const enabledDays = schedule.days.filter((day) => day.enabled !== false);
+  const enabledTimes = schedule.times.filter((time) => time.enabled !== false);
+
+  const daysWrap = document.getElementById("dateOptionsWrap");
+  const timesWrap = document.getElementById("timeOptionsWrap");
+  if (!daysWrap || !timesWrap) return;
+
+  daysWrap.replaceChildren();
+  enabledDays.forEach((day) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "activity-card day-card";
+    button.dataset.day = day.value;
+    button.dataset.label = day.label;
+    button.textContent = day.label;
+    daysWrap.append(button);
+  });
+
+  timesWrap.replaceChildren();
+  enabledTimes.forEach((time) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "chip time-chip";
+    button.dataset.time = time.value;
+    button.dataset.label = time.label;
+    button.textContent = time.label;
+    timesWrap.append(button);
+  });
+
+  selectSingleScheduleDefaults();
+}
+
+function selectSingleScheduleDefaults() {
+  const dayButtons = Array.from(document.querySelectorAll(".day-card"));
+  const timeButtons = Array.from(document.querySelectorAll(".time-chip"));
+
+  state.selectedDay = "";
+  state.selectedDayLabel = "";
+  state.selectedTimeSlot = "";
+  state.selectedTimeLabel = "";
+
+  if (dayButtons.length === 1) {
+    dayButtons[0].classList.add("selected");
+    state.selectedDay = dayButtons[0].dataset.day;
+    state.selectedDayLabel = dayButtons[0].dataset.label || dayButtons[0].textContent.trim();
+  }
+
+  if (timeButtons.length === 1) {
+    timeButtons[0].classList.add("selected");
+    state.selectedTimeSlot = timeButtons[0].dataset.time;
+    state.selectedTimeLabel = timeButtons[0].dataset.label || timeButtons[0].textContent.trim();
+  }
+}
+
+function renderInterestOptions(interests) {
+  const wrap = document.getElementById("interestsWrap");
+  if (!wrap) return;
+
+  wrap.replaceChildren();
+  interests.forEach((interest) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "chip";
+    button.dataset.interest = interest.value;
+    button.append(document.createTextNode(interest.label));
+
+    if (interest.symbol) {
+      const symbol = document.createElement("span");
+      symbol.className = "option-symbol";
+      symbol.setAttribute("aria-hidden", "true");
+      symbol.textContent = interest.symbol;
+      button.append(" ", symbol);
+    }
+
+    wrap.append(button);
+  });
+}
+
+function renderActivityOptions(activities) {
+  const wrap = document.getElementById("activitiesWrap");
+  if (!wrap) return;
+
+  wrap.replaceChildren();
+  activities.forEach((activity) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "activity-card";
+    button.dataset.activity = activity.value;
+
+    const symbol = document.createElement("span");
+    symbol.className = "emoji";
+    symbol.setAttribute("aria-hidden", "true");
+    symbol.textContent = activity.symbol || "•";
+
+    const title = document.createElement("h3");
+    title.textContent = activity.title;
+
+    const description = document.createElement("p");
+    description.textContent = activity.description;
+
+    button.append(symbol, title, description);
+    wrap.append(button);
+  });
+}
 
 function bindGeneralNavigation() {
   document.querySelectorAll("[data-next]").forEach((btn) => {
@@ -150,6 +325,12 @@ function bindGeneralNavigation() {
 }
 
 function goToStep(stepNumber) {
+  if (stepNumber === 2 && shouldSkipNameStep()) {
+    state.profile.firstName = siteContent.nameSettings.firstName.trim();
+    state.profile.lastName = (siteContent.nameSettings.lastName || "").trim();
+    stepNumber = 3;
+  }
+
   document.querySelectorAll(".step").forEach((step) => {
     step.classList.remove("active");
   });
@@ -159,16 +340,8 @@ function goToStep(stepNumber) {
     nextStep.classList.add("active");
     state.currentStep = stepNumber;
     updateProgress();
-    // If we navigate to the schedule step, ensure the Persian datepicker is initialized
     if (stepNumber === 7) {
-      setTimeout(() => {
-        try {
-          // Initialize day/time buttons for schedule selection
-          bindDayAndTimeButtons();
-        } catch (err) {
-          console.warn('Schedule init error:', err);
-        }
-      }, 60);
+      updateSchedulePreview();
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
   }
@@ -303,16 +476,23 @@ function showBoyfriendDialogue() {
 }
 
 function updateProgress() {
-  const progress = ((state.currentStep - 1) / (TOTAL_STEPS - 1)) * 100;
+  const skipNameStep = shouldSkipNameStep();
+  const logicalStep = skipNameStep && state.currentStep > 2
+    ? state.currentStep - 1
+    : state.currentStep;
+  const logicalTotal = TOTAL_STEPS - (skipNameStep ? 1 : 0);
+  const progress = ((logicalStep - 1) / (logicalTotal - 1)) * 100;
   const progressBar = document.getElementById("progressBar");
   const stepLabel = document.getElementById("stepLabel");
   const dots = document.querySelectorAll(".step-dot");
 
   progressBar.style.width = `${progress}%`;
-  stepLabel.textContent = `مرحله ${state.currentStep} از ${TOTAL_STEPS}`;
+  stepLabel.textContent = `مرحله ${logicalStep} از ${logicalTotal}`;
 
   dots.forEach((dot, index) => {
-    dot.classList.toggle("active", index === state.currentStep - 1);
+    dot.hidden = skipNameStep && index === 1;
+    const logicalIndex = skipNameStep && index > 1 ? index - 1 : index;
+    dot.classList.toggle("active", logicalIndex === logicalStep - 1);
   });
 }
 
@@ -372,16 +552,17 @@ function personalizeTexts() {
   const fullName =
     `${state.profile.firstName} ${state.profile.lastName}`.trim();
   const firstName = state.profile.firstName || "تو";
-
-  document.getElementById("introText").innerHTML = `
-    <h2>${fullName} عزیز،</h2>
-    <br />
-  من علیرضام،
-از اون مدل آدما که یه قهوه و یه گفت‌وگوی خوب براشون از خیلی چیزا جذاب‌تره.
-  `;
+  const introText = document.getElementById("introText");
+  const greeting = document.createElement("strong");
+  greeting.textContent = `${fullName} عزیز،`;
+  introText.replaceChildren(
+    greeting,
+    document.createElement("br"),
+    document.createTextNode(siteContent?.copy?.storyText || "من علیرضام، از اون مدل آدما که یه گفت‌وگوی خوب براشون جذابه."),
+  );
 
   document.getElementById("questionTitle").textContent =
-    `${firstName}، بریم یه قرار خودمونی بچینیم؟`;
+    `${firstName}، ${siteContent?.copy?.questionTitle || "با من میای بریم دیت؟"}`;
 
   document.getElementById("celebrateText").textContent =
     `${firstName}، واقعاً خوشحالم که قبول کردی. بزن بریم ببینیم چه چیزی بیشتر به دلت می‌شینه.`;
@@ -395,7 +576,8 @@ function bindQuestionStep() {
   const boyfriendYesBtn = document.getElementById("boyfriendYesBtn");
   const boyfriendNoBtn = document.getElementById("boyfriendNoBtn");
   const noHint = document.getElementById("noHint");
-  const questionArea = document.getElementById("questionArea");
+  const noButtonArena = document.getElementById("noButtonArena");
+  let noButtonMoveLocked = false;
 
   yesBtn.addEventListener("click", () => {
     goToStep(6);
@@ -410,20 +592,25 @@ function bindQuestionStep() {
   });
 
   const moveNoButton = () => {
+    if (noButtonMoveLocked) return;
+    noButtonMoveLocked = true;
+    window.setTimeout(() => {
+      noButtonMoveLocked = false;
+    }, 350);
+
     state.noAttempts += 1;
 
-    const areaRect = questionArea.getBoundingClientRect();
     const btnRect = noBtn.getBoundingClientRect();
 
-    const maxX = Math.max(0, areaRect.width - btnRect.width - 10);
-    const maxY = Math.max(0, areaRect.height - btnRect.height - 10);
+    const maxX = Math.max(0, noButtonArena.clientWidth - btnRect.width - 16);
+    const maxY = Math.max(0, noButtonArena.clientHeight - btnRect.height - 16);
 
-    const randomX = Math.floor(Math.random() * maxX);
-    const randomY = Math.floor(Math.random() * maxY);
+    const randomX = 8 + Math.floor(Math.random() * maxX);
+    const randomY = 8 + Math.floor(Math.random() * maxY);
 
     noBtn.classList.add("moving");
-    noBtn.style.left = `${randomX}px`;
-    noBtn.style.top = `${randomY}px`;
+    noBtn.style.setProperty("--no-x", `${randomX}px`);
+    noBtn.style.setProperty("--no-y", `${randomY}px`);
 
     if (state.noAttempts >= 2) {
       noHint.classList.remove("hidden");
@@ -434,19 +621,24 @@ function bindQuestionStep() {
     }
   };
 
-  noBtn.addEventListener("mouseenter", moveNoButton);
-  noBtn.addEventListener(
-    "touchstart",
-    (e) => {
-      e.preventDefault();
-      moveNoButton();
-    },
-    { passive: false },
-  );
+  noBtn.addEventListener("pointerenter", (event) => {
+    if (event.pointerType === "mouse") moveNoButton();
+  });
 
-  noBtn.addEventListener("click", (e) => {
-    e.preventDefault();
-    moveNoButton();
+  noBtn.addEventListener("pointerdown", (event) => {
+    if (event.pointerType === "touch") {
+      event.preventDefault();
+      moveNoButton();
+    }
+  });
+
+  noBtn.addEventListener("click", (event) => {
+    if (event.detail === 0) {
+      goToStep(13);
+      return;
+    }
+
+    event.preventDefault();
   });
 
   boyfriendBtn.addEventListener("click", (e) => {
@@ -495,6 +687,7 @@ function bindDayAndTimeButtons() {
       dayButtons.forEach((b) => b.classList.remove('selected'));
       btn.classList.add('selected');
       state.selectedDay = btn.dataset.day;
+      state.selectedDayLabel = btn.dataset.label || btn.textContent.trim();
       updateSchedulePreview();
     });
   });
@@ -504,6 +697,7 @@ function bindDayAndTimeButtons() {
       timeChips.forEach((c) => c.classList.remove('selected'));
       chip.classList.add('selected');
       state.selectedTimeSlot = chip.dataset.time;
+      state.selectedTimeLabel = chip.dataset.label || chip.textContent.trim();
       updateSchedulePreview();
     });
   });
@@ -513,7 +707,9 @@ function updateSchedulePreview() {
   const preview = document.getElementById("schedulePreview");
 
   if (state.selectedDay && state.selectedTimeSlot) {
-    preview.textContent = `عالیه، پس فعلاً ${state.selectedDay} — ${state.selectedTimeSlot} در نظر گرفته شده ✨`;
+    const dayLabel = state.selectedDayLabel || state.selectedDay;
+    const timeLabel = state.selectedTimeLabel || state.selectedTimeSlot;
+    preview.textContent = `عالیه، پس فعلاً ${dayLabel} — ${timeLabel} در نظر گرفته شده ✨`;
     preview.classList.remove("hidden");
   } else {
     preview.classList.add("hidden");
@@ -587,12 +783,14 @@ function bindContactStep() {
     const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
     const dateValue = state.selectedDate || state.selectedDay || "ثبت نشده";
     const timeValue = state.selectedTime || state.selectedTimeSlot || "ثبت نشده";
+    const dateLabel = state.selectedDayLabel || dateValue;
+    const timeLabel = state.selectedTimeLabel || timeValue;
 
     TicketGenerator.setData({
       name: fullName || state.profile.firstName || 'مهمان',
       dateStyle: suggestionTitle,
       interests: state.profile.interests,
-      dateTime: `${dateValue} ${timeValue}`,
+      dateTime: `${dateLabel} ${timeLabel}`,
     });
 
     const payload = {
@@ -637,10 +835,15 @@ function renderSuggestions() {
     btn.dataset.title = item.title;
     btn.dataset.desc = item.desc;
 
-    btn.innerHTML = `
-      <span class="suggestion-title">${item.title}</span>
-      <span class="suggestion-desc">${item.desc}</span>
-    `;
+    const title = document.createElement("span");
+    title.className = "suggestion-title";
+    title.textContent = item.title;
+
+    const description = document.createElement("span");
+    description.className = "suggestion-desc";
+    description.textContent = item.desc;
+
+    btn.append(title, description);
 
     btn.addEventListener("click", () => {
       document.querySelectorAll(".suggestion-card").forEach((card) => {
@@ -718,80 +921,6 @@ function bindFinalStep() {
   // No final summary page in the new flow.
   // Ticket display is the final step after contact submission.
 }
-function setupNoButton() {
-  const noBtn = document.getElementById("noBtn");
-  const yesBtn = document.getElementById("yesBtn");
-  const card = noBtn.closest(".card");
-  let attempts = 0;
-
-  function escape() {
-    attempts++;
-
-    if (attempts >= 2) {
-      document.getElementById("noHint").classList.remove("hidden");
-    }
-
-    const cardRect = card.getBoundingClientRect();
-    const noRect = noBtn.getBoundingClientRect();
-    const yesRect = yesBtn.getBoundingClientRect();
-
-    const isMobile = window.innerWidth < 640;
-
-    let x = 0;
-    let y = 0;
-    let safe = false;
-    let maxTries = 20;
-
-    while (!safe && maxTries > 0) {
-      maxTries--;
-
-      if (isMobile) {
-        // موبایل: فرار بیشتر عمودی/کناری
-        x = (Math.random() - 0.5) * 120;
-        y = (Math.random() - 0.5) * 220;
-      } else {
-        // دسکتاپ: فرار آزادتر
-        x = (Math.random() - 0.5) * 200;
-        y = (Math.random() - 0.5) * 120;
-      }
-
-      const futureLeft = noRect.left + x;
-      const futureTop = noRect.top + y;
-      const futureRight = futureLeft + noRect.width;
-      const futureBottom = futureTop + noRect.height;
-
-      const overlap =
-        futureRight > yesRect.left &&
-        futureLeft < yesRect.right &&
-        futureBottom > yesRect.top &&
-        futureTop < yesRect.bottom;
-
-      const insideCard =
-        futureLeft >= cardRect.left + 10 &&
-        futureTop >= cardRect.top + 10 &&
-        futureRight <= cardRect.right - 10 &&
-        futureBottom <= cardRect.bottom - 10;
-
-      if (!overlap && insideCard) {
-        safe = true;
-      }
-    }
-
-    noBtn.style.position = "relative";
-    noBtn.style.zIndex = "5";
-    noBtn.style.transform = `translate(${x}px, ${y}px)`;
-  }
-
-  noBtn.addEventListener("mouseenter", escape);
-  noBtn.addEventListener(
-    "touchstart",
-    (e) => {
-      e.preventDefault();
-      escape();
-    },
-    { passive: false },
-  );
-}
 function resetApp() {
   state.currentStep = 1;
   state.profile = {
@@ -803,6 +932,8 @@ function resetApp() {
   state.selectedTime = "";
   state.selectedDay = "";
   state.selectedTimeSlot = "";
+  state.selectedDayLabel = "";
+  state.selectedTimeLabel = "";
   state.selectedActivity = "";
   state.selectedSuggestion = "";
   state.noAttempts = 0;
@@ -811,6 +942,7 @@ function resetApp() {
 
   document.getElementById("firstName").value = "";
   document.getElementById("lastName").value = "";
+  applyNameSettings(siteContent?.nameSettings);
   const dateEl = document.getElementById("dateInput");
   if (dateEl) dateEl.value = "";
   // clear selected UI states for day/time chips
@@ -826,6 +958,7 @@ function resetApp() {
   document
     .querySelectorAll(".suggestion-card")
     .forEach((card) => card.classList.remove("selected"));
+  selectSingleScheduleDefaults();
 
   document.getElementById("profileError").classList.add("hidden");
   document.getElementById("scheduleError").classList.add("hidden");
@@ -835,6 +968,8 @@ function resetApp() {
   document.getElementById("noHint").classList.add("hidden");
   document.getElementById("noBtn").style.left = "";
   document.getElementById("noBtn").style.top = "";
+  document.getElementById("noBtn").style.removeProperty("--no-x");
+  document.getElementById("noBtn").style.removeProperty("--no-y");
   document.getElementById("noBtn").classList.remove("moving");
 
   const boyfriendBtn = document.getElementById("boyfriendBtn");
