@@ -28,6 +28,9 @@
     "firstName": "زهرا",
     "lastName": ""
   },
+  "contactSettings": {
+    "enabled": false
+  },
   "schedule": {
     "days": [
       { "value": "شنبه", "label": "شنبه", "enabled": false },
@@ -36,7 +39,7 @@
       { "value": "سه‌شنبه", "label": "سه‌شنبه", "enabled": true },
       { "value": "چهارشنبه", "label": "چهارشنبه", "enabled": true },
       { "value": "پنج‌شنبه", "label": "پنج‌شنبه", "enabled": false },
-      { "value": "جمعه", "label": "جمعه", "enabled": false }
+      { "value": "جمعه", "label": "جمعه", "enabled": false}
     ],
     "times": [
       { "value": "عصر", "label": "عصر", "enabled": true },
@@ -46,24 +49,24 @@
   },
   "interests": [
     { "value": "کافه", "label": "کافه", "symbol": "☕" },
-    { "value": "پیاده‌روی", "label": "پیاده‌روی", "symbol": "↗" },
-    { "value": "فیلم", "label": "فیلم", "symbol": "▣" },
-    { "value": "موسیقی", "label": "موسیقی", "symbol": "♫" },
-    { "value": "کتاب", "label": "کتاب", "symbol": "▤" },
-    { "value": "طبیعت", "label": "طبیعت", "symbol": "✳" },
-    { "value": "بستنی", "label": "بستنی", "symbol": "❋" },
-    { "value": "رستوران", "label": "رستوران", "symbol": "⌂" },
-    { "value": "گیم", "label": "بازی", "symbol": "▦" },
-    { "value": "دوس ندارم بگم", "label": "ترجیح می‌دم نگم", "symbol": "—" }
+    { "value": "پیاده‌روی", "label": "پیاده‌روی", "symbol": "🚶‍♂️‍➡️" },
+    { "value": "فیلم", "label": "فیلم", "symbol": "🎬" },
+    { "value": "موسیقی", "label": "موسیقی", "symbol": "🎵" },
+    { "value": "کتاب", "label": "کتاب", "symbol": "📚" },
+    { "value": "طبیعت", "label": "طبیعت", "symbol": "🌳" },
+    { "value": "بستنی", "label": "بستنی", "symbol": "🍦" },
+    { "value": "رستوران", "label": "رستوران", "symbol": "🍽️" },
+    { "value": "گیم", "label": "بازی", "symbol": "🎮" },
+    { "value": "دوس ندارم بگم", "label": "ترجیح می‌دم نگم", "symbol": "🙂‍↔️" }
   ],
   "activities": [
     { "value": "کافه", "title": "کافه", "description": "یک قهوه و گفت‌وگوی بی‌عجله", "symbol": "☕" },
-    { "value": "پیاده‌روی", "title": "پیاده‌روی", "description": "قدم‌زدن و کشف گوشه‌ای تازه از شهر", "symbol": "↗" },
-    { "value": "سینما", "title": "سینما", "description": "یک فیلم خوب و گپ بعد از آن", "symbol": "▣" },
-    { "value": "رستوران", "title": "رستوران", "description": "غذای خوب و گفت‌وگوی بهتر", "symbol": "⌂" },
-    { "value": "بستنی", "title": "بستنی", "description": "یک انتخاب ساده و خنک", "symbol": "❋" },
-    { "value": "کتاب‌فروشی", "title": "کتاب‌فروشی", "description": "کتاب‌گردی و انتخاب برای هم", "symbol": "▤" },
-    { "value": "گیم کلاب", "title": "گیم کلاب", "description": "بازی، خنده و کمی رقابت", "symbol": "▦" }
+    { "value": "پیاده‌روی", "title": "پیاده‌روی", "description": "قدم‌زدن و کشف گوشه‌ای تازه از شهر", "symbol": "🚶" },
+    { "value": "سینما", "title": "سینما", "description": "یک فیلم خوب و گپ بعد از آن", "symbol": "🎬" },
+    { "value": "رستوران", "title": "رستوران", "description": "غذای خوب و گفت‌وگوی بهتر", "symbol": "🍽️" },
+    { "value": "بستنی", "title": "بستنی", "description": "یک انتخاب ساده و خنک", "symbol": "🍦" },
+    { "value": "کتاب‌فروشی", "title": "کتاب‌فروشی", "description": "کتاب‌گردی و انتخاب برای هم", "symbol": "📚" },
+    { "value": "گیم کلاب", "title": "گیم کلاب", "description": "بازی، خنده و کمی رقابت", "symbol": "🎮" }
   ],
   "suggestions": {
     "کافه": [
@@ -103,4 +106,3 @@
     ]
   }
 }
-

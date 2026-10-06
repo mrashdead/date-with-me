@@ -40,6 +40,11 @@ content:
           - { name: skipNameStep, label: مرحله نام رد شود, type: boolean }
           - { name: firstName, label: نام, type: string }
           - { name: lastName, label: نام خانوادگی, type: string }
+      - name: contactSettings
+        label: اطلاعات تماس
+        type: object
+        fields:
+          - { name: enabled, label: دریافت اطلاعات تماس فعال باشد, type: boolean }
       - name: schedule
         label: روزها و ساعت‌های مجاز
         type: object

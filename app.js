@@ -21,6 +21,7 @@ const state = {
   noAttempts: 0,
   boyfriendClickCount: 0,
   boyfriendEmailSent: false,
+  submissionStarted: false,
 };
 
 let siteContent = null;
@@ -329,6 +330,11 @@ function goToStep(stepNumber) {
     state.profile.firstName = siteContent.nameSettings.firstName.trim();
     state.profile.lastName = (siteContent.nameSettings.lastName || "").trim();
     stepNumber = 3;
+  }
+
+  if (stepNumber === 11 && siteContent?.contactSettings?.enabled === false) {
+    submitInvite();
+    return;
   }
 
   document.querySelectorAll(".step").forEach((step) => {
@@ -779,46 +785,53 @@ function bindContactStep() {
     state.telegram = telegram;
     state.phone = phone;
 
-    const fullName = `${state.profile.firstName} ${state.profile.lastName}`.trim();
-    const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
-    const dateValue = state.selectedDate || state.selectedDay || "ثبت نشده";
-    const timeValue = state.selectedTime || state.selectedTimeSlot || "ثبت نشده";
-    const dateLabel = state.selectedDayLabel || dateValue;
-    const timeLabel = state.selectedTimeLabel || timeValue;
-
-    TicketGenerator.setData({
-      name: fullName || state.profile.firstName || 'مهمان',
-      dateStyle: suggestionTitle,
-      interests: state.profile.interests,
-      dateTime: `${dateLabel} ${timeLabel}`,
-    });
-
-    const payload = {
-      first_name: state.profile.firstName || "ناشناس",
-      last_name: state.profile.lastName || "",
-      interests: state.profile.interests.join(", ") || "",
-      date: dateValue,
-      time: timeValue,
-      activity: state.selectedActivity || "",
-      suggestion: state.selectedSuggestion || "",
-      Instagram: state.instagram || "",
-      instagram: state.instagram || "",
-      telegram: state.telegram || "",
-      phone: state.phone || "",
-      final_answer: "accepted",
-    };
-
-    sendViaEmailJS(payload)
-      .then(() => {
-        goToStep(12);
-        TicketGenerator.show('ticketContainer');
-      })
-      .catch(() => {
-        alert("مشکلی در ارسال ایمیل رخ داد، ولی بلیت نمایش داده می‌شود.");
-        goToStep(12);
-        TicketGenerator.show('ticketContainer');
-      });
+    submitInvite();
   });
+}
+
+function submitInvite() {
+  if (state.submissionStarted) return;
+  state.submissionStarted = true;
+
+  const fullName = `${state.profile.firstName} ${state.profile.lastName}`.trim();
+  const suggestionTitle = state.selectedSuggestion.split(" - ")[0];
+  const dateValue = state.selectedDate || state.selectedDay || "ثبت نشده";
+  const timeValue = state.selectedTime || state.selectedTimeSlot || "ثبت نشده";
+  const dateLabel = state.selectedDayLabel || dateValue;
+  const timeLabel = state.selectedTimeLabel || timeValue;
+
+  TicketGenerator.setData({
+    name: fullName || state.profile.firstName || 'مهمان',
+    dateStyle: suggestionTitle,
+    interests: state.profile.interests,
+    dateTime: `${dateLabel} ${timeLabel}`,
+  });
+
+  const payload = {
+    first_name: state.profile.firstName || "ناشناس",
+    last_name: state.profile.lastName || "",
+    interests: state.profile.interests.join(", ") || "",
+    date: dateValue,
+    time: timeValue,
+    activity: state.selectedActivity || "",
+    suggestion: state.selectedSuggestion || "",
+    Instagram: state.instagram || "",
+    instagram: state.instagram || "",
+    telegram: state.telegram || "",
+    phone: state.phone || "",
+    final_answer: "accepted",
+  };
+
+  sendViaEmailJS(payload)
+    .then(() => {
+      goToStep(12);
+      TicketGenerator.show('ticketContainer');
+    })
+    .catch(() => {
+      alert("مشکلی در ارسال ایمیل رخ داد، ولی بلیت نمایش داده می‌شود.");
+      goToStep(12);
+      TicketGenerator.show('ticketContainer');
+    });
 }
 
 function renderSuggestions() {
@@ -939,6 +952,7 @@ function resetApp() {
   state.noAttempts = 0;
   state.boyfriendClickCount = 0;
   state.boyfriendEmailSent = false;
+  state.submissionStarted = false;
 
   document.getElementById("firstName").value = "";
   document.getElementById("lastName").value = "";

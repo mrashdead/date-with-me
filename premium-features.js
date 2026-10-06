@@ -451,7 +451,7 @@ const TicketGenerator = {
     const { name, dateStyle, interests, dateTime } = this.ticketData;
 
     return `
-      <div class="digital-ticket" id="ticketContent">
+      <div class="digital-ticket" id="ticketContent" lang="fa" dir="rtl">
         <!-- Left Section -->
         <div class="ticket-left">
           <div class="ticket-header">
@@ -546,11 +546,19 @@ const TicketGenerator = {
       tempContainer.style.left = '-9999px';
       tempContainer.style.top = '-9999px';
       tempContainer.style.zIndex = '-9999';
+      tempContainer.lang = 'fa';
+      tempContainer.dir = 'rtl';
       tempContainer.innerHTML = this.generateHTML();
       tempContainer.style.background = 'linear-gradient(135deg, #1a1a2e 0%, #16213e 100%)';
       tempContainer.style.padding = '20px';
       tempContainer.style.borderRadius = '12px';
       document.body.appendChild(tempContainer);
+
+      if (document.fonts) {
+        await document.fonts.load('400 16px Vazirmatn');
+        await document.fonts.load('600 16px Vazirmatn');
+        await document.fonts.ready;
+      }
 
       const canvas = await html2canvas(tempContainer, {
         backgroundColor: null,
@@ -797,6 +805,8 @@ const injectAnimations = () => {
     /* Digital Ticket Styles */
     .digital-ticket {
       display: flex;
+      direction: rtl;
+      unicode-bidi: isolate;
       background: #ffffff;
       border: 1px solid #e8e4de;
       border-radius: 12px;
@@ -820,7 +830,7 @@ const injectAnimations = () => {
       margin: 0;
       font-size: 1.4rem;
       text-align: center;
-      letter-spacing: 2px;
+      letter-spacing: 0;
     }
 
     .ticket-subtitle {
@@ -847,7 +857,7 @@ const injectAnimations = () => {
       font-size: 0.75rem;
       color: var(--text-faint);
       text-transform: uppercase;
-      letter-spacing: 1px;
+      letter-spacing: 0;
       margin-bottom: 4px;
     }
 
@@ -916,7 +926,7 @@ const injectAnimations = () => {
 
     .barcode-text {
       font-size: 0.7rem;
-      letter-spacing: 2px;
+      letter-spacing: 0;
       margin-top: 8px;
       color: var(--text-faint);
     }
@@ -942,7 +952,7 @@ const injectAnimations = () => {
     .ticket-seal p {
       margin: 0;
       font-size: 0.75rem;
-      letter-spacing: 1px;
+      letter-spacing: 0;
       color: var(--primary-2);
     }
 
