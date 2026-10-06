@@ -141,7 +141,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function initializeApp() {
-  initHearts();
+  initBackgroundCreatures();
   bindGeneralNavigation();
   bindNameStep();
   bindInterestsStep();
@@ -1008,21 +1008,24 @@ function resetApp() {
   goToStep(1);
 }
 
-function initHearts() {
-  const container = document.getElementById("hearts-bg");
+function initBackgroundCreatures() {
+  const container = document.getElementById("creatures-bg");
+  if (!container || window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
 
-  setInterval(() => {
-    const heart = document.createElement("span");
-    heart.className = "floating-heart";
-    heart.textContent = Math.random() > 0.5 ? "💖" : "💕";
-    heart.style.left = `${Math.random() * 100}%`;
-    heart.style.animationDuration = `${6 + Math.random() * 5}s`;
-    heart.style.fontSize = `${12 + Math.random() * 16}px`;
+  const creatures = [
+    { emoji: "🐸", kind: "frog", left: "7%", top: "16%", delay: "-1.5s" },
+    { emoji: "🐱", kind: "cat", left: "83%", top: "24%", delay: "-5s" },
+    { emoji: "🐈", kind: "cat", left: "8%", top: "76%", delay: "-8s" },
+    { emoji: "🐸", kind: "frog", left: "82%", top: "82%", delay: "-3.5s" },
+  ];
 
-    container.appendChild(heart);
-
-    setTimeout(() => {
-      heart.remove();
-    }, 12000);
-  }, 650);
+  creatures.forEach((creature) => {
+    const figure = document.createElement("span");
+    figure.className = `background-creature background-creature--${creature.kind}`;
+    figure.textContent = creature.emoji;
+    figure.style.left = creature.left;
+    figure.style.top = creature.top;
+    figure.style.animationDelay = creature.delay;
+    container.appendChild(figure);
+  });
 }
